@@ -21,7 +21,7 @@
 - [MongoDB](https://www.mongodb.com/atlas/database)
 - [Render](https://render.com/)
 
-### NPM module
+## NPM module
 
 > - sass
 > - dotenv
@@ -30,6 +30,9 @@
 > - mongoose
 > - cors
 > - express
-> - bcryptjs
 > - jsonwebtoken
 > - validator
+
+## API
+
+[Pokémon API](https://pokemontcg.io/)
