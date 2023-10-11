@@ -9,8 +9,9 @@
 ### Client Side
 
 - [Sass](https://sass-lang.com/)
-- [React](https://reactjs.org/) (JSX)
+- [React (JSX)](https://reactjs.org/)
 - [React Router](https://reactrouter.com/en/main)
+- [React Bootstrap (optional)](https://react-bootstrap.netlify.app/)
 - [Vite](https://vitejs.dev/)
 
 ### Server Side
@@ -25,6 +26,7 @@
 > - sass
 > - dotenv
 > - react router
+> - react bootstrap (optional)
 > - mongoose
 > - cors
 > - express
