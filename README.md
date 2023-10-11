@@ -6,7 +6,7 @@
 
 ## Tech stack used:
 
-### Client Side
+### - Client Side
 
 - [Sass](https://sass-lang.com/)
 - [React (JSX)](https://reactjs.org/)
@@ -14,7 +14,7 @@
 - [React Bootstrap (optional)](https://react-bootstrap.netlify.app/)
 - [Vite](https://vitejs.dev/)
 
-### Server Side
+### - Server Side
 
 - [NodeJS](https://nodejs.org/)
 - [Express](https://expressjs.com/de/)
