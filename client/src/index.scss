@@ -17,8 +17,8 @@
 
 @font-face {
   font-family: 'Outfit';
-  src: url('../fonts/outfit-vf.woff2') format('woff2 supports variations'),
-    url('../fonts/outfit-vf.woff2') format('woff2-variations');
+  src: url('./assets/fonts/outfit-vf.woff2') format('woff2 supports variations'),
+       url('./assets/fonts/outfit-vf.woff2') format('woff2-variations');
   font-weight: 100 900;
 }
 
