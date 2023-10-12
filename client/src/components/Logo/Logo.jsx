@@ -1,4 +1,5 @@
 import logo from "../../assets/images/pokemon-logo.svg";
+import "./Logo.scss";
 
 const Logo = () => {
     return (

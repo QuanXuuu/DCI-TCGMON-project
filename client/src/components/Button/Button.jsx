@@ -1,6 +1,6 @@
 import "./Button.scss";
 
-const Button = ({ text, uppercase }) => {    
+const Button = ({ text, uppercase = false }) => {    
     // const buttonText = text;
     // const uppercaseBoolean = uppercase;
     

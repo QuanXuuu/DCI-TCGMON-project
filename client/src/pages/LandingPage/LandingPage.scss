@@ -2,7 +2,8 @@
 
 .LandingPage {
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     background: $bg-color-gradient;
     display: flex;
     flex-flow: column nowrap;
@@ -11,35 +12,37 @@
     gap: 3.2rem;
     padding: 3.2rem;
 
-    .image-wrapper {
-        display: flex;
-        flex-flow: row nowrap;
+    .image-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 3.2rem;
+    }
+
+    .card1 {
         position: relative;
+        top: 3.2rem;
+        grid-column: 1 / 4;
+        grid-row: 1;
+        z-index: 3;
+    }
+
+    .card2 {
+        grid-column: 2 / -1;
+        grid-row: 1;
+    }
+
+    .card {
         width: 100%;
-        height: 40rem;
-
-        .card {
-            width: 60%;
-        }
-
-        .card1 {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 5;
-        }
-
-        .card2 {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
+        height: 100%;
+        object-fit: contain;
     }
 
     .button-wrapper {
         display: flex;
         flex-flow: column nowrap;
-        gap: 0.8rem;
+        justify-content: center;
+        align-items: center;
+        gap: 1.6rem;
         width: 100%;
         padding-bottom: 1.6rem;
     }
