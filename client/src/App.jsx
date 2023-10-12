@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import './App.css'
+import LandingPage from "./pages/LandingPage/LandingPage.jsx";
+import './App.scss';
 
-function App() {
-
-  return (
+const App = () => {
+    return (
     <>
-
+        <LandingPage />
     </>
-  )
-}
+    )
+};
 
-export default App
+export default App;
