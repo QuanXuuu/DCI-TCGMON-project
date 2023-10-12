@@ -36,3 +36,8 @@
 ## API
 
 [Pokémon API](https://pokemontcg.io/)
+
+## Project Setup
+
+- Clone this repository
+- Install all dependencies with '$ npm install'
