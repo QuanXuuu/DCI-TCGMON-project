@@ -1,6 +1,6 @@
 # Trading Card Game (TCG) Project
 
-![LandingPage](images/TCG-Figma.png)
+![LandingPage](TCG-Figma.png)
 
 **Important:** This Demo is optimized for mobile screen.
 
