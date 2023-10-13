@@ -5,6 +5,7 @@
     height: 100%;
     min-height: 100vh;
     background: $bg-color-gradient;
+    background-size: 150%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -15,6 +16,7 @@
     .image-container {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
+        max-width: 40rem;
         margin-bottom: 3.2rem;
     }
 

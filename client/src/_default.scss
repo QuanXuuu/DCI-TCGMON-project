@@ -14,19 +14,11 @@
     box-sizing: border-box;
 }
 
-:root {
-    font-family: 'Outfit', sans-serif;
-    font-size: 62.5%;
-    -webkit-text-size-adjust: none;
-    font-weight: 400;
-    line-height: 1;
-}
-
 // colors:
 $bg-color: rgb(238, 174, 202);
 
-$bg-color-gradient: radial-gradient(circle,
-        rgba(238, 174, 202, 1) 60%,
+$bg-color-gradient: radial-gradient(circle at center bottom,
+        rgba(238, 174, 202, 1) 35%,
         rgba(148, 187, 233, 1) 100%);
 
 $yellow: rgb(255, 203, 5);
@@ -43,10 +35,16 @@ $font5: 1rem; // footer, "card/sealed products information 320px"
 
 // box shadow
 
-
 // Border radius
 $button-border-radius: 2.8rem;
 
-
-
 // Box margin, padding
+
+:root {
+    font-family: 'Outfit', sans-serif;
+    font-size: 62.5%;
+    -webkit-text-size-adjust: none;
+    font-weight: 400;
+    line-height: 1;
+    color: $primary-text;
+}
