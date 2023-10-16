@@ -18,13 +18,16 @@
 // colors:
 $bg-color: rgb(238, 174, 202);
 
-$bg-color-gradient: radial-gradient(
-  circle at center bottom,
-  rgba(238, 174, 202, 1) 35%,
-  rgba(148, 187, 233, 1) 100%
-);
+$bg-color-gradient: radial-gradient(circle at center bottom,
+        rgba(238, 174, 202, 1) 35%,
+        rgba(148, 187, 233, 1) 100%);
+        
+$bg-color-gradient-mobile: radial-gradient(145.08% 145.08% at 50% 115.5%, #E089AE 32.04%, #89BBF6 100%);
+
 
 $yellow: rgb(255, 203, 5);
+
+$transperant-white:rgba(255, 255, 255, 0.25);
 
 $primary-text: rgba(0, 0, 0, 0.85);
 $secondary-text: rgb(255, 255, 255);

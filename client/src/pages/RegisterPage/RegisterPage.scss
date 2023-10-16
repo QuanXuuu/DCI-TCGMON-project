@@ -1,0 +1,38 @@
+@import "../../default";
+
+.RegisterPage{
+    background: $bg-color-gradient-mobile;
+    width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        
+        background-size: 150%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 3.2rem;
+        padding: 3.2rem;
+
+    .RegisterWelcomeContainer{
+       h1 {
+        font-size: $font1;
+        font-weight: 600;
+        text-align: center;
+       }
+       h2 {
+        font-size: $font2;
+        font-weight: 600;
+        text-align: center;
+       }
+    }
+
+    .RegisterPageLoginButton{
+        font-size: $font3;
+        font-weight: 700;
+        
+    }
+}
+
+
+
