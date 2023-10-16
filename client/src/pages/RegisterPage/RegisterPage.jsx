@@ -7,7 +7,7 @@ import "./RegisterPage.scss";
 const RegisterPage = () => {
     return (
         <div className="RegisterPage">
-            <Logo />
+            <Logo height={ "80" }/>
             <div className="RegisterWelcomeContainer">
                 <h1>Welcome!</h1>
                 <h2>Sign up now, it`s free.</h2>
