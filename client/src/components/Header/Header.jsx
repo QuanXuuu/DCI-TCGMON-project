@@ -6,7 +6,8 @@ import './Header.scss';
 const Header = () => {
   return (
     <div className="Header">
-      <Logo />
+      <div className="placeholder"></div>
+      <Logo height={'40'} />
       <Hamburger />
     </div>
   );

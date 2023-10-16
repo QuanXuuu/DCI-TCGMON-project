@@ -1,29 +1,33 @@
 @font-face {
-    font-family: 'Outfit';
-    src: url('../src/assets/fonts/outfit-vf.woff2') format('woff2 supports variations'),
-         url('../src/assets/fonts/outfit-vf.woff2') format('woff2-variations');
-    font-weight: 100 900;
+  font-family: 'Outfit';
+  src: url('../src/assets/fonts/outfit-vf.woff2')
+      format('woff2 supports variations'),
+    url('../src/assets/fonts/outfit-vf.woff2') format('woff2-variations');
+  font-weight: 100 900;
 }
 
 *:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
-    all: unset;
-    display: revert;
+  all: unset;
+  display: revert;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 // colors:
 $bg-color: rgb(238, 174, 202);
 
-$bg-color-gradient: radial-gradient(circle at center bottom,
-        rgba(238, 174, 202, 1) 35%,
-        rgba(148, 187, 233, 1) 100%);
+$bg-color-gradient: radial-gradient(
+  circle at center bottom,
+  rgba(238, 174, 202, 1) 35%,
+  rgba(148, 187, 233, 1) 100%
+);
 
 $yellow: rgb(255, 203, 5);
 
 $primary-text: rgba(0, 0, 0, 0.85);
+$secondary-text: rgb(255, 255, 255);
 
 // font size:
 $font1: 3.2rem; // header = H1
@@ -41,10 +45,10 @@ $button-border-radius: 2.8rem;
 // Box margin, padding
 
 :root {
-    font-family: 'Outfit', sans-serif;
-    font-size: 62.5%;
-    -webkit-text-size-adjust: none;
-    font-weight: 400;
-    line-height: 1;
-    color: $primary-text;
+  font-family: 'Outfit', sans-serif;
+  font-size: 62.5%;
+  -webkit-text-size-adjust: none;
+  font-weight: 400;
+  line-height: 1;
+  color: $primary-text;
 }
