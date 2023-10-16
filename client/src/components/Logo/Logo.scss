@@ -1,0 +1,13 @@
+@import "../../default";
+
+.Logo {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    img {
+        height: 8rem;
+    }
+}
