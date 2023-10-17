@@ -1,4 +1,5 @@
 import Header from "../../components/Header/Header";
+import SearchByCard from "../../components/SearchByCard/SearchByCard";
 import './SearchPage.scss'; 
 
 const SearchPage = () => {
@@ -11,6 +12,7 @@ const SearchPage = () => {
                 <button className="SwitchButton">Search by set</button>
                 <button className="SwitchButton">Search by card</button>
             </div>
+            <SearchByCard/>
             </div>
         </div>
         
