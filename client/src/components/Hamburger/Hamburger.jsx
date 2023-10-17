@@ -6,7 +6,7 @@ const Hamburger = () => {
   return (
     <>
       <button className="Hamburger">
-        <FontAwesomeIcon icon={faBars} className="Hamburger-icon" />
+        <FontAwesomeIcon icon={faBars} className="hamburger-icon" />
       </button>
     </>
   );

@@ -1,15 +1,15 @@
 .Header {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  height: 6.4rem;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  height: 6.4rem;
   padding: 0 0.8rem;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
-  .placeholder {
-    width: 4.8rem;
-    height: 4.8rem;
-  }
+.placeholder {
+  width: 4.8rem;
+  height: 4.8rem;
 }
