@@ -1,28 +1,21 @@
 @import "../../default";
 
 .RegisterForm {
-      display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        gap: 1.6rem;
-        width: 100%;
-        padding-bottom: 1.6rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    width: 100%;
 
-        form{
+        form {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             width: 100%;
-
+            gap: 1.6rem
         }
-
-    .RegisterFormInputOne{
-        margin-bottom: 1.6rem;
-        
-
-    }
 
            input {
                width: 100%;
@@ -31,8 +24,16 @@
                border-radius: $button-border-radius;
                background-color: $transperant-white;
                font-size: $font3;
-               font-weight: 700;
-               text-align: center;
-    
+               font-weight: 500;
+               text-align: center; 
            }
+
+           input:focus {
+            border: 3px solid rgb(87, 145, 227);
+            box-sizing: border-box;
+           }
+
+         /*   input:focus::placeholder {
+            color: transparent;
+          } */
 }

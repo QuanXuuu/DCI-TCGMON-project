@@ -6,7 +6,8 @@ const RegisterForm = () => {
                
                 <form action="">
                     <input className="RegisterFormInputOne" type="email" placeholder="Email address"/>
-                    <input type="password" placeholder="Password"/>
+                <input type="password" placeholder="Password" />
+                <input type="password" placeholder="Repeat password"/>
                 </form>
             </div>
         
