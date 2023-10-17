@@ -9,13 +9,16 @@ const RegisterPage = () => {
         <div className="RegisterPage">
             <Logo height={ "80" }/>
             <div className="RegisterWelcomeContainer">
-                <h1>Welcome!</h1>
-                <h2>Sign up now, it`s free.</h2>
+                <div>
+                    <h1>Welcome!</h1>
+                    <h2>Sign up now, it's free.</h2>
+                </div>
+                    <RegisterForm />
+                </div>
+            <div className="RegisterPageButtonsWrapper">
+                <Button text={ "Create account" }  />
+                <button className="RegisterPageLoginButton">Login</button>
             </div>
-
-            <RegisterForm />
-          <Button text={ "Create account" }  />
-        <button className="RegisterPageLoginButton">Login</button>
         </div>
     )
 
