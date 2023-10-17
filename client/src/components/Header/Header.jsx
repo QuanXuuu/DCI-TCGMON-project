@@ -2,11 +2,11 @@ import Logo from '../Logo/Logo';
 import Hamburger from '../Hamburger/Hamburger';
 import './Header.scss';
 
-const Header = () => {
+const Header = ({ color }) => {
   return (
     <div className="Header">
       <Logo height={'40'} />
-      <Hamburger />
+      <Hamburger color={color} />
     </div>
   );
 };
