@@ -13,8 +13,8 @@ const RegisterPage = () => {
                     <h1>Welcome!</h1>
                     <h2>Sign up now, it's free.</h2>
                 </div>
-                    <RegisterForm />
-                </div>
+                <RegisterForm />
+            </div>
             <div className="RegisterPageButtonsWrapper">
                 <Button text={ "Create account" }  />
                 <button className="RegisterPageLoginButton">Login</button>
@@ -23,9 +23,5 @@ const RegisterPage = () => {
     )
 
 }
-
-
-
-
 
 export default RegisterPage;
