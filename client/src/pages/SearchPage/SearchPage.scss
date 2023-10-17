@@ -24,10 +24,21 @@
     }
 
     .SearchSwitchButtons {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
 
         .SwitchButton {
-            color: white;
-            
+            color: $secondary-text;
+            font-size: $font4;
+            font-weight: 400;
+            width: 40%;
+            max-width: 20rem;
+            height: 4rem;
+            border: 2px solid $yellow;
+            border-radius: $button-border-radius;
+            text-align: center;
+            backdrop-filter: blur(3px);
         }
     }
 }

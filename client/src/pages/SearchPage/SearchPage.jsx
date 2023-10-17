@@ -7,10 +7,10 @@ const SearchPage = () => {
             <Header />
             <div className="SearchPageWrapper">
                 <h1>Search</h1>
-            </div>
             <div className="SearchSwitchButtons">
                 <button className="SwitchButton">Search by set</button>
                 <button className="SwitchButton">Search by card</button>
+            </div>
             </div>
         </div>
         
