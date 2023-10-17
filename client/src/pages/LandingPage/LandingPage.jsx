@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-
-import Button from '../../components/Button/Button.jsx';
-import Logo from '../../components/Logo/Logo.jsx';
-import cards from '../../assets/images/cards72 v1.png';
+import Button from '../../components/Button/Button';
+import Logo from '../../components/Logo/Logo';
+import image from '../../assets/images/cards v7.png';
 import './LandingPage.scss';
 
 const LandingPage = () => {
@@ -27,7 +26,7 @@ const LandingPage = () => {
         className="image-wrapper"
         style={{ height: `calc(${height}px - 35.2rem)` }}
       >
-        <img src={cards} alt="pokemon-cards" />
+        <img src={image} alt="pokemon-cards" />
       </div>
       <div className="button-wrapper">
         <Button text={'Login'} uppercase={true} />
