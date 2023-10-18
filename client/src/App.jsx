@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SearchTermContext from './contexts/SearchTermContext';
+import SearchQueryContext from './contexts/SearchQueryContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage/LandingPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
@@ -10,11 +10,14 @@ import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage';
 import './App.scss';
 
 const App = () => {
-  const [searchTerm, setSearchTerm] = useState('charizard');
-  const value = { searchTerm, setSearchTerm };
+  const [searchQuery, setSearchQuery] = useState({
+    searchTerm: 'umbreon',
+    searchMethod: 'name',
+  });
+  const value = { searchQuery, setSearchQuery };
 
   return (
-    <SearchTermContext.Provider value={value}>
+    <SearchQueryContext.Provider value={value}>
       <div className="App">
         <BrowserRouter>
           <div className="page">
@@ -29,7 +32,7 @@ const App = () => {
           </div>
         </BrowserRouter>
       </div>
-    </SearchTermContext.Provider>
+    </SearchQueryContext.Provider>
   );
 };
 

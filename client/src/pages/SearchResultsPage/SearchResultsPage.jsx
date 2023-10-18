@@ -1,17 +1,89 @@
-import { useState, useContext } from 'react';
-import SearchTermContext from '../../contexts/SearchTermContext';
+import { useState, useContext, useEffect } from 'react';
+import SearchQueryContext from '../../contexts/SearchQueryContext';
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faFilter } from '@fortawesome/free-solid-svg-icons';
+import SingleCardsResults from '../../components/SingleCardsResults/SingleCardsResults';
+import SealedProductsResults from '../../components/SealedProductsResults/SealedProductsResults';
 import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
-  const searchTerm = useContext(SearchTermContext);
+  const searchQuery = useContext(SearchQueryContext);
 
-  const [singleCardResultsAmount, setSingleCardResultsAmount] = useState(102);
-  const [sealedProductsResultsAmount, setSealedProductsResultsAmount] =
-    useState(7);
+  const [singleCardSearchResults, setSingleCardSearchResults] = useState({});
+  const [sealedProductSearchResults, setSealedProductSearchResults] = useState(
+    {}
+  );
+
+  useEffect(() => {
+    if (searchQuery.searchQuery.searchMethod === 'name') {
+      const searchByName = async () => {
+        const fetchCardResults = await fetch(
+          `https://api.pokemontcg.io/v2/cards?q=name:"${searchQuery.searchQuery.searchTerm}"`,
+          {
+            method: 'GET',
+            // headers: {
+            //   'X-Api-Key': '',
+            // },
+          }
+        );
+
+        const cardResultData = await fetchCardResults.json();
+        setSingleCardSearchResults(cardResultData);
+
+        const fetchSealedResults = await fetch(
+          `https://api.pokemontcg.io/v2/sealed?q=name:"${searchQuery.searchQuery.searchTerm}"`,
+          {
+            method: 'GET',
+            // headers: {
+            //   'X-Api-Key': '',
+            // },
+          }
+        );
+
+        const sealedResultData = await fetchSealedResults.json();
+        setSealedProductSearchResults(sealedResultData);
+
+        console.log(cardResultData);
+        console.log(sealedResultData);
+      };
+
+      searchByName();
+    } else {
+      const searchBySet = async () => {
+        const fetchCardResults = await fetch(
+          `https://api.pokemontcg.io/v2/cards?q=set.name:"${searchQuery.searchQuery.searchTerm}"`,
+          {
+            method: 'GET',
+            // headers: {
+            //   'X-Api-Key': '',
+            // },
+          }
+        );
+
+        const cardResultData = await fetchCardResults.json();
+        setSingleCardSearchResults(cardResultData);
+
+        const fetchSealedResults = await fetch(
+          `https://api.pokemontcg.io/v2/sealed?q=set.name:"${searchQuery.searchQuery.searchTerm}"`,
+          {
+            method: 'GET',
+            // headers: {
+            //   'X-Api-Key': '',
+            // },
+          }
+        );
+
+        const sealedResultData = await fetchSealedResults.json();
+        setSealedProductSearchResults(sealedResultData);
+
+        // console.log for data visibility
+        console.log(cardResultData);
+        console.log(sealedResultData);
+      };
+
+      searchBySet();
+    }
+  }, []);
 
   return (
     <div className="SearchResultsPage">
@@ -20,34 +92,31 @@ const SearchResultsPage = () => {
         <ReturnButton text={'Search'} />
         <div className="headline-wrapper">
           <h1>Search results for</h1>
-          <h1 className="underlined">{searchTerm.searchTerm}</h1>
+          <h1 className="underlined">
+            &quot;{searchQuery.searchQuery.searchTerm}&quot;
+          </h1>
         </div>
         <div className="results-info-wrapper">
           <p>
-            <span className="bold">{singleCardResultsAmount}</span> Single Cards
+            <span className="bold">{singleCardSearchResults.count}</span>
+            {'  '}Single Cards
           </p>
           <p>
-            <span className="bold">{sealedProductsResultsAmount}</span> Sealed
-            Products
+            <span className="bold">{sealedProductSearchResults.count}</span>
+            {'  '}Sealed Products
           </p>
         </div>
         <div className="results-wrapper">
-          <div className="results-headline">
-            <button className="results-options-button">
-              <FontAwesomeIcon
-                icon={faSort}
-                className="results-options-button-icon"
-              />
-            </button>
-            <h1>Single Cards</h1>
-            <button className="results-options-button">
-              <FontAwesomeIcon
-                icon={faFilter}
-                className="results-options-button-icon"
-              />
-            </button>
-          </div>
-          <div className="results">Karten und so</div>
+          {singleCardSearchResults.count > 0 ? (
+            <SingleCardsResults content={singleCardSearchResults} />
+          ) : (
+            <></>
+          )}
+          {sealedProductSearchResults.count > 0 ? (
+            <SealedProductsResults content={sealedProductSearchResults} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

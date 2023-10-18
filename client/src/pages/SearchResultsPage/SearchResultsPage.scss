@@ -3,6 +3,7 @@
 .SearchResultsPage {
   background: $bg-color-gradient-mobile;
   background-size: 150%;
+  background-attachment: fixed;
 
   .page-wrapper {
     display: flex;
@@ -60,44 +61,6 @@
       align-items: center;
       gap: 3.2rem;
       width: 100%;
-
-      .results-headline {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-
-        h1 {
-          font-size: $font1;
-          font-weight: 700;
-          text-align: center;
-          color: $primary-text;
-        }
-
-        .results-options-button {
-          display: flex;
-          flex-flow: column nowrap;
-          justify-content: center;
-          align-items: center;
-          width: 3.2rem;
-          height: 3.2rem;
-
-          .results-options-button-icon {
-            height: 1.6rem;
-          }
-        }
-      }
-
-      .results {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(255, 255, 255, 0.25);
-        width: 100%;
-        height: 50rem;
-      }
     }
   }
 }
