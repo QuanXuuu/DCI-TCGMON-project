@@ -12,22 +12,23 @@
   padding: 3.2rem;
   background: $bg-color-gradient-mobile;
   background-size: 150%;
-}
 
-.image-wrapper {
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  .image-wrapper {
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
-}
 
-.button-wrapper {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  gap: 1.6rem;
-  width: 100%;
-  margin-bottom: 1.6rem;
+  .button-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    width: 100%;
+
+    margin-bottom: 1.6rem;
+  }
 }

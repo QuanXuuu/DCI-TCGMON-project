@@ -1,0 +1,15 @@
+@import '../../default';
+
+.ReturnButton {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  font-size: $font4;
+
+  .return-button-icon {
+    height: 1rem;
+  }
+}
