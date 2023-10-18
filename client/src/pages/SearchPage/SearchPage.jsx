@@ -1,40 +1,61 @@
-import React, { useState } from 'react';
-import Header from "../../components/Header/Header";
-import SearchByCard from "../../components/SearchByCard/SearchByCard";
-import SearchBySet from "../../components/SearchBySet/SearchBySet";
-import './SearchPage.scss'; 
+import { useState, useEffect } from 'react';
+import Header from '../../components/Header/Header';
+import SearchByCard from '../../components/SearchByCard/SearchByCard';
+import SearchBySet from '../../components/SearchBySet/SearchBySet';
+import './SearchPage.scss';
 
 const SearchPage = () => {
-    const [selectedOption, setSelectedOption] = useState("set");
+  const [sets, setSets] = useState();
+  const [selectedOption, setSelectedOption] = useState('set');
 
-    const handleOptionChange = (option) => {
-        setSelectedOption(option);
-    }
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
 
-    return (
-        <div className="SearchPage">
-            <Header />
-            <div className="SearchPageWrapper">
-                <h1>Search</h1>
-                <div className="SearchSwitchButtons">
-                    <button
-                        className={`SwitchButton ${selectedOption === "set" ? 'active' : ''}`}
-                        onClick={() => handleOptionChange("set")}
-                    >
-                        Search by set
-                    </button>
-                    <button
-                        className={`SwitchButton ${selectedOption === "card" ? 'active' : ''}`}
-                        onClick={() => handleOptionChange("card")}
-                    >
-                        Search by card
-                    </button>
-                </div>
-                {selectedOption === "set" && <SearchBySet />}
-                {selectedOption === "card" && <SearchByCard />}
-            </div>
+  useEffect(() => {
+    const getSetNames = async () => {
+      const fetchSets = await fetch(`https://api.pokemontcg.io/v2/sets`, {
+        method: 'GET',
+        // headers: {
+        //   'X-Api-Key': '',
+        // },
+      });
+
+      const setData = await fetchSets.json();
+      setSets(setData);
+    };
+
+    getSetNames();
+  }, []);
+
+  return !sets ? null : (
+    <div className="SearchPage">
+      <Header />
+      <div className="SearchPageWrapper">
+        <h1>Search</h1>
+        <div className="SearchSwitchButtons">
+          <button
+            className={`SwitchButton ${
+              selectedOption === 'set' ? 'active' : ''
+            }`}
+            onClick={() => handleOptionChange('set')}
+          >
+            Search by set
+          </button>
+          <button
+            className={`SwitchButton ${
+              selectedOption === 'card' ? 'active' : ''
+            }`}
+            onClick={() => handleOptionChange('card')}
+          >
+            Search by card
+          </button>
         </div>
-    )
-}
+        {selectedOption === 'set' && <SearchBySet setlist={sets} />}
+        {selectedOption === 'card' && <SearchByCard />}
+      </div>
+    </div>
+  );
+};
 
 export default SearchPage;

@@ -15,7 +15,10 @@ const SearchResultsPage = () => {
   );
 
   useEffect(() => {
-    if (searchQuery.searchQuery.searchMethod === 'name') {
+    if (
+      searchQuery.searchQuery.searchTerm !== '' &&
+      searchQuery.searchQuery.searchMethod === 'name'
+    ) {
       const searchByName = async () => {
         const fetchCardResults = await fetch(
           `https://api.pokemontcg.io/v2/cards?q=name:"${searchQuery.searchQuery.searchTerm}"`,
@@ -48,7 +51,10 @@ const SearchResultsPage = () => {
       };
 
       searchByName();
-    } else {
+    } else if (
+      searchQuery.searchQuery.searchTerm !== '' &&
+      searchQuery.searchQuery.searchMethod === 'set'
+    ) {
       const searchBySet = async () => {
         const fetchCardResults = await fetch(
           `https://api.pokemontcg.io/v2/cards?q=set.name:"${searchQuery.searchQuery.searchTerm}"`,
@@ -82,14 +88,17 @@ const SearchResultsPage = () => {
       };
 
       searchBySet();
-    }
-  }, []);
+    } else return;
+  }, [
+    searchQuery.searchQuery.searchMethod,
+    searchQuery.searchQuery.searchTerm,
+  ]);
 
   return (
     <div className="SearchResultsPage">
       <Header color={'black'} />
       <div className="page-wrapper">
-        <ReturnButton text={'Search'} />
+        <ReturnButton text={'Search'} link={'search'} />
         <div className="headline-wrapper">
           <h1>Search results for</h1>
           <h1 className="underlined">
