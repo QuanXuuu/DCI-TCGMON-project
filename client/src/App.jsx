@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import MyCollectionsPage from './pages/MyCollectionsPage/MyCollectionsPage';
+import SearchPage from './pages/SearchPage/SearchPage.jsx';
 import SearchResultsPage from './pages/SearchResultsPage/SearchResultsPage';
 import './App.scss';
 
@@ -22,8 +23,8 @@ const App = () => {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/collections" element={<MyCollectionsPage />} />
+              <Route path="/search" element={ <SearchPage /> } /> 
               <Route path="/results" element={<SearchResultsPage />} />
-              {/* <Route path="*" element={ <RegisterPage /> } />  */}
             </Routes>
           </div>
         </BrowserRouter>

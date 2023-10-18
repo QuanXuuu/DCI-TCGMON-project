@@ -1,0 +1,88 @@
+@import "../../default";
+
+.SearchBySet {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    width: 100%;
+
+    .SearchBySetDropdown {
+        width: 100%;
+
+        .SearchBySetDropdownBox {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                width: 100%;
+                max-width: 40rem;
+                height: 5.6rem;
+                line-height: 5.6rem;
+                border-radius: $button-border-radius;
+                background-color: $transperant-white2;
+                font-size: $font3;
+                font-weight: 500;
+                text-align: center;
+                color: rgb(20, 20, 20);
+                position: relative;
+                backdrop-filter: blur(2px);
+
+                .DropdownArrow {
+                    position: absolute;
+                    right: 4rem;
+                    top: calc(50% - 9px);
+                }
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                padding: 12px 16px;
+                z-index: 1000;
+            }
+        }
+
+        p:focus {
+            border: 3px solid rgb(87, 145, 227);
+            box-sizing: border-box;
+        }
+    }
+
+    &.dropdown-visible {
+        width: 100%;
+        position: relative;
+
+        .dropdown-content {
+            width: 100%;
+            position: absolute;
+            display: block;
+            background-color: rgba(21, 21, 21, 0.922);
+            font-size: $font3;
+            text-align: center;
+            backdrop-filter: blur(30px);
+            border-radius: $button-border-radius;
+            border: 3px solid rgb(87, 145, 227);
+            box-sizing: border-box;
+
+            .SetName {
+                color: $secondary-text;
+                font-size: $font3;
+                font-weight: 500;
+                height: 5.6rem;
+                line-height: 5.6rem;
+                border-bottom: 1px solid rgb(0, 0, 0);
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+}
