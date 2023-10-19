@@ -64,8 +64,8 @@ const LandingPage = () => {
         <img src={currentImage} alt="pokemon-cards" />
       </div>
       <div className="button-wrapper">
-        <Button text={'Login'} uppercase={true} />
-        <Button text={'Register'} uppercase={true} />
+        <Button text={'Login'} uppercase={true} link={'login'} />
+        <Button text={'Register'} uppercase={true} link={'register'} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import SearchByCard from '../../components/SearchByCard/SearchByCard';
 import SearchBySet from '../../components/SearchBySet/SearchBySet';
@@ -6,36 +6,56 @@ import './SearchPage.scss';
 
 const SearchPage = () => {
 
+  const [sets, setSets] = useState();
   const [selectedOption, setSelectedOption] = useState('set');
 
-  const handleOptionChange = (option) => {
-    setSelectedOption(option);
-  }
+  useEffect(() => {
+    const getSetNames = async () => {
+      const fetchSets = await fetch(`https://api.pokemontcg.io/v2/sets`, {
+        method: 'GET',
+        // headers: {
+        //   'X-Api-Key': '',
+        // },
+      });
 
-  return (
-    <div className='SearchPage'>
+      const setData = await fetchSets.json();
+      setSets(setData);
+
+      // console.log for data visibility
+      console.log(setData);
+    };
+
+    getSetNames();
+  }, []);
+
+  return !sets ? null : (
+    <div className="SearchPage">
       <Header />
-      <div className='SearchPageWrapper'>
+      <div className="SearchPageWrapper">
         <h1>Search</h1>
-        <div className='SearchSwitchButtons'>
+        <div className="SearchSwitchButtons">
           <button
-            className={`SwitchButton ${selectedOption === 'set' ? 'active' : ''}`}
-            onClick={() => handleOptionChange('set')}
+            className={`SwitchButton ${
+              selectedOption === 'set' ? 'active' : ''
+            }`}
+            onClick={() => setSelectedOption('set')}
           >
             Search by set
           </button>
           <button
-            className={`SwitchButton ${selectedOption === 'card' ? 'active' : ''}`}
-            onClick={() => handleOptionChange('card')}
+            className={`SwitchButton ${
+              selectedOption === 'card' ? 'active' : ''
+            }`}
+            onClick={() => setSelectedOption('card')}
           >
             Search by card
           </button>
         </div>
-        {selectedOption === 'set' && <SearchBySet />}
+        {selectedOption === 'set' && <SearchBySet setlist={sets} />}
         {selectedOption === 'card' && <SearchByCard />}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SearchPage;

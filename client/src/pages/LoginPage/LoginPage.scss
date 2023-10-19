@@ -1,61 +1,59 @@
-@import "../../default";
+@import '../../default';
 
 .LoginPage {
-    background: $bg-color-gradient-mobile;
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;    
-    background-size: 150%;
+  background: $bg-color-gradient-mobile;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  background-size: 150%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3.2rem;
+  padding: 3.2rem;
+
+  .LoginTextAndFormBox {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-between;
+    gap: 3.2rem;
+    width: 100%;
+
+    h1 {
+      font-size: $font1;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 2.4rem;
+    }
+  }
+
+  .LoginFormContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
     align-items: center;
     gap: 3.2rem;
-    padding: 3.2rem;
+    width: 100%;
 
-    .LoginTextAndFormBox {
-
-        display: flex;
-        flex-flow: column nowrap;
-        gap: 3.2rem;
-        width: 100%;
-
-       h1 {
-        font-size: $font1;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 2.4rem;
-       }
+    .ForgotPasswordButton {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-top: 1.6rem;
     }
+  }
 
-    .LoginFormContainer {
-      
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        gap: 3.2rem;
-        width: 100%;
+  .LoginAndRegisterContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3.2rem;
+    width: 100%;
+    margin-bottom: 1.6rem;
 
-        .ForgotPasswordButton {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-top: 1.6rem;
-        }
+    .LoginPageRegisterButton {
+      font-size: $font3;
+      font-weight: 700;
     }
-
-    .LoginAndRegisterContainer {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        gap: 3.2rem;
-        width: 100%;
-        margin-bottom: 1.6rem;
-
-        .LoginPageRegisterButton {
-            font-size: $font3;
-            font-weight: 700;
-        }
-    }
+  }
 }

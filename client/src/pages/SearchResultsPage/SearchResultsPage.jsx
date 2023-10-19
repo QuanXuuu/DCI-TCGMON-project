@@ -16,10 +16,13 @@ const SearchResultsPage = () => {
   );
 
   useEffect(() => {
-    if (searchQuery.searchQuery.searchMethod === 'name') {
+    if (
+      searchQuery.searchQuery.searchValue !== '' &&
+      searchQuery.searchQuery.searchMethod === 'name'
+    ) {
       const searchByName = async () => {
         const fetchCardResults = await fetch(
-          `https://api.pokemontcg.io/v2/cards?q=name:"${searchQuery.searchQuery.searchTerm}"`,
+          `https://api.pokemontcg.io/v2/cards?q=name:"${searchQuery.searchQuery.searchValue}"`,
           {
             method: 'GET',
             // headers: {
@@ -32,7 +35,7 @@ const SearchResultsPage = () => {
         setSingleCardSearchResults(cardResultData);
 
         const fetchSealedResults = await fetch(
-          `https://api.pokemontcg.io/v2/sealed?q=name:"${searchQuery.searchQuery.searchTerm}"`,
+          `https://api.pokemontcg.io/v2/sealed?q=name:"${searchQuery.searchQuery.searchValue}"`,
           {
             method: 'GET',
             // headers: {
@@ -44,15 +47,19 @@ const SearchResultsPage = () => {
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
 
+        // console.log for data visibility
         console.log(cardResultData);
         console.log(sealedResultData);
       };
 
       searchByName();
-    } else {
+    } else if (
+      searchQuery.searchQuery.searchValue !== '' &&
+      searchQuery.searchQuery.searchMethod === 'set'
+    ) {
       const searchBySet = async () => {
         const fetchCardResults = await fetch(
-          `https://api.pokemontcg.io/v2/cards?q=set.name:"${searchQuery.searchQuery.searchTerm}"`,
+          `https://api.pokemontcg.io/v2/cards?q=set.id:"${searchQuery.searchQuery.searchValue}"`,
           {
             method: 'GET',
             // headers: {
@@ -65,7 +72,7 @@ const SearchResultsPage = () => {
         setSingleCardSearchResults(cardResultData);
 
         const fetchSealedResults = await fetch(
-          `https://api.pokemontcg.io/v2/sealed?q=set.name:"${searchQuery.searchQuery.searchTerm}"`,
+          `https://api.pokemontcg.io/v2/sealed?q=set.id:"${searchQuery.searchQuery.searchValue}"`,
           {
             method: 'GET',
             // headers: {
@@ -83,18 +90,21 @@ const SearchResultsPage = () => {
       };
 
       searchBySet();
-    }
-  }, []);
+    } else return;
+  }, [
+    searchQuery.searchQuery.searchValue,
+    searchQuery.searchQuery.searchMethod,
+  ]);
 
   return (
     <div className="SearchResultsPage">
       <Header color={'black'} background={'transparent'} />
       <div className="page-wrapper">
-        <ReturnButton text={'Search'} />
+        <ReturnButton text={'Search'} link={'search'} />
         <div className="headline-wrapper">
           <h1>Search results for</h1>
           <h1 className="underlined">
-            &quot;{searchQuery.searchQuery.searchTerm}&quot;
+            &quot;{searchQuery.searchQuery.searchDisplay}&quot;
           </h1>
         </div>
         <div className="results-info-wrapper">
