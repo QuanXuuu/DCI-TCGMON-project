@@ -5,6 +5,7 @@ import SearchBySet from '../../components/SearchBySet/SearchBySet';
 import './SearchPage.scss';
 
 const SearchPage = () => {
+
   const [sets, setSets] = useState();
   const [selectedOption, setSelectedOption] = useState('set');
 

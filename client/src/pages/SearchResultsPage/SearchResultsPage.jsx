@@ -7,6 +7,7 @@ import SealedProductsResults from '../../components/SealedProductsResults/Sealed
 import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
+
   const searchQuery = useContext(SearchQueryContext);
 
   const [singleCardSearchResults, setSingleCardSearchResults] = useState({});
@@ -97,7 +98,7 @@ const SearchResultsPage = () => {
 
   return (
     <div className="SearchResultsPage">
-      <Header color={'black'} />
+      <Header color={'black'} background={'transparent'} />
       <div className="page-wrapper">
         <ReturnButton text={'Search'} link={'search'} />
         <div className="headline-wrapper">

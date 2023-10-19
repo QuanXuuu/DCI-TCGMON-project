@@ -4,6 +4,7 @@ import Button from '../../components/Button/Button';
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
+
   return (
     <div className="MyCollectionsPage">
       <Header />
