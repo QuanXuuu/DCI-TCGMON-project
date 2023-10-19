@@ -10,7 +10,7 @@ const MyCollectionsPage = () => {
         <h1>My Collections</h1>
         <div className="button-wrapper">
           <Button text={'Create new collection'} />
-          <Button text={'Search'} />
+          <Button text={'Search'} link={'search'} />
         </div>
       </div>
     </div>

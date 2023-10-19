@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import './Button.scss';
 
-const Button = ({ text, uppercase = false }) => {
+const Button = ({ text, uppercase = false, link }) => {
+  const navigate = useNavigate();
+
   return (
     <>
-      <button className="Button">
+      <button onClick={() => navigate(`/${link}`)} className="Button">
         {uppercase ? text.toUpperCase() : text}
       </button>
     </>
