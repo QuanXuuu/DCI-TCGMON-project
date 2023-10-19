@@ -8,28 +8,26 @@ const SearchByCard = () => {
   const { setSearchQuery } = useContext(SearchQueryContext);
 
   useEffect(() => {
-    setSearchQuery({ searchTerm: '', searchMethod: '' });
+    setSearchQuery({ searchDisplay: '', searchValue: '', searchMethod: '' });
   }, [setSearchQuery]);
 
   return (
     <div className="SearchByCard">
-      <div className="SearchByCardForm">
-        <form action="">
-          <input
-            type="text"
-            value={inputValue}
-            placeholder="Card name"
-            onChange={(e) => {
-              setInputValue(e.target.value);
-              setSearchQuery({
-                searchTerm: e.target.value,
-                searchMethod: 'name',
-              });
-            }}
-          />
-        </form>
-      </div>
-      <Button text={'Show results'} link={'results'} />
+      <input
+        className="SearchByCardInput"
+        type="text"
+        value={inputValue}
+        placeholder="Card/product name"
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          setSearchQuery({
+            searchDisplay: e.target.value,
+            searchValue: e.target.value,
+            searchMethod: 'name',
+          });
+        }}
+      />
+      <Button text={'Show search results'} link={'results'} />
     </div>
   );
 };

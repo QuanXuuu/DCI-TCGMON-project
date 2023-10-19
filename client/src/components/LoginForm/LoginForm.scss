@@ -1,39 +1,39 @@
-@import "../../default";
+@import '../../default';
 
 .LoginForm {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.6rem;
+  width: 100%;
+
+  form {
     display: flex;
-    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    gap: 1.6rem;
+    flex-direction: column;
     width: 100%;
+    gap: 1.6rem;
+  }
 
-        form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            width: 100%;
-            gap: 1.6rem
-        }
+  input {
+    width: 100%;
+    max-width: 40rem;
+    height: 5.6rem;
+    border-radius: $button-border-radius;
+    background-color: $transparent-white25;
+    font-size: $font3;
+    font-weight: 500;
+    text-align: center;
+  }
 
-           input {
-               width: 100%;
-               max-width: 40rem;
-               height: 5.6rem;
-               border-radius: $button-border-radius;
-               background-color: $transperant-white;
-               font-size: $font3;
-               font-weight: 500;
-               text-align: center; 
-           }
+  input:focus {
+    border: 3px solid rgb(87, 145, 227);
+    box-sizing: border-box;
+  }
 
-           input:focus {
-            border: 3px solid rgb(87, 145, 227);
-            box-sizing: border-box;
-           }
-
-         /*   input:focus::placeholder {
+  /*   input:focus::placeholder {
             color: transparent;
           } */
 }

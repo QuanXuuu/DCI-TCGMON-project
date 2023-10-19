@@ -21,26 +21,27 @@
     font-size: $font1;
     font-weight: 700;
     color: $secondary-text;
-    margin-bottom: 2.4rem;
   }
 
   .SearchSwitchButtons {
     display: flex;
-    justify-content: space-between;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
     width: 100%;
-    margin-bottom: 6.4rem;
+    margin: 3.2rem 0;
 
     .SwitchButton {
+      width: 14.4rem;
+      padding: 1.6rem;
       color: $secondary-text;
       font-size: 1.4rem;
       font-weight: 400;
-      width: 48%;
-      /* max-width: 20rem; */
-      height: 4.8rem;
-      border: 2px solid $yellow;
-      border-radius: $button-border-radius;
       text-align: center;
-      backdrop-filter: blur(10px);
+      border: 0.2rem solid $yellow;
+      border-radius: 2.5rem;
+      backdrop-filter: blur(1.6rem);
       cursor: pointer;
 
       &.active {
