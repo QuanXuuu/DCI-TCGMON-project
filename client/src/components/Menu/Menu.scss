@@ -1,0 +1,53 @@
+@import '../../default';
+
+.Menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(35, 35, 35, 0.932);
+  backdrop-filter: blur(15px);
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.MenuContent {
+  .MenuOptions {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-size: $font2;
+    color: $secondary-text;
+    font-weight: 400;
+    padding: 2.4rem 2.4rem 0 0;
+
+    p {
+      margin-bottom: 2.4rem;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    width: 80%;
+    position: absolute;
+    bottom: 0;
+    font-size: $font4;
+    font-weight: 200;
+    color: $secondary-text;
+    padding: 2.4rem 0;
+    margin-bottom: 0.8rem;
+    border-top: 1px solid $secondary-text;
+    left: 10%;
+
+    p {
+      margin-top: 1.6rem;
+    }
+  }
+}

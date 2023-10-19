@@ -1,0 +1,17 @@
+@import '../../default';
+
+.CloseButton {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  margin-left: calc(50% - 103px);
+  cursor: pointer;
+
+  .close-icon {
+    height: 3.2rem;
+    color: $secondary-text;
+  }
+}

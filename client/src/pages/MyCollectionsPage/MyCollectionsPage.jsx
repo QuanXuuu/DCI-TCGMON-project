@@ -1,8 +1,11 @@
+import { useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';
 import Header from '../../components/Header/Header';
+import Menu from '../../components/Menu/Menu';
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
+
   return (
     <div className="MyCollectionsPage">
       <Header />
