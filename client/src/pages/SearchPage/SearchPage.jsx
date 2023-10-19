@@ -8,10 +8,6 @@ const SearchPage = () => {
   const [sets, setSets] = useState();
   const [selectedOption, setSelectedOption] = useState('set');
 
-  const handleOptionChange = (option) => {
-    setSelectedOption(option);
-  };
-
   useEffect(() => {
     const getSetNames = async () => {
       const fetchSets = await fetch(`https://api.pokemontcg.io/v2/sets`, {
@@ -23,6 +19,9 @@ const SearchPage = () => {
 
       const setData = await fetchSets.json();
       setSets(setData);
+
+      // console.log for data visibility
+      console.log(setData);
     };
 
     getSetNames();
@@ -38,7 +37,7 @@ const SearchPage = () => {
             className={`SwitchButton ${
               selectedOption === 'set' ? 'active' : ''
             }`}
-            onClick={() => handleOptionChange('set')}
+            onClick={() => setSelectedOption('set')}
           >
             Search by set
           </button>
@@ -46,7 +45,7 @@ const SearchPage = () => {
             className={`SwitchButton ${
               selectedOption === 'card' ? 'active' : ''
             }`}
-            onClick={() => handleOptionChange('card')}
+            onClick={() => setSelectedOption('card')}
           >
             Search by card
           </button>
