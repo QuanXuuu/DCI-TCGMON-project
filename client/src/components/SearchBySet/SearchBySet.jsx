@@ -25,13 +25,15 @@ const SearchBySet = ({ setlist }) => {
           name="sets"
         >
           <option value="">-- Choose set --</option>
-          {setlist.data.map((result, index) => {
-            return (
-              <option key={index} value={result.id}>
-                {result.name}
-              </option>
-            );
-          })}
+          {setlist.data
+            .sort((a, b) => a.releaseDate.localeCompare(b.releaseDate))
+            .map((result, index) => {
+              return (
+                <option key={index} value={result.id}>
+                  {result.name}
+                </option>
+              );
+            })}
         </select>
       </div>
       <Button text={'Show search results'} link={'results'} />
