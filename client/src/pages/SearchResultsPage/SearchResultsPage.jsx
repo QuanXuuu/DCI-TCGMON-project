@@ -7,7 +7,6 @@ import SealedProductsResults from '../../components/SealedProductsResults/Sealed
 import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
-
   const searchQuery = useContext(SearchQueryContext);
 
   const [singleCardSearchResults, setSingleCardSearchResults] = useState({});
