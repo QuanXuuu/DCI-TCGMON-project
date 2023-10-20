@@ -11,7 +11,7 @@ import './CollectionDetailsPage.scss';
 const CollectionDetailsPage = () => {
   return (
     <div className="CollectionDetailsPage">
-      <Header color={'black'} />
+      <Header color={'black'} background={'transparent'}/>
 
       <div className="page-wrapper">
         <ReturnButton text={'Search'} link={'search'} />
