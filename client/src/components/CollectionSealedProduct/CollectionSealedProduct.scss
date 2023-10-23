@@ -1,0 +1,24 @@
+@import '../../default';
+
+.CollectionSealedProduct {
+  width: 31rem;
+  height: 18rem;
+  margin-top: 1rem;
+  border-radius: 1.2rem;
+  background-color: rgba($color: #fff, $alpha: 0.25);
+  box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.8rem;
+  padding: 1.2rem;
+
+  .collection-product-image-wrapper {
+    width: 12rem;
+    height: 12rem;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.2rem;
+  }
+}

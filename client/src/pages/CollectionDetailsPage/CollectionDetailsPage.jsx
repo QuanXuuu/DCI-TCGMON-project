@@ -5,6 +5,7 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import SealedProductsHeader from '../../components/SealedProductsHeader/SealedProductsHeader';
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
+import CollectionSealedProduct from '../../components/CollectionSealedProduct/CollectionSealedProduct';
 
 import './CollectionDetailsPage.scss';
 
@@ -55,6 +56,7 @@ const CollectionDetailsPage = () => {
         <div className="detail-cards-wrapper">
           <SealedProductsHeader />
           <h4>Scarlet & Violet</h4>
+          <CollectionSealedProduct />
         </div>
       </div>
     </div>
