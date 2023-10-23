@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import SealedProductsHeader from '../../components/SealedProductsHeader/SealedProductsHeader';
+import EditCollectionModal from '../../components/EditCollectionModal/EditCollectionModal';
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
 import CollectionSealedProduct from '../../components/CollectionSealedProduct/CollectionSealedProduct';
@@ -10,6 +12,13 @@ import CollectionSealedProduct from '../../components/CollectionSealedProduct/Co
 import './CollectionDetailsPage.scss';
 
 const CollectionDetailsPage = () => {
+   const [isEditCollectionModalOpen, setIsEditCollectionModalOpen] =
+    useState(false);
+
+  const toggleEditCollectionModal = () => {
+    setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
+  };   
+
   return (
     <div className="CollectionDetailsPage">
       <Header color={'black'} background={'transparent'}/>
@@ -18,9 +27,18 @@ const CollectionDetailsPage = () => {
         <ReturnButton text={'Search'} link={'search'} />
         <div className="headline-wrapper">
           <h1>Collection#1</h1>
-          <button className="edit">
+          <button className="edit" onClick={toggleEditCollectionModal}>
             <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
           </button>
+          
+            {isEditCollectionModalOpen && (
+            <EditCollectionModal
+              isEditCollectionModalOpen={isEditCollectionModalOpen}
+              toggleEditCollectionModal={toggleEditCollectionModal}
+            />
+          )}
+
+          
         </div>
 
         <div className="details-info-wrapper">
