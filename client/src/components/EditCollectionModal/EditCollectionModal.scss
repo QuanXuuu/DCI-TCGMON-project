@@ -1,100 +1,109 @@
 @import '../../default';
 
 .EditCollectionModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgba(35, 35, 35, 0.932);
-    backdrop-filter: blur(15px);
-    width: 100vw;
-    height: 100vh;
-    z-index: 10000;
-
-    
-        .Delete-Button {
-                width: 100%;
-                max-width: 40rem;
-                height: 5.6rem;
-                border-radius: $button-border-radius;
-                background-color: red;
-                font-size: $font3;
-                font-weight: 700;
-                text-align: center;
-                cursor: pointer;
-                color: $secondary-text;
-            
-
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(35, 35, 35, 0.932);
+  backdrop-filter: blur(15px);
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
+.Delete-Div {
+  width: 100%;
+  max-width: 40rem;
+
+  margin: 0 3.2rem 0 3.2rem;
+}
+
+.Delete-Button {
+  height: 5.6rem;
+
+  border-radius: $button-border-radius;
+  background-color: red;
+  font-size: $font3;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  color: $secondary-text;
+  margin-bottom: 3.2rem;
+}
 .close {
-    display: flex;
-    justify-content: end;
-    padding: 0.8rem 0.8rem 0 0;
+  display: flex;
+  width: 100%;
+
+  justify-content: end;
+  padding: 0.8rem 0.8rem 0 0;
 }
 
 .EditCollectionModalContent {
-    padding: 0 3.2rem 8rem 3.2rem;
-    height: calc(100% - 4.8rem);
+  background-color: aqua;
+  width: 100%;
+  padding: 0 3.2rem 8rem 3.2rem;
+  height: calc(100% - 4.8rem);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2.4rem;
+
+  p {
+    font-size: $font1;
+    color: $secondary-text;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2.4rem;
+  }
+
+  .CollectionNameInput {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    gap: 2.4rem;
+    width: 100%;
+    max-width: 40rem;
+    height: 5.6rem;
+    line-height: 5.6rem;
+    border-radius: $button-border-radius;
+    background-color: $transparent-white50;
+    font-size: $font3;
+    text-align: center;
+    backdrop-filter: blur(1.6rem);
 
-    p {
-        font-size: $font1;
-        color: $secondary-text;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 2.4rem;
+    &:focus {
+      border: 3px solid rgb(87, 145, 227);
     }
+  }
 
-    .CollectionNameInput {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        max-width: 40rem;
-        height: 5.6rem;
-        line-height: 5.6rem;
-        border-radius: $button-border-radius;
-        background-color: $transparent-white50;
-        font-size: $font3;
-        text-align: center;
-        backdrop-filter: blur(1.6rem);
+  #TCGname {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 40rem;
+    height: 5.6rem;
+    line-height: 5.6rem;
+    border-radius: $button-border-radius;
+    background-color: $transparent-white50;
+    backdrop-filter: blur(1.6rem);
+    font-size: $font3;
+    text-align: center;
+    text-align-last: center;
+    color: $primary-text;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+  }
 
-
-        &:focus {
-            border: 3px solid rgb(87, 145, 227);
-        }
-    }
-
-    #TCGname {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        width: 100%;
-        max-width: 40rem;
-        height: 5.6rem;
-        line-height: 5.6rem;
-        border-radius: $button-border-radius;
-        background-color: $transparent-white50;
-        backdrop-filter: blur(1.6rem);
-        font-size: $font3;
-        text-align: center;
-        text-align-last: center;
-        color: $primary-text;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        cursor: pointer;
-    }
-
-    option {
-        color: $primary-text;
-        font-size: $font1;
-    }
+  option {
+    color: $primary-text;
+    font-size: $font1;
+  }
 }
-

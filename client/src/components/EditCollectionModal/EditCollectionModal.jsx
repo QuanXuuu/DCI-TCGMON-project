@@ -24,10 +24,12 @@ const EditCollectionModal = ({
         <select name="TCGs" id="TCGname">
           <option value="">Pokemon</option>
         </select>
+
         <AddCollectionButton text={'Create new collection'} />
       </div>
-
-      <button className="Delete-Button">Delete collection</button>
+      <div className="Delete-Div">
+        <button className="Delete-Button">Delete collection</button>
+      </div>
     </div>
   );
 };
