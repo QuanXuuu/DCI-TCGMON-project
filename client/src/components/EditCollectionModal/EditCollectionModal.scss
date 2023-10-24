@@ -15,35 +15,14 @@
   align-items: center;
 }
 
-.Delete-Div {
-  width: 100%;
-  max-width: 40rem;
-
-  margin: 0 3.2rem 0 3.2rem;
-}
-
-.Delete-Button {
-  height: 5.6rem;
-
-  border-radius: $button-border-radius;
-  background-color: red;
-  font-size: $font3;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  color: $secondary-text;
-  margin-bottom: 3.2rem;
-}
 .close {
   display: flex;
-  width: 100%;
-
   justify-content: end;
+  width: 100%;
   padding: 0.8rem 0.8rem 0 0;
 }
 
 .EditCollectionModalContent {
-  background-color: aqua;
   width: 100%;
   padding: 0 3.2rem 8rem 3.2rem;
   height: calc(100% - 4.8rem);
@@ -106,4 +85,23 @@
     color: $primary-text;
     font-size: $font1;
   }
+}
+
+.Delete-Div {
+  width: 100%;
+  max-width: 40rem;
+  padding: 0 3.2rem 3.2rem;
+}
+
+.Delete-Button {
+  height: 5.6rem;
+  width: 100%;
+  border-radius: $button-border-radius;
+  background-color: #E24A5D;
+  font-size: $font3;
+  font-weight: 300;
+  text-align: center;
+  cursor: pointer;
+  color: $secondary-text;
+  margin-bottom: 3.2rem;
 }
