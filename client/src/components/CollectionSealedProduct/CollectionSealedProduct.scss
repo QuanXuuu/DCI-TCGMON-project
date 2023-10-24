@@ -11,6 +11,29 @@
   flex-flow: row nowrap;
   gap: 0.8rem;
   padding: 1.2rem;
+  position: relative;
+
+  .ranking-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.4rem 2rem;
+    width: 3.2rem;
+    font-size: $font4;
+    border-radius: $button-border-radius;
+    background-color: $yellow;
+    font-weight: 700;
+    text-align: center;
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+  }
+
+  .CollectionSealedProductContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 
   .collection-product-image-wrapper {
     width: 12rem;
@@ -21,4 +44,103 @@
     justify-content: center;
     border-radius: 1.2rem;
   }
+
+  .top-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+  }
+
+  .CollectionSealedProductInfo {
+    width: 55%;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    .CollectionSealedProductTitle {
+      font-size: $font5;
+      font-weight: 600;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      flex-direction: row;
+    }
+
+    .edition {
+      font-size: $font5;
+      margin-bottom: 4px;
+    }
+
+    .LanguageAndEdition {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      font-size: $font5;
+      margin-bottom: 1rem;
+
+      :last-child {
+            color: rgba(30, 30, 30, 0.586);
+          }
+    }
+
+    .price-infos {
+      display: flex;
+      justify-content: space-between;
+      font-size: $font4;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+
+      .bold {
+        margin-left: 4px;
+      }
+
+      .green-number {
+        color: $green;
+      }
+    }
+  }
+
+  .bottom-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+
+    .market-data-button {
+      width: 30%;
+      max-width: 11.4rem;
+      height: 2.4rem;
+      border-radius: $button-border-radius;
+      background-color: $yellow;
+      font-size: $font5;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .pie-percentage-and-total {
+      font-size: $font5;
+      font-weight: 700;
+      line-height: 2.4rem;
+
+      .bold {
+        margin-left: 0.8rem;
+      }
+
+      .black {
+        color: $primary-text;
+      }
+
+    }
+    .green {
+      color: $green;
+
+      :first-child {
+        color: $primary-text;
+        font-weight: 500;
+      }
+    }
+  }
+
 }

@@ -89,13 +89,15 @@
 
 .Delete-Div {
   width: 100%;
-  max-width: 40rem;
   padding: 0 3.2rem 3.2rem;
+  display: flex;
+  justify-content: center;
 }
 
 .Delete-Button {
   height: 5.6rem;
   width: 100%;
+  max-width: 40rem;
   border-radius: $button-border-radius;
   background-color: #E24A5D;
   font-size: $font3;

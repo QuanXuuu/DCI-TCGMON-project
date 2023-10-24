@@ -53,19 +53,19 @@ const CollectionDetailsPage = () => {
           <div className="purchase-price-wrapper">
             <p>
               <FontAwesomeIcon icon={faCartShopping} />
-              <span className="bold">62,280.50</span>€
+              <span className="bold">62,280.50</span> €
             </p>
             <p className="green-number">
-              +<span className="bold">21,700.00</span>€
+              +<span className="bold2">21,700.00</span> €
             </p>
           </div>
           <div className="market-price-wrapper">
             <p className="green-number">
               <FontAwesomeIcon icon={faChartLine} />
-              <span className="bold">83,980.50</span>€
+              <span className="bold">83,980.50</span> €
             </p>
             <p className="green-number">
-              +<span className="bold">34.84</span>%
+              +<span className="bold2">34.84</span> %
             </p>
           </div>
           <button className="market-data-button">Market Data</button>
@@ -73,6 +73,10 @@ const CollectionDetailsPage = () => {
 
         <div className="detail-cards-wrapper">
           <SealedProductsHeader />
+          <h4>Scarlet & Violet</h4>
+          <CollectionSealedProduct />
+          <h4>Scarlet & Violet</h4>
+          <CollectionSealedProduct />
           <h4>Scarlet & Violet</h4>
           <CollectionSealedProduct />
         </div>
