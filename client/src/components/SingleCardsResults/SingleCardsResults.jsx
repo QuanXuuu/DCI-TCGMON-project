@@ -1,4 +1,4 @@
-/* import SearchResultCard from '../SearchResultCard/SearchResultCard'; */
+import SearchResultCard from '../SearchResultCard/SearchResultCard';
 import SingleCardsHeader from '../SingleCardsHeader/SingleCardsHeader';
 import './SingleCardsResults.scss';
 
