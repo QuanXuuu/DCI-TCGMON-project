@@ -7,6 +7,7 @@ const secret = process.env.SECRET_KEY;
 
 const userSchema = new mongoose.Schema(
 	{
+		id: { type: String, unique: true, required: true, trim: true },
 		username: { type: String, unique: true, required: true, trim: true },
 		email: { type: String, unique: true, required: true, trim: true },
 		password: { type: String, required: true },
@@ -21,8 +22,7 @@ const userSchema = new mongoose.Schema(
 		},
 		loggedIn: { type: Boolean, default: false },
 		lastLogin: { type: Date, default: "" },
-		userCollectionCardsPokemon: { type: Array, default: [] },
-		userCollectionProductsPokemon: { type: Array, default: [] },
+		collections: { type: Array, default: [] },
 	},
 	{
 		timestamps: true,

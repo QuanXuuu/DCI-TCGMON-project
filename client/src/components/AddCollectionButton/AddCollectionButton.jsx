@@ -1,15 +1,11 @@
-import './../Button/Button.scss'
+import './../Button/Button.scss';
 
-const AddCollectionButton = ({text,  toggleAddCollectionModal}) => {
-
+const AddCollectionButton = ({ text, toggleAddCollectionModal }) => {
   return (
     <>
-          <button
-              onClick={toggleAddCollectionModal}
-              className="Button"
-            >
-            {text}   
-        </button>
+      <button className="Button" onClick={toggleAddCollectionModal}>
+        {text}
+      </button>
     </>
   );
 };
