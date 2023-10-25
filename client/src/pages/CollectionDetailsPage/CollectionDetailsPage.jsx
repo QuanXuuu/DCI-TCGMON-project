@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import UserDataContext from '../../contexts/UserDataContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -8,37 +9,47 @@ import EditCollectionModal from '../../components/EditCollectionModal/EditCollec
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
 import CollectionSealedProduct from '../../components/CollectionSealedProduct/CollectionSealedProduct';
-
 import './CollectionDetailsPage.scss';
 
-const CollectionDetailsPage = () => {
-   const [isEditCollectionModalOpen, setIsEditCollectionModalOpen] =
+const CollectionDetailsPage = ({ collection }) => {
+  const { userData, setUserData } = useContext(UserDataContext);
+
+  const [isEditCollectionModalOpen, setIsEditCollectionModalOpen] =
     useState(false);
 
   const toggleEditCollectionModal = () => {
     setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
-  };   
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const response = await fetch(`/api/users/bob@bob.de`, {
+        method: 'GET',
+      });
+      const data = await response.json();
+      setUserData(data);
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <div className="CollectionDetailsPage">
-      <Header color={'black'} background={'transparent'}/>
+      <Header color={'black'} background={'transparent'} />
 
       <div className="page-wrapper">
-        <ReturnButton text={'Search'} link={'search'} />
+        <ReturnButton text={'My Collections'} link={'collections'} />
         <div className="headline-wrapper">
-          <h1>Collection#1</h1>
+          <h1>Collection #1</h1>
           <button className="edit" onClick={toggleEditCollectionModal}>
             <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
           </button>
-          
-            {isEditCollectionModalOpen && (
+          {isEditCollectionModalOpen && (
             <EditCollectionModal
               isEditCollectionModalOpen={isEditCollectionModalOpen}
               toggleEditCollectionModal={toggleEditCollectionModal}
             />
           )}
-
-          
         </div>
 
         <div className="details-info-wrapper">

@@ -2,16 +2,11 @@ import User from "../models/User.js";
 
 export const createUser = async (req, res) => {
 	try {
-		const { username, email, password, role } = req.body;
-		const newUser = new User({
-			id: username.toLowerCase(),
-			username,
-			email,
-			role,
-		});
+		const { email, password } = req.body;
+		const newUser = new User({ email });
 		newUser.password = newUser.encryptPassword(password);
-
 		await newUser.save();
+
 		res.status(201).json({
 			success: true,
 			message: `New user ${newUser.email} created`,
@@ -27,7 +22,7 @@ export const createUser = async (req, res) => {
 
 export const getUser = async (req, res) => {
 	try {
-		const response = await User.findOne({ id: req.params.id });
+		const response = await User.findOne({ email: req.params.id });
 		res.status(200).json(response);
 	} catch (error) {
 		console.log({ error });
@@ -56,7 +51,7 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUser = async (req, res) => {
 	try {
-		const response = await User.findOne({ id: req.params.id });
+		const response = await User.findOne({ email: req.params.id });
 		const { collections } = req.body;
 		response.collections = collections;
 		await response.save();

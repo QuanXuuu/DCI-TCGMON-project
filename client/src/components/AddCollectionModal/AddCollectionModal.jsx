@@ -15,12 +15,12 @@ const AddCollectionModal = ({
   const [collectionTCG, setCollectionTCG] = useState('');
 
   const handleCreateCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/testuserololo`, {
+    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
 
-    data.collections.push({
+    data.collections.unshift({
       collectionName: collectionName,
       collectionTCG: collectionTCG,
       collectionContent: {
@@ -29,19 +29,13 @@ const AddCollectionModal = ({
       },
     });
 
-    const updateUserData = await fetch(`/api/users/testuserololo`, {
+    const updateUserData = await fetch(`/api/users/bob@bob.de`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
     const response = await updateUserData.json();
     setUserData(data);
-    document
-      .querySelector('.collection-wrapper')
-      .scrollBy({ left: 9999, behavior: 'smooth' });
-
-    // console.log for visibility
-    console.log(response);
   };
 
   return (
