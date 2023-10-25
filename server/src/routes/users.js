@@ -8,7 +8,6 @@ userRouter
 	.get("/users/:id", userController.getUser)
 	.get("/users", userController.getAllUsers)
 	.patch("/users/:id", userController.updateUser)
-	.put("/users/:id", userController.replaceUser)
 	.delete("/users/:id", userController.deleteUser)
 	.delete("/users", userController.deleteAllUsers);
 

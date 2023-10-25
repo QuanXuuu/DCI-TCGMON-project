@@ -3,13 +3,18 @@ import User from "../models/User.js";
 export const createUser = async (req, res) => {
 	try {
 		const { username, email, password, role } = req.body;
-		const newUser = new User({ username, email, role });
+		const newUser = new User({
+			id: username.toLowerCase(),
+			username,
+			email,
+			role,
+		});
 		newUser.password = newUser.encryptPassword(password);
 
 		await newUser.save();
 		res.status(201).json({
 			success: true,
-			message: `New user ${newUser.username} created`,
+			message: `New user ${newUser.email} created`,
 		});
 	} catch (error) {
 		console.log({ error });
@@ -22,11 +27,8 @@ export const createUser = async (req, res) => {
 
 export const getUser = async (req, res) => {
 	try {
-		const response = await User.findById(req.params.id);
-		res.status(200).json({
-			success: true,
-			data: { response },
-		});
+		const response = await User.findOne({ id: req.params.id });
+		res.status(200).json(response);
 	} catch (error) {
 		console.log({ error });
 		res.status(500).json({
@@ -54,32 +56,15 @@ export const getAllUsers = async (req, res) => {
 
 export const updateUser = async (req, res) => {
 	try {
-		const response = await User.findByIdAndUpdate(req.params.id, req.body, {
-			new: true,
-		});
-		res.status(200).json({
-			success: true,
-			data: { response },
-		});
-	} catch (error) {
-		console.log({ error });
-		res.status(500).json({
-			success: false,
-			message: `Server error: ${{ error }}`,
-		});
-	}
-};
+		const response = await User.findOne({ id: req.params.id });
+		const { collections } = req.body;
+		response.collections = collections;
+		await response.save();
 
-export const replaceUser = async (req, res) => {
-	try {
-		const response = await User.findOneAndReplace(
-			{ _id: req.params.id },
-			req.body,
-			{ new: true }
-		);
 		res.status(200).json({
 			success: true,
-			data: { response },
+			message: "User data successfully updated",
+			data: response,
 		});
 	} catch (error) {
 		console.log({ error });
