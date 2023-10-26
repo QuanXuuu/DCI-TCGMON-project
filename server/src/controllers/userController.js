@@ -1,103 +1,84 @@
-import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
+import catchAsync from "../utils/catchAsync.js";
 
-export const createUser = async (req, res) => {
-	try {
-		const { email, password } = req.body;
-		const newUser = new User({ email });
-		newUser.password = newUser.encryptPassword(password);
-		await newUser.save();
-
-		res.status(201).json({
-			success: true,
-			message: `New user ${newUser.email} created`,
-		});
-	} catch (error) {
-		console.log({ error });
-		res.status(500).json({
-			success: false,
-			message: `Server error: ${{ error }}`,
-		});
-	}
+const signToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
 };
 
-export const getUser = async (req, res) => {
-	try {
-		const response = await User.findOne({ email: req.params.id });
-		res.status(200).json(response);
-	} catch (error) {
-		console.log({ error });
-		res.status(500).json({
-			success: false,
-			message: `Server error: ${{ error }}`,
-		});
-	}
-};
+export const createUser = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+  const newUser = new User({ email });
+  newUser.password = newUser.encryptPassword(password);
+  await newUser.save();
 
-export const getAllUsers = async (req, res) => {
-	try {
-		const response = await User.find();
-		res.status(200).json({
-			success: true,
-			data: { response },
-		});
-	} catch (error) {
-		console.log({ error });
-		res.status(500).json({
-			success: false,
-			message: `Server error: ${{ error }}`,
-		});
-	}
-};
+  res.status(201).json({
+    success: true,
+    message: `New user ${newUser.email} created`,
+  });
+});
 
-export const updateUser = async (req, res) => {
-	try {
-		const response = await User.findOne({ email: req.params.id });
-		const { collections } = req.body;
-		response.collections = collections;
-		await response.save();
+export const login = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
 
-		res.status(200).json({
-			success: true,
-			message: "User data successfully updated",
-			data: response,
-		});
-	} catch (error) {
-		console.log({ error });
-		res.status(500).json({
-			success: false,
-			message: `Server error: ${{ error }}`,
-		});
-	}
-};
+  // Check if password is correct
+  const user = await User.findOne({ email }).select("+password");
+  console.log(user);
+  const correct = await user.comparePassword(password, user.password);
+  console.log(correct);
 
-export const deleteUser = async (req, res) => {
-	try {
-		await User.findByIdAndDelete(req.params.id);
-		res.status(200).json({
-			success: true,
-			message: "User deleted",
-		});
-	} catch (error) {
-		console.log({ error });
-		res.status(500).json({
-			success: false,
-			message: `Server error: ${{ error }}`,
-		});
-	}
-};
+  if (!correct) {
+    return next("Incorrect password, please double check");
+  }
 
-export const deleteAllUsers = async (req, res) => {
-	try {
-		await User.deleteMany();
-		res.status(200).json({
-			success: true,
-			message: "All users deleted",
-		});
-	} catch (error) {
-		console.log({ error });
-		res.status(500).json({
-			success: false,
-			message: `Server error: ${{ error }}`,
-		});
-	}
-};
+  // If everything okay, send token to client
+  const token = signToken(user._id);
+  res.status(200).json({
+    status: "success",
+    token,
+  });
+});
+
+export const getUser = catchAsync(async (req, res, next) => {
+  const response = await User.findOne({ email: req.params.id });
+  res.status(200).json(response);
+});
+
+export const getAllUsers = catchAsync(async (req, res, next) => {
+  const response = await User.find();
+  res.status(200).json({
+    success: true,
+    data: { response },
+  });
+});
+
+export const updateUser = catchAsync(async (req, res, next) => {
+  const response = await User.findOne({ email: req.params.id });
+  const { collections } = req.body;
+  response.collections = collections;
+  await response.save();
+
+  res.status(200).json({
+    success: true,
+    message: "User data successfully updated",
+    data: response,
+  });
+});
+
+export const deleteUser = catchAsync(async (req, res, next) => {
+  await User.findByIdAndDelete(req.params.id);
+  res.status(200).json({
+    success: true,
+    message: "User deleted",
+  });
+});
+
+export const deleteAllUsers = catchAsync(async (req, res, next) => {
+  await User.deleteMany();
+  res.status(200).json({
+    success: true,
+    message: "All users deleted",
+  });
+});
