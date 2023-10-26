@@ -9,8 +9,8 @@ import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
   const { userData, setUserData } = useContext(UserDataContext);
-
   const [pokemonData, setPokemonData] = useState();
+
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
 
@@ -47,7 +47,9 @@ const MyCollectionsPage = () => {
     };
 
     fetchData();
+  }, [setUserData]);
 
+  useEffect(() => {
     if (isAddCollectionModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -57,7 +59,7 @@ const MyCollectionsPage = () => {
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [setUserData, isAddCollectionModalOpen]);
+  }, [isAddCollectionModalOpen]);
 
   return !pokemonData ? null : (
     <div className="MyCollectionsPage">

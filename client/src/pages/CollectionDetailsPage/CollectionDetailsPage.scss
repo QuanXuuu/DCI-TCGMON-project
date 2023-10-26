@@ -17,12 +17,13 @@
     padding: 2.4rem 3.2rem 3.2rem 3.2rem;
 
     .headline-wrapper {
+      position: relative;
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: column nowrap;
       align-items: center;
       justify-content: center;
-      gap: 0.8rem;
       width: 100%;
+      padding: 0 4.8rem;
 
       h1 {
         font-size: $font1;
@@ -32,13 +33,14 @@
       }
 
       .edit {
+        position: absolute;
+        right: 0;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
-        width: 2.4rem;
-        height: 2.4rem;
-        margin-left: 16px;
+        width: 3.2rem;
+        height: 3.2rem;
         cursor: pointer;
 
         .edit-icon {
@@ -52,42 +54,76 @@
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1.6rem;
       width: 100%;
       margin: 1.6rem 0;
+      font-size: $font3;
 
-      p {
-        font-size: $font3;
+      .collection-content-wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .price-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+      }
+
+      .icon-wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        width: 1.8rem;
+        height: 1.8rem;
+
+        .price-icon {
+          height: 1.6rem;
+        }
+      }
+
+      .price-wrapper-left,
+      .price-wrapper-right {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+
+      .price-wrapper-right {
+        align-items: flex-end;
+      }
+
+      .text-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.8rem;
       }
 
       .bold {
         font-weight: 700;
-        margin-left: 0.8rem;
       }
 
-      .bold2 {
-        font-weight: 700;
-      }
-
-      .green-number {
+      .green {
         color: $green;
       }
 
-      .purchase-price-wrapper,
-      .market-price-wrapper {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        align-items: center;
-        gap: 3.2rem;
-        width: 31rem;
+      .red {
+        color: $red;
       }
 
       .market-data-button {
-        width: 100%;
-        max-width: 11.4rem;
-        height: 3.2rem;
-        border-radius: $button-border-radius;
+        padding: 1.2rem 2rem;
+        border-radius: 1.8rem;
         background-color: $yellow;
         font-size: $font5;
         font-weight: 700;
@@ -97,6 +133,11 @@
     }
 
     .detail-cards-wrapper {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
       h4 {
         font-size: $font4;
         font-weight: 700;
