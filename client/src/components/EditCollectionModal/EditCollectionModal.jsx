@@ -16,7 +16,7 @@ const EditCollectionModal = ({
       <div className="close">
         <CloseButton
           isEditCollectionModalOpen={isEditCollectionModalOpen}
-          toggleAddCollectionModal={toggleEditCollectionModal}
+          toggleEditCollectionModal={toggleEditCollectionModal}
         />
       </div>
       <div className="EditCollectionModalContent">
