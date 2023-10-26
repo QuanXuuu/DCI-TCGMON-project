@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import userRouter from "./src/routes/usersRoutes.js";
+import userRouter from "./src/routes/userRoutes.js";
 import "./src/database/db.js";
 import path from "path";
 import { fileURLToPath } from "url";
