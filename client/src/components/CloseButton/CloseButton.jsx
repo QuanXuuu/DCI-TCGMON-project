@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import './CloseButton.scss';
 
-const CloseButton = ({ toggleMenu, toggleAddCollectionModal }) => {
+const CloseButton = ({ toggleMenu, toggleAddCollectionModal, toggleEditCollectionModal, toggleAddSingleCardModal }) => {
 
   const closeOptions = () => {
     if (toggleAddCollectionModal) {
@@ -10,6 +10,12 @@ const CloseButton = ({ toggleMenu, toggleAddCollectionModal }) => {
 
     } else if (toggleMenu) {
       toggleMenu();
+
+    } else if (toggleEditCollectionModal) {
+      toggleEditCollectionModal();
+    
+    } else if (toggleAddSingleCardModal) {
+      toggleAddSingleCardModal();
     }
   };
 
