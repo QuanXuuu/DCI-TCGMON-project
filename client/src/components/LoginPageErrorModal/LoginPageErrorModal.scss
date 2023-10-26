@@ -1,0 +1,30 @@
+@import '../../default';
+
+.LoginPageErrorModal {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 3.2rem;
+  position: absolute;
+  margin-top: 5.9rem;
+  height: 15%;
+
+  .Error-Text {
+    height: 5.6rem;
+    width: 140%;
+
+    /*   border-radius: $button-border-radius;
+    background-color: $transparent-white25; */
+    font-size: $font3;
+    font-weight: 400;
+    text-align: center;
+    /*  background-color: #e24a5d; */
+    /*   color: #e24a5d; */
+    /* color: $secondary-text; */
+    color: red;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+  }
+}
