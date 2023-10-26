@@ -29,7 +29,7 @@ const App = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/collections" element={<MyCollectionsPage />} />
                 <Route
-                  path="/collection-details"
+                  path="/collections/:id"
                   element={<CollectionDetailsPage />}
                 />
                 <Route path="/search" element={<SearchPage />} />

@@ -18,7 +18,8 @@ const CollectionSummary = ({ collectionData, pokemonData }) => {
       (pokemonEntry) => userEntry.id === pokemonEntry.id
     );
 
-    return (userEntry.marketPrice = priceData[0].cardmarket.prices.avg7);
+    return (userEntry.marketPrice =
+      priceData[0].cardmarket.prices.averageSellPrice);
   });
 
   const totalValue = collectionData.collectionContent.singleCards.reduce(
