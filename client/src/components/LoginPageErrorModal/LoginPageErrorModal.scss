@@ -7,7 +7,7 @@
   align-items: center;
   padding: 3.2rem;
   position: absolute;
-  margin-top: 5.9rem;
+  margin-top: 8.6rem;
   height: 15%;
 
   .Error-Text {
@@ -23,8 +23,5 @@
     /*   color: #e24a5d; */
     /* color: $secondary-text; */
     color: red;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
   }
 }
