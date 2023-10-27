@@ -9,7 +9,6 @@ const signToken = (id) => {
 };
 
 export const createUser = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const { email, password } = req.body;
 
   const newUser = new User({ email });
