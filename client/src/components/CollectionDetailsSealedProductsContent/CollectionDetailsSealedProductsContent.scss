@@ -1,0 +1,19 @@
+@import '../../default';
+
+.CollectionDetailsSealedProductsContent {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 3.2rem;
+
+  .collection-details-sealed-products-content-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 1.6rem;
+  }
+}
