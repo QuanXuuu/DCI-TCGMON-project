@@ -36,4 +36,16 @@
   /*   input:focus::placeholder {
             color: transparent;
           } */
+
+  .signUp-button {
+    width: 100%;
+    max-width: 40rem;
+    height: 5.6rem;
+    border-radius: $button-border-radius;
+    background-color: $yellow;
+    font-size: $font3;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
 }

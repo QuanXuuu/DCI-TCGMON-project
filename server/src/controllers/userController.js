@@ -9,7 +9,9 @@ const signToken = (id) => {
 };
 
 export const createUser = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   const { email, password } = req.body;
+
   const newUser = new User({ email });
   newUser.password = newUser.encryptPassword(password);
   await newUser.save();
@@ -23,22 +25,23 @@ export const createUser = catchAsync(async (req, res, next) => {
 export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Check if password is correct
   const user = await User.findOne({ email }).select("+password");
   console.log(user);
   const correct = await user.comparePassword(password, user.password);
   console.log(correct);
 
-  if (!correct) {
-    return next("Incorrect password, please double check");
+  if (correct) {
+    const token = signToken(user._id);
+    res.status(200).json({
+      status: "success",
+      token,
+    });
+  } else {
+    res.status(401).send({
+      status: "fail",
+      message: "Incorrect password",
+    });
   }
-
-  // If everything okay, send token to client
-  const token = signToken(user._id);
-  res.status(200).json({
-    status: "success",
-    token,
-  });
 });
 
 export const getUser = catchAsync(async (req, res, next) => {
@@ -50,6 +53,7 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
   const response = await User.find();
   res.status(200).json({
     success: true,
+    results: response.length,
     data: { response },
   });
 });

@@ -4,7 +4,7 @@ import * as userController from "../controllers/userController.js";
 const userRouter = Router();
 
 userRouter
-  .post("/signup", userController.createUser)
+  .post("/register", userController.createUser)
   .post("/login", userController.login)
   .get("/users/:id", userController.getUser)
   .get("/users", userController.getAllUsers)

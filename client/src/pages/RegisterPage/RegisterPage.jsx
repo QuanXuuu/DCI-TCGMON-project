@@ -1,11 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../../components/Button/Button.jsx';
+import { useState } from 'react';
 import Logo from '../../components/Logo/Logo.jsx';
 import RegisterForm from '../../components/RegisterForm/RegisterForm.jsx';
 import './RegisterPage.scss';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+
+  function handleAddUsers(user) {
+    setUsers((users) => [...users, user]);
+  }
 
   return (
     <div className="RegisterPage">
@@ -15,10 +20,9 @@ const RegisterPage = () => {
           <h1>Welcome!</h1>
           <h2>Sign up now, it&apos;s free.</h2>
         </div>
-        <RegisterForm />
+        <RegisterForm onAddUsers={handleAddUsers} />
       </div>
       <div className="RegisterPageButtonsWrapper">
-        <Button text={'Create account'} link={'login'} />
         <button
           className="RegisterPageLoginButton"
           onClick={() => navigate('/login')}
