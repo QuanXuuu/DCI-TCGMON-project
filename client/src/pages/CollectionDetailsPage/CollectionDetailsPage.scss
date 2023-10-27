@@ -122,7 +122,7 @@
       }
 
       .market-data-button {
-        padding: 1.2rem 2rem;
+        padding: 1rem 2rem;
         border-radius: 1.8rem;
         background-color: $yellow;
         font-size: $font5;
@@ -132,19 +132,13 @@
       }
     }
 
-    .detail-cards-wrapper {
+    .collection-details-content-wrapper {
       display: flex;
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
       width: 100%;
-      h4 {
-        font-size: $font4;
-        font-weight: 700;
-        text-align: center;
-        color: $primary-text;
-        margin-top: 3rem;
-      }
+      gap: 3.2rem;
     }
   }
 }
