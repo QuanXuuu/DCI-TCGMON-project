@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import Button from '../Button/Button';
 import axios from '../../api/axios';
 import './RegisterForm.scss';
 
@@ -72,8 +71,7 @@ const RegisterForm = ({ onAddUsers }) => {
           required
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        {/* <Button text={'Create account'} link={'login'}/> */}
-        <button className="signUp-button">Sign Up New User</button>
+        <button className="signup-button">Sign Up New User</button>
       </form>
     </div>
   );
