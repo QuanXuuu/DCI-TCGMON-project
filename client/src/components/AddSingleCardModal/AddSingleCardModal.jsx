@@ -4,9 +4,10 @@ import CloseButton from '../CloseButton/CloseButton';
 
 import './AddSingleCardModal.scss'
 
-const AddSingleCardModal = ({ isAddSingleCardModalOpen, toggleAddSingleCardModal, content, collections }) => {
+const AddSingleCardModal = ({ isAddSingleCardModalOpen, toggleAddSingleCardModal, content }) => {
     const [condition, setCondition] = useState('');
     const [grade, setGrade] = useState('');
+    const [purchasePrice, setPurchasePrice] = useState('');
   
     const handleConditionChange = (event) => {
       const selectedCondition = event.target.value;
@@ -26,7 +27,20 @@ const AddSingleCardModal = ({ isAddSingleCardModalOpen, toggleAddSingleCardModal
       }
     };
 
-    const UserData = useContext(UserDataContext); // collections.collectionName
+/*     const handlePurchasePriceChange = (event) => {
+        const inputValue = event.target.value;
+
+        // Entfernen von ungültigen Zeichen (nur Zahlen und Punkt . zulassen)
+        const sanitizedValue = inputValue.replace(/[^0-9.]/g, '');
+
+        // Auf zwei Nachkommastellen runden
+        const roundedValue = parseFloat(sanitizedValue).toFixed(2);
+
+        // Setzen des State-Werts
+        setPurchasePrice(roundedValue);
+    };
+
+    const userData = useContext(UserDataContext); // collections.collectionName */
     
     return (
         <div className='AddSingleCardModal' style={{ overflowY: isAddSingleCardModalOpen ? 'scroll' : 'hidden' }}>
@@ -58,6 +72,7 @@ const AddSingleCardModal = ({ isAddSingleCardModalOpen, toggleAddSingleCardModal
                     <div className='select-fields'>
                         <p>1st Edition</p>
                         <select className='select'>
+                            <option value=""></option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
@@ -66,6 +81,7 @@ const AddSingleCardModal = ({ isAddSingleCardModalOpen, toggleAddSingleCardModal
                     <div className='select-fields'>
                         <p>Reverse Holo</p>
                         <select className='select'>
+                            <option value=""></option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
@@ -74,6 +90,7 @@ const AddSingleCardModal = ({ isAddSingleCardModalOpen, toggleAddSingleCardModal
                     <div className='select-fields'>
                         <p>Language</p>
                         <select className='select'>
+                            <option value=""></option>
                             <option value="English">English</option>
                             <option value="German">German</option>
                             <option value="Japanese">Japanese</option>
@@ -147,16 +164,31 @@ const AddSingleCardModal = ({ isAddSingleCardModalOpen, toggleAddSingleCardModal
                     <div className='select-fields'>
                         <p>Purchase Price</p>
                         <form className='select' action="">
-                        <input type="Text" placeholder="00.00" />€
+                            <input type="number" placeholder="00.00"
+                                /* value={purchasePrice}
+                                onChange={handlePurchasePriceChange} */
+                            />€
                         </form>
                     </div>
 
                     <div className='select-fields'>
                         <p>Collection</p>
                         <select className='select'>
-                            <option value="collection"></option>
+                            <option value=""></option>
                         </select>
                     </div>
+
+                    {/* <div className='select-fields'>
+                        <p>Collection</p>
+                        <select className='select'>
+                        <option value=""></option>
+                        {userData.collections.map((collection) => (
+                        <option key={collection.collectionName} value={collection.collectionName}>
+                        {collection.collectionName}
+                        </option>
+                        ))}
+                        </select>
+                    </div> */}
 
                 </div>
                 <div className='button-div'>
