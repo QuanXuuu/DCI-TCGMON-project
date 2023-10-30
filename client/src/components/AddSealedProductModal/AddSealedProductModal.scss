@@ -1,0 +1,178 @@
+@import '../../default';
+
+.AddSealedProductModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(35, 35, 35, 0.932);
+  backdrop-filter: blur(15px);
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+
+}
+
+.close {
+    display: flex;
+    justify-content: end;
+    padding: 0.8rem 0.8rem 0 0;
+  }
+
+.content {
+  padding: 0 3.2rem 3.2rem 3.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  .title {
+    font-size: $font2;
+    font-weight: 600;
+    color: $secondary-text;
+    text-align: center;
+    margin-top: 1.6rem;
+  }
+
+  .img-and-info-wrapper-sealed {
+    margin-top: 2.4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1.6rem;
+
+    .product-image-wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        min-width: 16rem;
+        width: 16rem;
+        height: 16rem;
+        padding: 2.4rem;
+        background-color: #fff;
+        border-radius: 1.2rem;
+        box-shadow: rgba(0, 0, 0, 0.503) 0px 5px 15px;
+    
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+
+    .info {
+      /* background-color: aqua; */
+      width: 45%;
+      color: $secondary-text;
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      gap: 0.8rem;
+
+      .cycle-name {
+          font-size: $font4;
+          font-weight: 500;
+      }
+
+      .set-infos {
+          font-size: $font3;
+          font-weight: 100;
+      }
+
+      .set-name {
+        text-align: end;
+      }
+    }
+  }
+
+  .inputs {
+      color: $secondary-text;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      font-size: $font3;
+      font-weight: 200;
+      line-height: 2.8rem;
+      
+      .select-fields {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .select {
+        width: 50%;
+        max-width: 40rem;
+        height: 2.8rem;
+        line-height: 2.8rem;
+        border-radius: $button-border-radius;
+        background-color: rgba(255, 255, 255, 0.361);
+        backdrop-filter: blur(1.6rem);
+        font-size: $font3;
+        font-weight: 200;
+        text-align: center;
+        text-align-last: center;
+        color: $secondary-text;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+      }
+    
+      option {
+        color: $primary-text;
+        font-size: $font1;
+      
+      }
+
+      .grade {
+        color: gray;
+
+    }
+    .grade-select {
+        width: 50%;
+        max-width: 40rem;
+        height: 2.8rem;
+        line-height: 2.8rem;
+        border-radius: $button-border-radius;
+        background-color: rgb(54, 54, 54);
+        backdrop-filter: blur(1.6rem);
+        font-size: $font3;
+        font-weight: 200;
+        text-align: center;
+        text-align-last: center;
+        color: $primary-text;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+    }
+
+    form {
+        input {
+            width: 50%;
+        }
+    }
+  }
+
+  .add-button {
+    width: 100%;
+    max-width: 40rem;
+    height: 5.6rem;
+    border-radius: $button-border-radius;
+    background-color: $yellow;
+    font-size: $font3;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+  }
+
+}
+
+::placeholder {
+      color: $secondary-text;
+  }
+
+  .button-div {
+    display: flex;
+    justify-content: center;
+  }
