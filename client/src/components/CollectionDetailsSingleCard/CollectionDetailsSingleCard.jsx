@@ -32,9 +32,6 @@ const CollectionDetailsSingleCard = ({
     setIsLoading(false);
   }, []);
 
-  console.log(content);
-  console.log(singleCard);
-
   return isLoading ? null : (
     <div className="CollectionDetailsSingleCard">
       <button className="cdsc-edit-button">

@@ -5,7 +5,11 @@ import { faCopy, faCube, faCoins } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../../assets/images/pokemon-logo.svg';
 import './CollectionSummary.scss';
 
-const CollectionSummary = ({ collectionData, pokemonData }) => {
+const CollectionSummary = ({
+  collectionData,
+  singleCardsData,
+  sealedProductsData,
+}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,7 +18,7 @@ const CollectionSummary = ({ collectionData, pokemonData }) => {
   }, []);
 
   collectionData.collectionContent.singleCards.map((userEntry) => {
-    const priceData = pokemonData.data.filter(
+    const priceData = singleCardsData.data.filter(
       (pokemonEntry) => userEntry.id === pokemonEntry.id
     );
 
@@ -22,10 +26,24 @@ const CollectionSummary = ({ collectionData, pokemonData }) => {
       priceData[0].cardmarket.prices.averageSellPrice);
   });
 
-  const totalValue = collectionData.collectionContent.singleCards.reduce(
-    (total, entry) => total + entry.marketPrice,
-    0
-  );
+  collectionData.collectionContent.sealedProducts.map((userEntry) => {
+    const priceData = sealedProductsData.data.filter(
+      (pokemonEntry) => userEntry.id === pokemonEntry.id
+    );
+
+    return (userEntry.marketPrice =
+      priceData[0].tcgplayer.prices.normal.market);
+  });
+
+  const totalValue =
+    collectionData.collectionContent.singleCards.reduce(
+      (total, entry) => total + entry.marketPrice,
+      0
+    ) +
+    collectionData.collectionContent.sealedProducts.reduce(
+      (total, entry) => total + entry.marketPrice * entry.amount,
+      0
+    );
 
   return (
     <div className="CollectionSummary">
@@ -45,7 +63,10 @@ const CollectionSummary = ({ collectionData, pokemonData }) => {
       </div>
       <div className="product-count-wrapper">
         <p className="product-count">
-          {collectionData.collectionContent.sealedProducts.length}
+          {collectionData.collectionContent.sealedProducts.reduce(
+            (total, entry) => total + 1 * entry.amount,
+            0
+          )}
         </p>
         <div className="icon-wrapper">
           <FontAwesomeIcon icon={faCube} />

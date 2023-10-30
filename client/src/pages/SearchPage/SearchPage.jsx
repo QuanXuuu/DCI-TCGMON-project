@@ -5,7 +5,6 @@ import SearchBySet from '../../components/SearchBySet/SearchBySet';
 import './SearchPage.scss';
 
 const SearchPage = () => {
-
   const [sets, setSets] = useState();
   const [selectedOption, setSelectedOption] = useState('set');
 
@@ -20,9 +19,6 @@ const SearchPage = () => {
 
       const setData = await fetchSets.json();
       setSets(setData);
-
-      // console.log for data visibility
-      console.log(setData);
     };
 
     getSetNames();
