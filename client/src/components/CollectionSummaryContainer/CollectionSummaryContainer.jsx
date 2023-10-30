@@ -9,7 +9,8 @@ const CollectionSummaryContainer = ({ data }) => {
           <CollectionSummary
             key={index}
             collectionData={collection}
-            pokemonData={data.pokemonData}
+            singleCardsData={data.pokemonDataSingleCards}
+            sealedProductsData={data.pokemonDataSealedProducts}
           />
         );
       })}

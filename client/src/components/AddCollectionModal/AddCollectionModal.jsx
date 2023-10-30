@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
-// import { useParams } from 'react-router-dom';
 import CloseButton from '../CloseButton/CloseButton';
 import './AddCollectionModal.scss';
 
@@ -8,8 +7,7 @@ const AddCollectionModal = ({
   isAddCollectionModalOpen,
   toggleAddCollectionModal,
 }) => {
-  const { setUserData } = useContext(UserDataContext);
-  // const { params } = useParams();
+  const { userData, setUserData } = useContext(UserDataContext);
 
   const [collectionName, setCollectionName] = useState('');
   const [collectionTCG, setCollectionTCG] = useState('');
@@ -40,31 +38,33 @@ const AddCollectionModal = ({
 
   return (
     <div className="AddCollectionModal">
-      <div className="close">
+      <div className="close-button-wrapper">
         <CloseButton
           isAddCollectionModalOpen={isAddCollectionModalOpen}
           toggleAddCollectionModal={toggleAddCollectionModal}
         />
       </div>
       <div className="AddCollectionModalContent">
-        <p>Create New Collection</p>
+        <p>Create new collection</p>
         <input
           id="collectionName"
           type="text"
-          placeholder="Collection Name"
+          placeholder="Collection name"
           onChange={(e) => {
             setCollectionName(e.target.value);
           }}
         />
-        <select
-          id="collectionTCG"
-          onChange={(e) => {
-            setCollectionTCG(e.target.value);
-          }}
-        >
-          <option value="">-- Choose TCG --</option>
-          <option value="pokemon">Pokemon</option>
-        </select>
+        <div className="select-wrapper">
+          <select
+            id="collectionTCG"
+            onChange={(e) => {
+              setCollectionTCG(e.target.value);
+            }}
+          >
+            <option value="">-- Choose TCG --</option>
+            <option value="pokemon">Pokemon</option>
+          </select>
+        </div>
         <button
           className="Button"
           onClick={() => {

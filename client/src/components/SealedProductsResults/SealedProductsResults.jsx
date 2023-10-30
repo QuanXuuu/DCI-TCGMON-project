@@ -36,7 +36,19 @@ const SealedProductsResults = ({ content }) => {
             return aNum - bNum;
           })
 
-          .sort((a, b) => a.type.localeCompare(b.type))
+          .sort((a, b) => {
+            const typeA = a.type;
+            const typeB = b.type;
+
+            if (typeA === undefined && typeB === undefined) {
+              return 0;
+            } else if (typeA === undefined) {
+              return -1;
+            } else if (typeB === undefined) {
+              return 1;
+            } else return typeA.localeCompare(typeB);
+          })
+
           .map((result, index) => {
             return <SearchResultProduct key={index} content={result} />;
           })}

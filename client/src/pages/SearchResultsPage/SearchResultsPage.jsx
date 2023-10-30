@@ -45,10 +45,6 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
-
-        // console.log for data visibility
-        console.log(cardResultData);
-        console.log(sealedResultData);
       };
 
       searchByName();
@@ -82,10 +78,6 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
-
-        // console.log for data visibility
-        console.log(cardResultData);
-        console.log(sealedResultData);
       };
 
       searchBySet();

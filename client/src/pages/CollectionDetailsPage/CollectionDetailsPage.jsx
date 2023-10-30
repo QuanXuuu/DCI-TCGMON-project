@@ -37,6 +37,7 @@ const CollectionDetailsPage = () => {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
+      setUserData(userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];
@@ -59,9 +60,12 @@ const CollectionDetailsPage = () => {
 
       if (!singleCardsQueryString && !sealedProductsQueryString) {
         setCollectionData(collectionData);
+        setPokemonDataSingleCards({});
+        setPokemonDataSealedProducts({});
         setPurchaseTotal('0.00');
         setMarketTotal('0.00');
         setColor('black');
+        setIsLoading(false);
         return;
       }
 
@@ -143,12 +147,23 @@ const CollectionDetailsPage = () => {
       };
 
       setPrices();
-
       setIsLoading(false);
     };
 
     generateCollectionDetailsData();
   }, []);
+
+  useEffect(() => {
+    if (isEditCollectionModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isEditCollectionModalOpen]);
 
   return isLoading ? null : (
     <div className="CollectionDetailsPage">
@@ -165,6 +180,7 @@ const CollectionDetailsPage = () => {
             <EditCollectionModal
               isEditCollectionModalOpen={isEditCollectionModalOpen}
               toggleEditCollectionModal={toggleEditCollectionModal}
+              collectionData={collectionData}
             />
           )}
         </div>
