@@ -1,6 +1,6 @@
 @import '../../default';
 
-.LoginPageErrorModal {
+.RegisterPageErrorModal {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -10,19 +10,19 @@
   margin-top: 8.6rem;
   height: 15%;
 
-  .Error-Text {
+  .Invalid-Text {
     height: 5.6rem;
     width: 140%;
 
     /*   border-radius: $button-border-radius;
     background-color: $transparent-white25; */
-    font-size: 2.65rem;
-    /*  font-size: $font3; */
+    /*  font-size: $font2; */
     font-weight: 400;
+    font-size: 2.65rem;
     text-align: center;
     /*  background-color: #e24a5d; */
-    /*   color: #e24a5d; */
-    /* color: $secondary-text; */
+    color: #e24a5d;
+    color: $secondary-text;
     color: red;
   }
 }
