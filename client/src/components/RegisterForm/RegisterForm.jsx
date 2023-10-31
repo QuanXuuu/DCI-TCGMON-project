@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import axios from '../../api/axios';
 import './RegisterForm.scss';
-
-const REGISTER_URL = '/api/register';
 
 const RegisterForm = ({ onAddUsers }) => {
   const [email, setEmail] = useState('');
@@ -13,27 +10,21 @@ const RegisterForm = ({ onAddUsers }) => {
     e.preventDefault();
     if (!email) return;
 
-    const newUser = {
-      email,
-      password,
-    };
-    onAddUsers(newUser);
-    console.log(newUser);
-
     try {
-      const response = await axios.post(
-        REGISTER_URL,
-        {
-          email,
-          password,
+      const newUser = { email, password };
+      onAddUsers(newUser);
+
+      const newUserData = await fetch(`/api/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          Headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      console.log(response.data);
+        body: JSON.stringify(newUser),
+      });
+
+      const response = await newUserData.json();
+      console.log('newUserData:', response);
+
       setEmail('');
       setPassword('');
       setConfirmPassword('');
