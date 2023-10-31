@@ -10,6 +10,7 @@ const signToken = (id) => {
 
 export const createUser = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log("req body:", req.body);
 
   const newUser = new User({ email });
   newUser.password = newUser.encryptPassword(password);
