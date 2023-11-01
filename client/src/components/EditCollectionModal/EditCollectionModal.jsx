@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -15,43 +15,34 @@ const EditCollectionModal = ({
   const { setUserData } = useContext(UserDataContext);
 
   const [collectionName, setCollectionName] = useState(params.id);
-  const [collectionTCG, setCollectionTCG] = useState('');
+  const [collectionTCG, setCollectionTCG] = useState(
+    collectionData.collectionTCG
+  );
 
-  useEffect(() => {
-    setCollectionName(collectionData.collectionName);
-    setCollectionTCG(collectionData.collectionTCG);
-  }, []);
+  const handleUpdateCollection = async () => {
+    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+      method: 'GET',
+    });
+    const data = await fetchUserData.json();
 
-  //   const handleUpdateCollection = async () => {
-  //     const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
-  //       method: 'GET',
-  //     });
-  //     const data = await fetchUserData.json();
+    const collectionIndex = data.collections.findIndex(
+      (entry) => entry.collectionName === params.id
+    );
 
-  //     const collectionIndex = data.collections.findIndex(
-  //       (entry) => entry.collectionName === params.id);
+    if (collectionIndex !== -1) {
+      data.collections[collectionIndex].collectionName = collectionName;
+      data.collections[collectionIndex].collectionTCG = collectionTCG;
+    }
 
-  //     if (collectionIndex !== -1) {
-  //       data.collections.splice(collectionIndex, 1);
-  //     }
+    await fetch(`/api/users/bob@bob.de`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
 
-  //     data.collections.unshift({
-  //       collectionName: collectionName,
-  //       collectionTCG: collectionTCG,
-  //       collectionContent: {
-  //         singleCards: [],
-  //         sealedProducts: [],
-  //       },
-  //     });
-
-  //     const updateUserData = await fetch(`/api/users/bob@bob.de`, {
-  //       method: 'PATCH',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(data),
-  //     });
-  //     const response = await updateUserData.json();
-  //     setUserData(data);
-  //   };
+    setUserData(data);
+    navigate(`/collections/${collectionName}`);
+  };
 
   const handleDeleteCollection = async () => {
     const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
@@ -67,14 +58,14 @@ const EditCollectionModal = ({
       data.collections.splice(collectionIndex, 1);
     }
 
-    const updateUserData = await fetch(`/api/users/bob@bob.de`, {
+    await fetch(`/api/users/bob@bob.de`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
 
-    const response = await updateUserData.json();
     setUserData(data);
+    navigate('/collections');
   };
 
   return (
@@ -112,8 +103,8 @@ const EditCollectionModal = ({
         <button
           className="Button"
           onClick={() => {
-            //handleUpdateCollection();
-            //toggleEditCollectionModal();
+            handleUpdateCollection();
+            toggleEditCollectionModal();
           }}
         >
           Update collection
@@ -122,7 +113,6 @@ const EditCollectionModal = ({
           className="delete-button"
           onClick={() => {
             handleDeleteCollection();
-            navigate('/collections');
           }}
         >
           Delete collection
