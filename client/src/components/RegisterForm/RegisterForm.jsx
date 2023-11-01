@@ -45,16 +45,16 @@ const RegisterForm = ({ onAddUsers }) => {
         <input
           className="RegisterFormInputOne"
           type="email"
+          placeholder="Email address"
           name="email"
           value={email}
-          placeholder="Email address"
           required
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
-          name="password"
           placeholder="Password"
+          name="password"
           value={password}
           required
           onChange={(e) => setPassword(e.target.value)}

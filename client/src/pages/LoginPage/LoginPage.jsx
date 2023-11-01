@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm/LoginForm.jsx';
 import Logo from '../../components/Logo/Logo.jsx';
-import Button from '../../components/Button/Button.jsx';
-
-import LoginPageErrorModal from '../../components/LoginPageErrorModal/LoginPageErrorModal.jsx';
+// import Button from '../../components/Button/Button.jsx';
+// import LoginPageErrorModal from '../../components/LoginPageErrorModal/LoginPageErrorModal.jsx';
 
 import './LoginPage.scss';
 
@@ -14,7 +13,7 @@ const LoginPage = () => {
     <div className="LoginPage">
       <Logo height={'80'} />
 
-      <LoginPageErrorModal />
+      {/* <LoginPageErrorModal /> */}
 
       <div className="LoginTextAndFormBox">
         <div>
@@ -29,7 +28,7 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="LoginAndRegisterContainer">
-        <Button text={'Login'} link={'collections'} />
+        {/* <Button text={'Login'} link={'collections'} /> */}
         <button
           className="LoginPageRegisterButton"
           onClick={() => navigate('/register')}
