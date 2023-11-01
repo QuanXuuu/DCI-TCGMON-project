@@ -1,14 +1,19 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RegisterForm.scss';
 
 const RegisterForm = ({ onAddUsers }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
+    if (password !== confirmPassword) {
+      return console.log('Please enter the same password again.');
+    }
 
     try {
       const newUser = { email, password };
@@ -28,6 +33,7 @@ const RegisterForm = ({ onAddUsers }) => {
       setEmail('');
       setPassword('');
       setConfirmPassword('');
+      navigate('/login');
     } catch (err) {
       console.log(err.message);
     }
@@ -62,7 +68,7 @@ const RegisterForm = ({ onAddUsers }) => {
           required
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button className="signup-button">Sign Up New User</button>
+        <button className="signup-button">Sign Up</button>
       </form>
     </div>
   );
