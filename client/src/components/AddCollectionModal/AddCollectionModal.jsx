@@ -18,22 +18,29 @@ const AddCollectionModal = ({
     });
     const data = await fetchUserData.json();
 
-    data.collections.unshift({
-      collectionName: collectionName,
-      collectionTCG: collectionTCG,
-      collectionContent: {
-        singleCards: [],
-        sealedProducts: [],
-      },
-    });
+    const duplicateIndex = data.collections.findIndex(
+      (entry) =>
+        entry.collectionName.toLowerCase() === collectionName.toLowerCase()
+    );
 
-    const updateUserData = await fetch(`/api/users/bob@bob.de`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    const response = await updateUserData.json();
-    setUserData(data);
+    if (duplicateIndex === -1) {
+      data.collections.unshift({
+        collectionName: collectionName,
+        collectionTCG: collectionTCG,
+        collectionContent: {
+          singleCards: [],
+          sealedProducts: [],
+        },
+      });
+
+      await fetch(`/api/users/bob@bob.de`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      setUserData(data);
+    } else console.log('Error: Duplicate detected, need error modal popup');
   };
 
   return (

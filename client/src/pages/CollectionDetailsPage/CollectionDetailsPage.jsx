@@ -16,6 +16,7 @@ const CollectionDetailsPage = () => {
   const params = useParams();
 
   const { userData, setUserData } = useContext(UserDataContext);
+
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState();
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState();
@@ -151,7 +152,7 @@ const CollectionDetailsPage = () => {
     };
 
     generateCollectionDetailsData();
-  }, []);
+  }, [params.id]);
 
   useEffect(() => {
     if (isEditCollectionModalOpen) {
