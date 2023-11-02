@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm/LoginForm.jsx';
 import Logo from '../../components/Logo/Logo.jsx';
 import Button from '../../components/Button/Button.jsx';
-
+import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal.jsx';
 import LoginPageErrorModal from '../../components/LoginPageErrorModal/LoginPageErrorModal.jsx';
 
 import './LoginPage.scss';
@@ -13,8 +13,6 @@ const LoginPage = () => {
   return (
     <div className="LoginPage">
       <Logo height={'80'} />
-
-      <LoginPageErrorModal />
 
       <div className="LoginTextAndFormBox">
         <div>
@@ -37,6 +35,8 @@ const LoginPage = () => {
           Register
         </button>
       </div>
+      {/* <ErrorAndSuccessModal customClassName="rp-lp-error-style" easmText={'Wrong username and/or password'} /> */}
+      <ErrorAndSuccessModal customClassName="lp-success-style" easmText={'Successfully registered to TCGmon!'} />
     </div>
   );
 };
