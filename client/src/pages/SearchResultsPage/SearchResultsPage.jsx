@@ -4,6 +4,7 @@ import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
 import SingleCardsResults from '../../components/SingleCardsResults/SingleCardsResults';
 import SealedProductsResults from '../../components/SealedProductsResults/SealedProductsResults';
+import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal';
 import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
@@ -121,6 +122,13 @@ const SearchResultsPage = () => {
           )}
         </div>
       </div>
+
+      <ErrorAndSuccessModal customClassName="srp-success-style" easmText={
+      <p className="easm-text">
+          <span style={{ fontWeight: 'bold' }}>Raikou</span> successfully added to <span style={{ fontWeight: 'bold' }}>Collection#1</span>
+      </p>
+      } />
+
     </div>
   );
 };

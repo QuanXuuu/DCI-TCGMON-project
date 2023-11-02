@@ -1,28 +1,20 @@
 @import '../../default';
 
 .LoginPageErrorModal {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  padding: 3.2rem;
+  width: 100%;
   position: absolute;
-  margin-top: 8.6rem;
-  height: 15%;
+  top: -30px;
+
+  .Error-TextContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 
   .Error-Text {
-    height: 5.6rem;
-    width: 140%;
-
-    /*   border-radius: $button-border-radius;
-    background-color: $transparent-white25; */
-    font-size: 2.65rem;
-    /*  font-size: $font3; */
+    font-size: 1.6rem;
     font-weight: 400;
     text-align: center;
-    /*  background-color: #e24a5d; */
-    /*   color: #e24a5d; */
-    /* color: $secondary-text; */
-    color: red;
+    color: #e3051f;
   }
 }

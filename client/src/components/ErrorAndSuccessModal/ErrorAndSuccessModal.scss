@@ -1,0 +1,42 @@
+@import '../../default';
+
+.ErrorAndSuccessModal {
+    position: absolute;
+    position: fixed;
+    color: white;
+    font-size: $font4;
+    font-weight: 300;
+    padding: 0.8rem;
+    width: 100%;
+    z-index: 10000;
+
+    .easm-text {
+        text-align: center;
+    }
+}
+
+.rp-lp-error-style {
+    width: 100%;
+    background-color: #E24A5D;
+    top: 0;
+}
+
+.lp-success-style {
+    width: 100%;
+    background-color: #47BD4C;
+    top: 0;
+}
+
+.srp-success-style {
+    background-color: #47BD4C;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: $font3;
+    width: 70%;
+    margin: auto;
+    padding: 2.4rem;
+    border-radius: 20px;
+    border: 2px solid #9FF6A3;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}

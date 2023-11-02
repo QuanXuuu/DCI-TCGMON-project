@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RegisterForm.scss';
 
-const RegisterForm = ({ onAddUsers }) => {
+const RegisterForm = ({ onAddUsers, isValidEmail, setIsInvalidEmail }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -14,6 +15,13 @@ const RegisterForm = ({ onAddUsers }) => {
     if (password !== confirmPassword) {
       return console.log('Please enter the same password again.');
     }
+
+    if (!isValidEmail(email)) {  // !!!!
+      setIsInvalidEmail(true);
+      return;
+    }
+
+  setIsInvalidEmail(false);
 
     try {
       const newUser = { email, password };
@@ -41,7 +49,7 @@ const RegisterForm = ({ onAddUsers }) => {
 
   return (
     <div className="RegisterForm">
-      <form action="" method="POST" onSubmit={handleSubmit}>
+      <form action="" method="POST" onSubmit={handleSubmit} noValidate>
         <input
           className="RegisterFormInputOne"
           type="email"
