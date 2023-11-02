@@ -11,9 +11,7 @@ const RegisterForm = ({ onAddUsers }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
-    if (password !== confirmPassword) {
-      return console.log('Please enter the same password again.');
-    }
+    if (password !== confirmPassword) return;
 
     try {
       const newUser = { email, password };
@@ -68,7 +66,7 @@ const RegisterForm = ({ onAddUsers }) => {
           required
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button className="signup-button">Sign Up</button>
+        <button className="signup-button">Create account</button>
       </form>
     </div>
   );

@@ -10,9 +10,23 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
     try {
-      navigate('/collections');
+      const loginData = await fetch(`/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const response = await loginData.json();
+      const jwtToken = response.token;
+      const loginUser = response.data.user;
+      console.log('token:', jwtToken);
+      console.log('User:', loginUser);
+
+      // redirect
+      // navigate(`/collections/${email}`);
     } catch (err) {
       console.log(err.message);
     }

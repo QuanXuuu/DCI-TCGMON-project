@@ -1,25 +1,66 @@
+import { promisify } from "util";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js";
 
-const signToken = (id) => {
+export const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
+export const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    secure: true,
+    httpOnly: true,
+  };
+  res.cookie("jwt", token, cookieOptions);
+
+  res.status(statusCode).json({
+    status: "scccess",
+    token,
+    data: {
+      user,
+    },
+  });
+};
+
+export const protect = catchAsync(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    res.status(401).send({
+      status: "fail",
+      message: "Invalid token, please login",
+    });
+  }
+
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  console.log(decoded);
+
+  const loggedInUser = await User.findById(decoded.id);
+  console.log(loggedInUser);
+
+  next();
+});
+
 export const createUser = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  console.log("req body:", req.body);
 
   const newUser = new User({ email });
   newUser.password = newUser.encryptPassword(password);
   await newUser.save();
 
-  res.status(201).json({
-    success: true,
-    message: `New user ${newUser.email} created`,
-  });
+  createSendToken(newUser, 201, res);
 });
 
 export const login = catchAsync(async (req, res, next) => {
@@ -28,14 +69,9 @@ export const login = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
   console.log(user);
   const correct = await user.comparePassword(password, user.password);
-  console.log(correct);
 
   if (correct) {
-    const token = signToken(user._id);
-    res.status(200).json({
-      status: "success",
-      token,
-    });
+    createSendToken(user, 200, res);
   } else {
     res.status(401).send({
       status: "fail",

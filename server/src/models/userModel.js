@@ -56,7 +56,6 @@ userSchema.methods.comparePassword = function (loginPassword) {
   if (this.password !== this.encryptPassword(loginPassword)) {
     return false;
   }
-
   return true;
 };
 
