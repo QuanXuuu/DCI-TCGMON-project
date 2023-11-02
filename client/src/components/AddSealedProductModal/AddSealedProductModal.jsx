@@ -1,110 +1,207 @@
 import { useState, useContext } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
 import CloseButton from '../CloseButton/CloseButton';
-
 import './AddSealedProductModal.scss';
 
-const AddSealedProductModal = ({ isAddSealedProductModalOpen, toggleAddSealedProductModal, content }) => {
-    const [condition, setCondition] = useState('');
-    const [grade, setGrade] = useState('');
-    const [purchasePrice, setPurchasePrice] = useState('');
-    
-    return (
-        <div className='AddSealedProductModal' style={{ overflowY: isAddSealedProductModalOpen ? 'scroll' : 'hidden' }}>
-            <div className="close">
-                <CloseButton
-                isAddSealedProductModalOpen={isAddSealedProductModalOpen}
-                toggleAddSealedProductModal={toggleAddSealedProductModal}
-                />
-            </div>
+const AddSealedProductModal = ({
+  isAddSealedProductModalOpen,
+  toggleAddSealedProductModal,
+  content,
+}) => {
+  const { userData, setUserData } = useContext(UserDataContext);
 
-            <div className='content'>
-                
-                <p className='title'>{content.name}</p>
-                
-                <div className='img-and-info-wrapper-sealed'>
-                    <div className="product-image-wrapper">
-                        <img src={content.images.small} alt={content.id} />
-                    </div>    
+  const [firstEdition, setFirstEdition] = useState(false);
+  const [language, setLanguage] = useState('');
+  const [purchasePrice, setPurchasePrice] = useState('');
+  const [amount, setAmount] = useState('');
+  const [collection, setCollection] = useState('');
 
-                    <div className='info'>
-                        <p className='cycle-name'>{content.set.name}</p>
-                        
-                        <p className='set-infos set-name'>{content.type}</p>
+  const handleAddProduct = async () => {
+    const newSealedProduct = {
+      id: content.id,
+      firstEdition: firstEdition,
+      language: language,
+      purchasePrice: Number(purchasePrice),
+      amount: Number(amount),
+    };
 
-                        <p className='set-infos set-name'>{content.set.id.toUpperCase()}</p>
+    const selectedCollection = collection;
 
-                    </div>
-                </div>
-                <div className='inputs'>
-                    <div className='select-fields'>
-                        <p>1st Edition</p>
-                        <select className='select'>
-                            <option value=""></option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                    </div>
+    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+      method: 'GET',
+    });
+    const data = await fetchUserData.json();
 
-                    <div className='select-fields'>
-                        <p>Language</p>
-                        <select className='select'>
-                            <option value=""></option>
-                            <option value="English">English</option>
-                            <option value="German">German</option>
-                            <option value="Japanese">Japanese</option>
-                            <option value="French">French</option>
-                            <option value="Spanish">Spanish</option>
-                            <option value="Portuguese">Portuguese</option>
-                            <option value="Italian">Italian</option>
-                            <option value="Korean">Korean</option>
-                            <option value="Indonesian">Indonesian</option>
-                            <option value="Thai">Thai</option>
-                            <option value="Traditional Chinese">Traditional Chinese</option>
-                            <option value="Simplified Chinese">Simplified Chinese</option>
-                        </select>
-                    </div>
+    const collectionIndex = data.collections.findIndex(
+      (entry) =>
+        entry.collectionName.toLowerCase() === selectedCollection.toLowerCase()
+    );
 
-                    <div className='select-fields'>
-                        <p>Purchase Price</p>
-                        <form className='select' action="">
-                            <input type="number" placeholder="00.00"/>€
-                        </form>
-                    </div>
+    data.collections[collectionIndex].collectionContent.sealedProducts.push(
+      newSealedProduct
+    );
 
-                    <div className='select-fields'>
-                        <p>Amount</p>
-                        <form className='select' action="">
-                            <input type="number" />
-                        </form>
-                    </div>
+    await fetch(`/api/users/bob@bob.de`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
 
-                    <div className='select-fields'>
-                        <p>Collection</p>
-                        <select className='select'>
-                            <option value=""></option>
-                        </select>
-                    </div>
+    setUserData(data);
+  };
 
-                    {/* <div className='select-fields'>
-                        <p>Collection</p>
-                        <select className='select'>
-                        <option value=""></option>
-                        {userData.collections.map((collection) => (
-                        <option key={collection.collectionName} value={collection.collectionName}>
-                        {collection.collectionName}
-                        </option>
-                        ))}
-                        </select>
-                    </div> */}
+  return (
+    <div
+      className="AddSealedProductModal"
+      style={{ overflowY: isAddSealedProductModalOpen ? 'scroll' : 'hidden' }}
+    >
+      <div className="close-button-wrapper">
+        <CloseButton
+          isAddSealedProductModalOpen={isAddSealedProductModalOpen}
+          toggleAddSealedProductModal={toggleAddSealedProductModal}
+        />
+      </div>
 
-                </div>
-                <div className='button-div'>
-                    <button className='add-button'>Add Product</button>
-                </div>    
-            </div>
+      <div className="content">
+        <div className="img-and-info-wrapper">
+          <div className="img-wrapper-sealed">
+            <img src={content.images.small} alt={content.id} />
+          </div>
+          <div className="info">
+            <p className="title">{content.name}</p>
+            <p className="set-infos set-name">{content.type}</p>
+            <p className="cycle-name">{content.set.series}</p>
+            <p className="set-infos set-name">{content.set.name}</p>
+            <p className="set-infos set-name">{content.set.id.toUpperCase()}</p>
+          </div>
         </div>
-    )
-}
+        <div className="inputs">
+          <div className="select-fields">
+            <p>1st Edition</p>
+            <select
+              onChange={(e) =>
+                e.target.value === 'yes'
+                  ? setFirstEdition(true)
+                  : setFirstEdition(false)
+              }
+              className="select"
+            >
+              <option value=""></option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div className="select-fields">
+            <p>Language</p>
+            <select
+              onChange={(e) => {
+                setLanguage(e.target.value);
+              }}
+              className="select"
+            >
+              <option value=""></option>
+              <option value="english">English</option>
+              <option value="german">German</option>
+              <option value="japanese">Japanese</option>
+              <option value="french">French</option>
+              <option value="dutch">Dutch</option>
+              <option value="spanish">Spanish</option>
+              <option value="portuguese">Portuguese</option>
+              <option value="italian">Italian</option>
+              <option value="korean">Korean</option>
+              <option value="indonesian">Indonesian</option>
+              <option value="thai">Thai</option>
+              <option value="traditional chinese">Traditional Chinese</option>
+              <option value="simplified chinese">Simplified Chinese</option>
+            </select>
+          </div>
+
+          <div className="select-fields">
+            <p>Purchase Price</p>
+            <div className="select-purchase-price">
+              <input
+                type="number"
+                placeholder="0.00"
+                value={purchasePrice}
+                onChange={(e) => {
+                  setPurchasePrice(e.target.value);
+                }}
+                onFocus={() => {
+                  setPurchasePrice('');
+                }}
+                onBlur={(e) => {
+                  let newValue = 0;
+                  if (e.target.value < 0) {
+                    newValue = (e.target.value * -1).toFixed(2);
+                  } else {
+                    newValue = Number(e.target.value).toFixed(2);
+                  }
+                  setPurchasePrice(newValue);
+                }}
+              />
+              <p className="select-purchase-price-euro">€</p>
+            </div>
+          </div>
+
+          <div className="select-fields">
+            <p>Amount</p>
+            <div className="select-amount">
+              <input
+                type="number"
+                placeholder="0"
+                value={amount}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }}
+                onFocus={() => {
+                  setAmount('');
+                }}
+                onBlur={(e) => {
+                  let newValue = 0;
+                  if (e.target.value < 0) {
+                    newValue = Math.trunc(e.target.value * -1);
+                  } else {
+                    newValue = Math.trunc(e.target.value);
+                  }
+                  setAmount(newValue);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="select-fields">
+            <p>Collection</p>
+            <select
+              onChange={(e) => {
+                setCollection(e.target.value);
+              }}
+              className="select"
+            >
+              <option value=""></option>
+              {userData.collections.map((entry, index) => {
+                return (
+                  <option key={index} value={entry.collectionName}>
+                    {entry.collectionName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+
+        <button
+          onClick={() => {
+            handleAddProduct();
+            toggleAddSealedProductModal();
+          }}
+          className="add-button"
+        >
+          Add card
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default AddSealedProductModal;

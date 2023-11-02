@@ -78,6 +78,9 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
+
+        console.log(singleCardSearchResults);
+        console.log(sealedProductSearchResults);
       };
 
       searchBySet();

@@ -15,7 +15,7 @@ import './CollectionDetailsPage.scss';
 const CollectionDetailsPage = () => {
   const params = useParams();
 
-  const { userData, setUserData } = useContext(UserDataContext);
+  const { setUserData } = useContext(UserDataContext);
 
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState();
@@ -107,7 +107,7 @@ const CollectionDetailsPage = () => {
           );
 
           return (userEntry.marketPrice =
-            priceData[0].tcgplayer.prices.normal.market);
+            priceData[0].tcgplayer.prices.normal.mid);
         });
       }
 
