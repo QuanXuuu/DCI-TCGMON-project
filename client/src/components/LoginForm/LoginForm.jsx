@@ -20,13 +20,14 @@ const LoginForm = () => {
       });
 
       const response = await loginData.json();
+      console.log(response);
       const jwtToken = response.token;
       const loginUser = response.data.user;
       console.log('token:', jwtToken);
       console.log('User:', loginUser);
 
       // redirect
-      // navigate(`/collections/${email}`);
+      navigate('/collections');
     } catch (err) {
       console.log(err.message);
     }

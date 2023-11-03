@@ -29,31 +29,7 @@ export const createSendToken = (user, statusCode, res) => {
   });
 };
 
-export const protect = catchAsync(async (req, res, next) => {
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  }
-  if (!token) {
-    res.status(401).send({
-      status: "fail",
-      message: "Invalid token, please login",
-    });
-  }
-
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log(decoded);
-
-  const loggedInUser = await User.findById(decoded.id);
-  console.log(loggedInUser);
-
-  next();
-});
-
-export const createUser = catchAsync(async (req, res, next) => {
+export const register = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   const newUser = new User({ email });
@@ -82,6 +58,8 @@ export const login = catchAsync(async (req, res, next) => {
 
 export const getUser = catchAsync(async (req, res, next) => {
   const response = await User.findOne({ email: req.params.id });
+
+  // req.user.id != req.params.userID
   res.status(200).json(response);
 });
 
