@@ -181,7 +181,7 @@ const CollectionDetailsPage = () => {
             <EditCollectionModal
               isEditCollectionModalOpen={isEditCollectionModalOpen}
               toggleEditCollectionModal={toggleEditCollectionModal}
-              collectionData={collectionData}
+              collectionName={collectionData.collectionName}
             />
           )}
         </div>
@@ -253,6 +253,7 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.singleCards}
               singleCardData={pokemonDataSingleCards}
               marketTotal={marketTotal}
+              collectionData={collectionData}
             />
           ) : (
             <></>
