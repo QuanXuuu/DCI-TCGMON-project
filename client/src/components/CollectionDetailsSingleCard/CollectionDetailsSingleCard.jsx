@@ -4,16 +4,36 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { faChartPie } from '@fortawesome/free-solid-svg-icons';
+import EditSingleCardModal from '../EditSingleCardModal/EditSingleCardModal';
 import './CollectionDetailsSingleCard.scss';
 
 const CollectionDetailsSingleCard = ({
   content,
   singleCardData,
   marketTotal,
+  collectionName
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [singleCard, setSingleCard] = useState();
   const [singleCardColor, setSingleCardColor] = useState('');
+  const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] = //!!!!
+  useState(false);
+
+  const toggleEditSingleCardModal = () => {
+  setIsEditSingleCardModalOpen(!isEditSingleCardModalOpen);
+  }; 
+  
+  useEffect(() => { 
+    if (isEditSingleCardModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isEditSingleCardModalOpen]); // !!!!
 
   useEffect(() => {
     const singleCard = singleCardData.data.filter(
@@ -35,8 +55,20 @@ const CollectionDetailsSingleCard = ({
   return isLoading ? null : (
     <div className="CollectionDetailsSingleCard">
       <button className="cdsc-edit-button">
-        <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
+        <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" onClick={toggleEditSingleCardModal}/>
       </button>
+      {isEditSingleCardModalOpen && (
+            <EditSingleCardModal 
+            content={singleCard}
+            isEditSingleCardModalOpen={isEditSingleCardModalOpen}
+            toggleEditSingleCardModal={toggleEditSingleCardModal}
+            initialPurchasePrice={content.purchasePrice}
+            initialLanguage={content.language}
+            initialCondition={content.condition}
+            initialGrade={content.grade}
+            initialCollection={collectionName}
+        />
+      )}
       <div className="cdsc-content-wrapper">
         <div className="cdsc-content-top-wrapper">
           <div className="cdsc-content-top-image">
