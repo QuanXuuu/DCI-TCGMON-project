@@ -4,8 +4,8 @@ const checkAuth = (req, res, next) => {
   const payload = jwt.verify(token);
 
   req.user = {
-    id: payload.id.
-  }
+    id: payload.id,
+  };
   next();
 };
 
