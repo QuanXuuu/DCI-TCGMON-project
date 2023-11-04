@@ -11,20 +11,13 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const loginData = await fetch(`/api/login`, {
+      await fetch(`/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-
-      const response = await loginData.json();
-      console.log(response);
-      const jwtToken = response.token;
-      const loginUser = response.data.user;
-      console.log('token:', jwtToken);
-      console.log('User:', loginUser);
 
       // redirect
       navigate('/collections');
@@ -34,7 +27,7 @@ const LoginForm = () => {
   };
   return (
     <div className="LoginForm">
-      <form action="" method="POST" onSubmit={handleSubmit}>
+      <form action="/login" method="POST" onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email address"

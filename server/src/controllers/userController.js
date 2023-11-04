@@ -1,4 +1,3 @@
-import { promisify } from "util";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js";
@@ -21,7 +20,7 @@ export const createSendToken = (user, statusCode, res) => {
   res.cookie("jwt", token, cookieOptions);
 
   res.status(statusCode).json({
-    status: "scccess",
+    status: "success",
     token,
     data: {
       user,
@@ -39,15 +38,15 @@ export const register = catchAsync(async (req, res, next) => {
   createSendToken(newUser, 201, res);
 });
 
-export const login = catchAsync(async (req, res, next) => {
+export const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email }).select("+password");
-  console.log(user);
   const correct = await user.comparePassword(password, user.password);
 
   if (correct) {
     createSendToken(user, 200, res);
+    console.log(`${user.email} successfully logged in.`);
   } else {
     res.status(401).send({
       status: "fail",
@@ -59,7 +58,6 @@ export const login = catchAsync(async (req, res, next) => {
 export const getUser = catchAsync(async (req, res, next) => {
   const response = await User.findOne({ email: req.params.id });
 
-  // req.user.id != req.params.userID
   res.status(200).json(response);
 });
 

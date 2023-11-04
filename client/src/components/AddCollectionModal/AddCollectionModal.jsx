@@ -8,7 +8,6 @@ const AddCollectionModal = ({
   toggleAddCollectionModal,
 }) => {
   const { userData, setUserData } = useContext(UserDataContext);
-
   const [collectionName, setCollectionName] = useState('');
   const [collectionTCG, setCollectionTCG] = useState('');
 
