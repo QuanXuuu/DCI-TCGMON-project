@@ -1,28 +1,31 @@
 import { useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './EditSealedProductModal.scss';
 
 const EditSealedProductModal = ({
-    isEditSealedProductModalOpen,
-    toggleEditSealedProductModal,
-    content,
-    initialPurchasePrice,
-    initialLanguage,
-    initialAmount,
-    initialFirstEdition,
-    initialCollection
+  isEditSealedProductModalOpen,
+  toggleEditSealedProductModal,
+  content,
+  sealedProductData,
 }) => {
+  const params = useParams();
+
   const { userData, setUserData } = useContext(UserDataContext);
 
-  const [firstEdition, setFirstEdition] = useState(initialFirstEdition);
-  const [language, setLanguage] = useState(initialLanguage);
-  const [purchasePrice, setPurchasePrice] = useState(initialPurchasePrice);
-  const [amount, setAmount] = useState(initialAmount);
-  const [collection, setCollection] = useState(initialCollection);
+  const [firstEdition, setFirstEdition] = useState(content.firstEdition);
+  const [language, setLanguage] = useState(content.language);
+  const [purchasePrice, setPurchasePrice] = useState(
+    content.purchasePrice.toFixed(2)
+  );
+  const [amount, setAmount] = useState(content.amount);
+  const [collection, setCollection] = useState(params.id);
+  const [initialCollection] = useState(params.id);
 
-  const handleAddProduct = async () => {
-    const newSealedProduct = {
+  const handleUpdateProduct = async () => {
+    const updatedSealedProduct = {
+      entryId: content.entryId,
       id: content.id,
       firstEdition: firstEdition,
       language: language,
@@ -37,14 +40,36 @@ const EditSealedProductModal = ({
     });
     const data = await fetchUserData.json();
 
-    const collectionIndex = data.collections.findIndex(
+    const initialCollectionIndex = data.collections.findIndex(
       (entry) =>
-        entry.collectionName.toLowerCase() === selectedCollection.toLowerCase()
+        entry.collectionName.toLowerCase() === initialCollection.toLowerCase()
     );
 
-    data.collections[collectionIndex].collectionContent.sealedProducts.push(
-      newSealedProduct
+    const entryIndex = data.collections[
+      initialCollectionIndex
+    ].collectionContent.sealedProducts.findIndex(
+      (entry) => entry.entryId === content.entryId
     );
+
+    if (selectedCollection.toLowerCase() !== initialCollection.toLowerCase()) {
+      const newCollectionIndex = data.collections.findIndex(
+        (entry) =>
+          entry.collectionName.toLowerCase() ===
+          selectedCollection.toLowerCase()
+      );
+
+      data.collections[
+        initialCollectionIndex
+      ].collectionContent.sealedProducts.splice(entryIndex, 1);
+
+      data.collections[
+        newCollectionIndex
+      ].collectionContent.sealedProducts.push(updatedSealedProduct);
+    } else {
+      data.collections[initialCollectionIndex].collectionContent.sealedProducts[
+        entryIndex
+      ] = updatedSealedProduct;
+    }
 
     await fetch(`/api/users/bob@bob.de`, {
       method: 'PATCH',
@@ -68,31 +93,35 @@ const EditSealedProductModal = ({
       </div>
 
       <div className="content">
+        <p className="title">{sealedProductData.name}</p>
         <div className="img-and-info-wrapper">
           <div className="img-wrapper-sealed">
-            <img src={content[0].images.small} alt={content[0].id} />
+            <img
+              src={sealedProductData.images.small}
+              alt={sealedProductData.id}
+            />
           </div>
           <div className="info">
-            <p className="title">{content[0].name}</p>
-            <p className="set-infos set-name">{content.type}</p>
-            <p className="cycle-name">{content[0].set.series}</p>
-            <p className="set-infos set-name">{content[0].set.name}</p>
-            <p className="set-infos set-name">{content[0].set.id.toUpperCase()}</p>
+            <p className="set-infos set-name">{sealedProductData.type}</p>
+            <p className="cycle-name">{sealedProductData.set.series}</p>
+            <p className="set-infos set-name">{sealedProductData.set.name}</p>
+            <p className="set-infos set-name">
+              {sealedProductData.set.id.toUpperCase()}
+            </p>
           </div>
         </div>
         <div className="inputs">
           <div className="select-fields">
             <p>1st Edition</p>
             <select
+              value={firstEdition ? 'yes' : 'no'}
               onChange={(e) =>
                 e.target.value === 'yes'
                   ? setFirstEdition(true)
                   : setFirstEdition(false)
               }
-              value={firstEdition}
               className="select"
             >
-              <option value=""></option>
               <option value="yes">Yes</option>
               <option value="no">No</option>
             </select>
@@ -103,11 +132,10 @@ const EditSealedProductModal = ({
             <select
               onChange={(e) => {
                 setLanguage(e.target.value);
-                }}
-                value={language}            
-                className="select"
+              }}
+              value={language}
+              className="select"
             >
-              <option value=""></option>
               <option value="english">English</option>
               <option value="german">German</option>
               <option value="japanese">Japanese</option>
@@ -180,12 +208,11 @@ const EditSealedProductModal = ({
           <div className="select-fields">
             <p>Collection</p>
             <select
+              value={collection}
               onChange={(e) => {
                 setCollection(e.target.value);
-                }}
-                value={collection} 
-                className="select"
-              
+              }}
+              className="select"
             >
               {userData.collections.map((entry, index) => {
                 return (
@@ -197,15 +224,14 @@ const EditSealedProductModal = ({
             </select>
           </div>
         </div>
-
         <button
           onClick={() => {
-            handleAddProduct();
+            handleUpdateProduct();
             toggleEditSealedProductModal();
           }}
           className="add-button"
         >
-          Update Product
+          Update product
         </button>
       </div>
     </div>

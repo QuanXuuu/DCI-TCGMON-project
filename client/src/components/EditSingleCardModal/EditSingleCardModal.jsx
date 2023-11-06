@@ -16,8 +16,8 @@ const EditSingleCardModal = ({
 
   const [firstEdition, setFirstEdition] = useState(content.firstEdition);
   const [reverseHolo, setReverseHolo] = useState(content.reverseHolo);
-  const [language, setLanguage] = useState(content.language.toLowerCase());
-  const [condition, setCondition] = useState(content.condition.toLowerCase());
+  const [language, setLanguage] = useState(content.language);
+  const [condition, setCondition] = useState(content.condition);
   const [grade, setGrade] = useState(content.grade);
   const [purchasePrice, setPurchasePrice] = useState(
     content.purchasePrice.toFixed(2)
@@ -287,8 +287,7 @@ const EditSingleCardModal = ({
               value={collection}
               onChange={(e) => {
                 setCollection(e.target.value);
-                }}
-              value={collection}            
+              }}
               className="select"
             >
               {userData.collections.map((entry, index) => {

@@ -46,6 +46,10 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
+
+        // Pokemon API data check
+        console.log(cardResultData);
+        console.log(sealedResultData);
       };
 
       searchByName();
@@ -79,6 +83,10 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
+
+        // Pokemon API data check
+        console.log(cardResultData);
+        console.log(sealedResultData);
       };
 
       searchBySet();
