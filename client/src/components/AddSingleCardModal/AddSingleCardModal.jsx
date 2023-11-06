@@ -258,13 +258,13 @@ const AddSingleCardModal = ({
               className="select"
             >
               <option value=""></option>
-              {userData.collections.map((entry, index) => {
+              {/* {userData.collections.map((entry, index) => {
                 return (
                   <option key={index} value={entry.collectionName}>
                     {entry.collectionName}
                   </option>
                 );
-              })}
+              })} */}
             </select>
           </div>
         </div>
