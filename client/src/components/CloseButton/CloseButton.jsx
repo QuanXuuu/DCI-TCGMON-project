@@ -20,7 +20,7 @@ const CloseButton = ({ toggleMenu, toggleAddCollectionModal, toggleEditCollectio
     } else if (toggleAddSealedProductModal) {
       toggleAddSealedProductModal();
 
-    }else if (toggleEditSingleCardModal) {
+    } else if (toggleEditSingleCardModal) {
       toggleEditSingleCardModal();
     }
   };

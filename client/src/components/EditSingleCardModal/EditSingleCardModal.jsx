@@ -260,10 +260,10 @@ const EditSingleCardModal = ({
             <select
               onChange={(e) => {
                 setCollection(e.target.value);
-              }}
+                }}
+              value={collection}            
               className="select"
             >
-              <option value=""></option>
               {userData.collections.map((entry, index) => {
                 return (
                   <option key={index} value={entry.collectionName}>

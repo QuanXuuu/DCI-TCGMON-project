@@ -181,7 +181,7 @@ const CollectionDetailsPage = () => {
             <EditCollectionModal
               isEditCollectionModalOpen={isEditCollectionModalOpen}
               toggleEditCollectionModal={toggleEditCollectionModal}
-              collectionName={collectionData.collectionName}
+              collectionName={collectionData.collectionName} //!!!
             />
           )}
         </div>

@@ -11,13 +11,12 @@ const CollectionDetailsSingleCard = ({
   content,
   singleCardData,
   marketTotal,
-  collectionName
+  collectionName //!!!
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [singleCard, setSingleCard] = useState();
   const [singleCardColor, setSingleCardColor] = useState('');
-  const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] = //!!!!
-  useState(false);
+  const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] = useState(false);
 
   const toggleEditSingleCardModal = () => {
   setIsEditSingleCardModalOpen(!isEditSingleCardModalOpen);
@@ -66,7 +65,7 @@ const CollectionDetailsSingleCard = ({
             initialLanguage={content.language}
             initialCondition={content.condition}
             initialGrade={content.grade}
-            initialCollection={collectionName}
+            initialCollection={collectionName} // !!!
         />
       )}
       <div className="cdsc-content-wrapper">
