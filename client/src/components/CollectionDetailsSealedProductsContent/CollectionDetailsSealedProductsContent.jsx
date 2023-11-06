@@ -6,6 +6,7 @@ const CollectionDetailsSealedProductsContent = ({
   content,
   sealedProductData,
   marketTotal,
+  collectionNameProp
 }) => {
   return (
     <div className="CollectionDetailsSealedProductsContent">
@@ -18,6 +19,7 @@ const CollectionDetailsSealedProductsContent = ({
               content={entry}
               sealedProductData={sealedProductData}
               marketTotal={marketTotal}
+              collectionNameProp={collectionNameProp}
             />
           );
         })}

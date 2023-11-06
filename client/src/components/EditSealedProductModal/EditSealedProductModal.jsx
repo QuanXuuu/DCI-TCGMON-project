@@ -1,59 +1,33 @@
 import { useState, useContext } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
 import CloseButton from '../CloseButton/CloseButton';
-import './EditSingleCardModal.scss';
+import './EditSealedProductModal.scss';
 
-const EditSingleCardModal = ({
-    isEditSingleCardModalOpen,
-    toggleEditSingleCardModal,
+const EditSealedProductModal = ({
+    isEditSealedProductModalOpen,
+    toggleEditSealedProductModal,
     content,
     initialPurchasePrice,
     initialLanguage,
-    initialCondition,
-    initialGrade,
+    initialAmount,
+    initialFirstEdition,
     initialCollection
 }) => {
   const { userData, setUserData } = useContext(UserDataContext);
 
-  const [firstEdition, setFirstEdition] = useState(false);
-  const [reverseHolo, setReverseHolo] = useState(false);
+  const [firstEdition, setFirstEdition] = useState(initialFirstEdition);
   const [language, setLanguage] = useState(initialLanguage);
-  const [condition, setCondition] = useState(initialCondition);
-  const [grade, setGrade] = useState(initialGrade);
   const [purchasePrice, setPurchasePrice] = useState(initialPurchasePrice);
+  const [amount, setAmount] = useState(initialAmount);
   const [collection, setCollection] = useState(initialCollection);
 
-  const handleConditionSelection = (e) => {
-    const selectedCondition = e.target.value;
-    setCondition(selectedCondition);
-
-    if (selectedCondition !== '') {
-      document.querySelector('#gradeSelection').setAttribute('disabled', true);
-    } else
-      document.querySelector('#gradeSelection').removeAttribute('disabled');
-  };
-
-  const handleGradeSelection = (e) => {
-    const selectedGrade = e.target.value;
-    setGrade(selectedGrade);
-
-    if (selectedGrade !== '') {
-      document
-        .querySelector('#conditionSelection')
-        .setAttribute('disabled', true);
-    } else
-      document.querySelector('#conditionSelection').removeAttribute('disabled');
-  };
-
-  const handleAddCard = async () => {
-    const newSingleCard = {
+  const handleAddProduct = async () => {
+    const newSealedProduct = {
       id: content.id,
       firstEdition: firstEdition,
-      reverseHolo: reverseHolo,
       language: language,
-      condition: condition,
-      grade: grade === '' ? grade : Number(grade),
       purchasePrice: Number(purchasePrice),
+      amount: Number(amount),
     };
 
     const selectedCollection = collection;
@@ -68,8 +42,8 @@ const EditSingleCardModal = ({
         entry.collectionName.toLowerCase() === selectedCollection.toLowerCase()
     );
 
-    data.collections[collectionIndex].collectionContent.singleCards.push(
-      newSingleCard
+    data.collections[collectionIndex].collectionContent.sealedProducts.push(
+      newSealedProduct
     );
 
     await fetch(`/api/users/bob@bob.de`, {
@@ -83,27 +57,24 @@ const EditSingleCardModal = ({
 
   return (
     <div
-      className="EditSingleCardModal"
-      style={{ overflowY: isEditSingleCardModalOpen ? 'scroll' : 'hidden' }}
+      className="EditSealedProductModal"
+      style={{ overflowY: isEditSealedProductModalOpen ? 'scroll' : 'hidden' }}
     >
       <div className="close-button-wrapper">
         <CloseButton
-          isEditSingleCardModalOpen={isEditSingleCardModalOpen}
-          toggleEditSingleCardModal={toggleEditSingleCardModal}
+          isEditSealedProductModalOpen={isEditSealedProductModalOpen}
+          toggleEditSealedProductModal={toggleEditSealedProductModal}
         />
       </div>
 
       <div className="content">
         <div className="img-and-info-wrapper">
-          <div className="img-wrapper">
+          <div className="img-wrapper-sealed">
             <img src={content[0].images.small} alt={content[0].id} />
           </div>
           <div className="info">
             <p className="title">{content[0].name}</p>
-            <p className="set-infos">
-              {content[0].number} | {content[0].set.printedTotal}
-            </p>
-            <p className="set-infos">{content[0].rarity}</p>
+            <p className="set-infos set-name">{content.type}</p>
             <p className="cycle-name">{content[0].set.series}</p>
             <p className="set-infos set-name">{content[0].set.name}</p>
             <p className="set-infos set-name">{content[0].set.id.toUpperCase()}</p>
@@ -118,22 +89,7 @@ const EditSingleCardModal = ({
                   ? setFirstEdition(true)
                   : setFirstEdition(false)
               }
-              className="select"
-            >
-              <option value=""></option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p>Reverse Holo</p>
-            <select
-              onChange={(e) =>
-                e.target.value === 'yes'
-                  ? setReverseHolo(true)
-                  : setReverseHolo(false)
-              }
+              value={firstEdition}
               className="select"
             >
               <option value=""></option>
@@ -148,7 +104,7 @@ const EditSingleCardModal = ({
               onChange={(e) => {
                 setLanguage(e.target.value);
                 }}
-                value={language}
+                value={language}            
                 className="select"
             >
               <option value=""></option>
@@ -165,66 +121,6 @@ const EditSingleCardModal = ({
               <option value="thai">Thai</option>
               <option value="traditional chinese">Traditional Chinese</option>
               <option value="simplified chinese">Simplified Chinese</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p
-              style={{
-                color: grade ? 'rgb(100, 100, 100)' : '',
-              }}
-            >
-              Condition
-            </p>
-            <select
-              className="select"
-              id="conditionSelection"
-              value={condition}
-              onChange={handleConditionSelection}
-              style={{
-                backgroundColor: grade ? 'rgb(75, 75, 75)' : '',
-              }}
-            >
-              <option value=""></option>
-              <option value="mint">Mint</option>
-              <option value="near mint">Near Mint</option>
-              <option value="excellent">Excellent</option>
-              <option value="good">Good</option>
-              <option value="light played">Light Played</option>
-              <option value="played">Played</option>
-              <option value="poor">Poor</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p
-              style={{
-                color: condition ? 'rgb(100, 100, 100)' : '',
-              }}
-            >
-              Grade
-            </p>
-            <select
-              className="select"
-              id="gradeSelection"
-              value={grade}
-              onChange={handleGradeSelection}
-              style={{
-                backgroundColor: condition ? 'rgb(75, 75, 75)' : '',
-              }}
-            >
-              <option value=""></option>
-              <option value="10">10</option>
-              <option value="9">9</option>
-              <option value="8">8</option>
-              <option value="7">7</option>
-              <option value="6">6</option>
-              <option value="5">5</option>
-              <option value="4">4</option>
-              <option value="3">3</option>
-              <option value="2">2</option>
-              <option value="1.5">1.5</option>
-              <option value="1">1</option>
             </select>
           </div>
 
@@ -256,13 +152,40 @@ const EditSingleCardModal = ({
           </div>
 
           <div className="select-fields">
+            <p>Amount</p>
+            <div className="select-amount">
+              <input
+                type="number"
+                placeholder="0"
+                value={amount}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }}
+                onFocus={() => {
+                  setAmount('');
+                }}
+                onBlur={(e) => {
+                  let newValue = 0;
+                  if (e.target.value < 0) {
+                    newValue = Math.trunc(e.target.value * -1);
+                  } else {
+                    newValue = Math.trunc(e.target.value);
+                  }
+                  setAmount(newValue);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="select-fields">
             <p>Collection</p>
             <select
               onChange={(e) => {
                 setCollection(e.target.value);
                 }}
-              value={collection}            
-              className="select"
+                value={collection} 
+                className="select"
+              
             >
               {userData.collections.map((entry, index) => {
                 return (
@@ -274,18 +197,19 @@ const EditSingleCardModal = ({
             </select>
           </div>
         </div>
+
         <button
           onClick={() => {
-            handleAddCard();
-            toggleEditSingleCardModal();
+            handleAddProduct();
+            toggleEditSealedProductModal();
           }}
           className="add-button"
         >
-          Update card
+          Update Product
         </button>
       </div>
     </div>
   );
 };
 
-export default EditSingleCardModal;
+export default EditSealedProductModal;

@@ -254,6 +254,7 @@ const CollectionDetailsPage = () => {
               singleCardData={pokemonDataSingleCards}
               marketTotal={marketTotal}
               collectionData={collectionData}
+              collectionNameProp={collectionData.collectionName}
             />
           ) : (
             <></>
@@ -263,6 +264,8 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.sealedProducts}
               sealedProductData={pokemonDataSealedProducts}
               marketTotal={marketTotal}
+              collectionData={collectionData}
+              collectionNameProp={collectionData.collectionName}
             />
           ) : (
             <></>
