@@ -287,7 +287,8 @@ const EditSingleCardModal = ({
               value={collection}
               onChange={(e) => {
                 setCollection(e.target.value);
-              }}
+                }}
+              value={collection}            
               className="select"
             >
               {userData.collections.map((entry, index) => {

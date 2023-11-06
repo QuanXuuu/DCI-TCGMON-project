@@ -15,8 +15,7 @@ const CollectionDetailsSingleCard = ({
   const [isLoading, setIsLoading] = useState(true);
   const [singleCard, setSingleCard] = useState();
   const [singleCardColor, setSingleCardColor] = useState('');
-  const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] =
-    useState(false);
+  const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] = useState(false);
 
   const toggleEditSingleCardModal = () => {
     setIsEditSingleCardModalOpen(!isEditSingleCardModalOpen);
