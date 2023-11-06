@@ -79,17 +79,11 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
-
-        console.log(singleCardSearchResults);
-        console.log(sealedProductSearchResults);
       };
 
       searchBySet();
     } else return;
-  }, [
-    searchQuery.searchQuery.searchValue,
-    searchQuery.searchQuery.searchMethod,
-  ]);
+  }, []);
 
   return (
     <div className="SearchResultsPage">
@@ -126,12 +120,15 @@ const SearchResultsPage = () => {
         </div>
       </div>
 
-      <ErrorAndSuccessModal customClassName="srp-success-style" easmText={
-      <p className="easm-text">
-          <span style={{ fontWeight: 'bold' }}>Raikou</span> successfully added to <span style={{ fontWeight: 'bold' }}>Collection#1</span>
-      </p>
-      } />
-
+      <ErrorAndSuccessModal
+        customClassName="srp-success-style"
+        easmText={
+          <div className="easm-text">
+            <span style={{ fontWeight: 700 }}>Raikou</span> successfully added
+            to <span style={{ fontWeight: 700 }}>Collection#1</span>
+          </div>
+        }
+      />
     </div>
   );
 };

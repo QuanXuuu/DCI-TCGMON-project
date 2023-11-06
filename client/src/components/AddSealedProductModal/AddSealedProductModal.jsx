@@ -63,12 +63,12 @@ const AddSealedProductModal = ({
       </div>
 
       <div className="content">
+        <p className="title">{content.name}</p>
         <div className="img-and-info-wrapper">
           <div className="img-wrapper-sealed">
             <img src={content.images.small} alt={content.id} />
           </div>
           <div className="info">
-            <p className="title">{content.name}</p>
             <p className="set-infos set-name">{content.type}</p>
             <p className="cycle-name">{content.set.series}</p>
             <p className="set-infos set-name">{content.set.name}</p>
@@ -179,13 +179,13 @@ const AddSealedProductModal = ({
               className="select"
             >
               <option value=""></option>
-              {userData.collections.map((entry, index) => {
+              {/* {userData.collections.map((entry, index) => {
                 return (
                   <option key={index} value={entry.collectionName}>
                     {entry.collectionName}
                   </option>
                 );
-              })}
+              })} */}
             </select>
           </div>
         </div>
