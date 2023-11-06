@@ -11,7 +11,7 @@ const CollectionDetailsSingleCard = ({
   content,
   singleCardData,
   marketTotal,
-  collectionName //!!!
+  collectionNameProp 
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [singleCard, setSingleCard] = useState();
@@ -65,7 +65,7 @@ const CollectionDetailsSingleCard = ({
             initialLanguage={content.language}
             initialCondition={content.condition}
             initialGrade={content.grade}
-            initialCollection={collectionName} // !!!
+            initialCollection={collectionNameProp} // !!!
         />
       )}
       <div className="cdsc-content-wrapper">

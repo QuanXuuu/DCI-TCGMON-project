@@ -4,16 +4,35 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { faChartPie } from '@fortawesome/free-solid-svg-icons';
+import EditSealedProductModal from '../EditSealedProductModal/EditSealedProductModal';
 import './CollectionDetailsSealedProduct.scss';
 
 const CollectionDetailsSealedProduct = ({
   content,
   sealedProductData,
   marketTotal,
+  collectionNameProp
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [sealedProduct, setSealedProduct] = useState();
   const [sealedProductColor, setSealedProductColor] = useState('');
+  const [isEditSealedProductModalOpen, setIsEditSealedProductModalOpen] = useState(false);
+
+  const toggleEditSealedProductModal = () => {
+    setIsEditSealedProductModalOpen(!isEditSealedProductModalOpen);
+  };
+  
+  useEffect(() => { 
+    if (isEditSealedProductModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isEditSealedProductModalOpen]);
 
   useEffect(() => {
     const sealedProduct = sealedProductData.data.filter(
@@ -38,8 +57,20 @@ const CollectionDetailsSealedProduct = ({
         <p>{content.amount}</p>
       </div>
       <button className="cdsp-edit-button">
-        <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" />
+        <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" onClick={toggleEditSealedProductModal}/>
       </button>
+      {isEditSealedProductModalOpen && (
+            <EditSealedProductModal 
+            content={sealedProduct}
+            isEditSealedProductModalOpen={isEditSealedProductModalOpen}
+            toggleEditSealedProductModal={toggleEditSealedProductModal}
+            initialPurchasePrice={content.purchasePrice}
+            initialLanguage={content.language}
+            initialAmount={content.amount}
+            initialFirstEdition={content.firstEdition}
+            initialCollection={collectionNameProp}
+        />
+      )}
       <div className="cdsp-content-wrapper">
         <div className="cdsp-content-top-wrapper">
           <div className="cdsp-content-top-image">

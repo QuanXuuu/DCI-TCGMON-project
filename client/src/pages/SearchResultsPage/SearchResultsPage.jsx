@@ -127,9 +127,9 @@ const SearchResultsPage = () => {
       </div>
 
       <ErrorAndSuccessModal customClassName="srp-success-style" easmText={
-      <p className="easm-text">
+      <span className="easm-text">
           <span style={{ fontWeight: 'bold' }}>Raikou</span> successfully added to <span style={{ fontWeight: 'bold' }}>Collection#1</span>
-      </p>
+      </span>
       } />
 
     </div>
