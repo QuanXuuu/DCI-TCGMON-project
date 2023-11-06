@@ -31,7 +31,8 @@ const CollectionSummary = ({
       (pokemonEntry) => userEntry.id === pokemonEntry.id
     );
 
-    return (userEntry.marketPrice = priceData[0].tcgplayer.prices.normal.mid);
+    return (userEntry.marketPrice = 1);
+    //   return (userEntry.marketPrice = priceData[0].tcgplayer.prices.normal.mid);
   });
 
   const totalValue =

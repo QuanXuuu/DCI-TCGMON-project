@@ -15,7 +15,8 @@ const CollectionDetailsSingleCard = ({
   const [isLoading, setIsLoading] = useState(true);
   const [singleCard, setSingleCard] = useState();
   const [singleCardColor, setSingleCardColor] = useState('');
-  const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] = useState(false);
+  const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] =
+    useState(false);
 
   const toggleEditSingleCardModal = () => {
     setIsEditSingleCardModalOpen(!isEditSingleCardModalOpen);
@@ -104,17 +105,21 @@ const CollectionDetailsSingleCard = ({
                   <div className="cdsc-content-icon-wrapper">
                     <FontAwesomeIcon icon={faCartShopping} className="icon" />
                   </div>
-                  <p className="bold">{`${content.purchasePrice.toFixed(
-                    2
-                  )} €`}</p>
+                  <p className="bold">
+                    {content.purchasePrice >= 1000
+                      ? `${Math.round(content.purchasePrice)} €`
+                      : `${content.purchasePrice.toFixed(2)} €`}
+                  </p>
                 </div>
                 <div className="cdsc-content-top-data-price-purchase-market">
                   <div className="cdsc-content-icon-wrapper">
                     <FontAwesomeIcon icon={faChartLine} className="icon" />
                   </div>
-                  <p
-                    className={`bold ${singleCardColor}`}
-                  >{`${content.marketPrice.toFixed(2)} €`}</p>
+                  <p className={`bold ${singleCardColor}`}>
+                    {content.marketPrice >= 1000
+                      ? `${Math.round(content.marketPrice)} €`
+                      : `${content.marketPrice.toFixed(2)} €`}
+                  </p>
                 </div>
               </div>
               <div className="cdsc-content-top-data-price-right-wrapper">
@@ -123,19 +128,25 @@ const CollectionDetailsSingleCard = ({
                     ? `${(content.marketPrice - content.purchasePrice).toFixed(
                         2
                       )} €`
+                    : content.marketPrice - content.purchasePrice >= 1000
+                    ? `+${Math.round(
+                        content.marketPrice - content.purchasePrice
+                      )} €`
                     : `+${(content.marketPrice - content.purchasePrice).toFixed(
                         2
                       )} €`}
                 </p>
                 <p className={`bold ${singleCardColor}`}>
-                  {(
-                    (content.marketPrice / content.purchasePrice - 1) *
-                    100
-                  ).toFixed(2) < 0
+                  {(content.marketPrice / content.purchasePrice - 1) * 100 < 0
                     ? `${(
                         (content.marketPrice / content.purchasePrice - 1) *
                         100
                       ).toFixed(2)} %`
+                    : (content.marketPrice / content.purchasePrice - 1) * 100 >=
+                      1000
+                    ? `+${Math.round(
+                        (content.marketPrice / content.purchasePrice - 1) * 100
+                      )} %`
                     : `+${(
                         (content.marketPrice / content.purchasePrice - 1) *
                         100
