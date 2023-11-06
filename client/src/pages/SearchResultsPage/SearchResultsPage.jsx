@@ -121,7 +121,7 @@ const SearchResultsPage = () => {
       </div>
 
       <ErrorAndSuccessModal
-        customClassName="srp-success-style"
+        customClassName="floating-success-modal"
         easmText={
           <div className="easm-text">
             <span style={{ fontWeight: 700 }}>Raikou</span> successfully added

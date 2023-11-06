@@ -10,6 +10,7 @@ import CollectionDetailsSingleCardsContent from '../../components/CollectionDeta
 import CollectionDetailsSealedProductsContent from '../../components/CollectionDetailsSealedProductsContent/CollectionDetailsSealedProductsContent';
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
+import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal';
 import './CollectionDetailsPage.scss';
 
 const CollectionDetailsPage = () => {
@@ -272,6 +273,18 @@ const CollectionDetailsPage = () => {
           )}
         </div>
       </div>
+      {/*   <ErrorAndSuccessModal
+        customClassName="floating-success-modal"
+        easmText={'Collection successfully updated'}
+      /> */}
+      <ErrorAndSuccessModal
+        customClassName="floating-success-modal"
+        easmText={'Single card successfully updated'}
+      />
+      {/*   <ErrorAndSuccessModal
+        customClassName="floating-success-modal"
+        easmText={'Sealed product successfully updated'}
+      /> */}
     </div>
   );
 };
