@@ -11,7 +11,6 @@ const CollectionDetailsSingleCard = ({
   content,
   singleCardData,
   marketTotal,
-  collectionNameProp 
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [singleCard, setSingleCard] = useState();
@@ -19,20 +18,8 @@ const CollectionDetailsSingleCard = ({
   const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] = useState(false);
 
   const toggleEditSingleCardModal = () => {
-  setIsEditSingleCardModalOpen(!isEditSingleCardModalOpen);
-  }; 
-  
-  useEffect(() => { 
-    if (isEditSingleCardModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isEditSingleCardModalOpen]); // !!!!
+    setIsEditSingleCardModalOpen(!isEditSingleCardModalOpen);
+  };
 
   useEffect(() => {
     const singleCard = singleCardData.data.filter(
@@ -49,23 +36,35 @@ const CollectionDetailsSingleCard = ({
     }
 
     setIsLoading(false);
-  }, []);
+  }, [singleCardData]);
+
+  useEffect(() => {
+    if (isEditSingleCardModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isEditSingleCardModalOpen]);
 
   return isLoading ? null : (
     <div className="CollectionDetailsSingleCard">
       <button className="cdsc-edit-button">
-        <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" onClick={toggleEditSingleCardModal}/>
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          className="edit-icon"
+          onClick={toggleEditSingleCardModal}
+        />
       </button>
       {isEditSingleCardModalOpen && (
-            <EditSingleCardModal 
-            content={singleCard}
-            isEditSingleCardModalOpen={isEditSingleCardModalOpen}
-            toggleEditSingleCardModal={toggleEditSingleCardModal}
-            initialPurchasePrice={content.purchasePrice}
-            initialLanguage={content.language}
-            initialCondition={content.condition}
-            initialGrade={content.grade}
-            initialCollection={collectionNameProp} // !!!
+        <EditSingleCardModal
+          isEditSingleCardModalOpen={isEditSingleCardModalOpen}
+          toggleEditSingleCardModal={toggleEditSingleCardModal}
+          content={content}
+          singleCardData={singleCard[0]}
         />
       )}
       <div className="cdsc-content-wrapper">

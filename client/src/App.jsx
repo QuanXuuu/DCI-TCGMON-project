@@ -12,7 +12,7 @@ import CollectionDetailsPage from './pages/CollectionDetailsPage/CollectionDetai
 import './App.scss';
 
 const App = () => {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(null);
   const [searchQuery, setSearchQuery] = useState({});
   const user = { userData, setUserData };
   const search = { searchQuery, setSearchQuery };
