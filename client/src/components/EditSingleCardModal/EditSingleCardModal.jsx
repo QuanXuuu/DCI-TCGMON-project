@@ -1,27 +1,29 @@
 import { useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './EditSingleCardModal.scss';
 
 const EditSingleCardModal = ({
-    isEditSingleCardModalOpen,
-    toggleEditSingleCardModal,
-    content,
-    initialPurchasePrice,
-    initialLanguage,
-    initialCondition,
-    initialGrade,
-    initialCollection
+  isEditSingleCardModalOpen,
+  toggleEditSingleCardModal,
+  content,
+  singleCardData,
 }) => {
+  const params = useParams();
+
   const { userData, setUserData } = useContext(UserDataContext);
 
-  const [firstEdition, setFirstEdition] = useState(false);
-  const [reverseHolo, setReverseHolo] = useState(false);
-  const [language, setLanguage] = useState(initialLanguage);
-  const [condition, setCondition] = useState(initialCondition);
-  const [grade, setGrade] = useState(initialGrade);
-  const [purchasePrice, setPurchasePrice] = useState(initialPurchasePrice);
-  const [collection, setCollection] = useState(initialCollection);
+  const [firstEdition, setFirstEdition] = useState(content.firstEdition);
+  const [reverseHolo, setReverseHolo] = useState(content.reverseHolo);
+  const [language, setLanguage] = useState(content.language.toLowerCase());
+  const [condition, setCondition] = useState(content.condition.toLowerCase());
+  const [grade, setGrade] = useState(content.grade);
+  const [purchasePrice, setPurchasePrice] = useState(
+    content.purchasePrice.toFixed(2)
+  );
+  const [collection, setCollection] = useState(params.id);
+  const [initialCollection] = useState(params.id);
 
   const handleConditionSelection = (e) => {
     const selectedCondition = e.target.value;
@@ -45,8 +47,9 @@ const EditSingleCardModal = ({
       document.querySelector('#conditionSelection').removeAttribute('disabled');
   };
 
-  const handleAddCard = async () => {
-    const newSingleCard = {
+  const handleUpdateCard = async () => {
+    const updatedSingleCard = {
+      entryId: content.entryId,
       id: content.id,
       firstEdition: firstEdition,
       reverseHolo: reverseHolo,
@@ -63,14 +66,36 @@ const EditSingleCardModal = ({
     });
     const data = await fetchUserData.json();
 
-    const collectionIndex = data.collections.findIndex(
+    const initialCollectionIndex = data.collections.findIndex(
       (entry) =>
-        entry.collectionName.toLowerCase() === selectedCollection.toLowerCase()
+        entry.collectionName.toLowerCase() === initialCollection.toLowerCase()
     );
 
-    data.collections[collectionIndex].collectionContent.singleCards.push(
-      newSingleCard
+    const entryIndex = data.collections[
+      initialCollectionIndex
+    ].collectionContent.singleCards.findIndex(
+      (entry) => entry.entryId === content.entryId
     );
+
+    if (selectedCollection.toLowerCase() !== initialCollection.toLowerCase()) {
+      const newCollectionIndex = data.collections.findIndex(
+        (entry) =>
+          entry.collectionName.toLowerCase() ===
+          selectedCollection.toLowerCase()
+      );
+
+      data.collections[
+        initialCollectionIndex
+      ].collectionContent.singleCards.splice(entryIndex, 1);
+
+      data.collections[newCollectionIndex].collectionContent.singleCards.push(
+        updatedSingleCard
+      );
+    } else {
+      data.collections[initialCollectionIndex].collectionContent.singleCards[
+        entryIndex
+      ] = updatedSingleCard;
+    }
 
     await fetch(`/api/users/bob@bob.de`, {
       method: 'PATCH',
@@ -96,23 +121,26 @@ const EditSingleCardModal = ({
       <div className="content">
         <div className="img-and-info-wrapper">
           <div className="img-wrapper">
-            <img src={content[0].images.small} alt={content[0].id} />
+            <img src={singleCardData.images.small} alt={singleCardData.id} />
           </div>
           <div className="info">
-            <p className="title">{content[0].name}</p>
+            <p className="title">{singleCardData.name}</p>
             <p className="set-infos">
-              {content[0].number} | {content[0].set.printedTotal}
+              {singleCardData.number} | {singleCardData.set.printedTotal}
             </p>
-            <p className="set-infos">{content[0].rarity}</p>
-            <p className="cycle-name">{content[0].set.series}</p>
-            <p className="set-infos set-name">{content[0].set.name}</p>
-            <p className="set-infos set-name">{content[0].set.id.toUpperCase()}</p>
+            <p className="set-infos">{singleCardData.rarity}</p>
+            <p className="cycle-name">{singleCardData.set.series}</p>
+            <p className="set-infos set-name">{singleCardData.set.name}</p>
+            <p className="set-infos set-name">
+              {singleCardData.set.id.toUpperCase()}
+            </p>
           </div>
         </div>
         <div className="inputs">
           <div className="select-fields">
             <p>1st Edition</p>
             <select
+              value={firstEdition ? 'yes' : 'no'}
               onChange={(e) =>
                 e.target.value === 'yes'
                   ? setFirstEdition(true)
@@ -120,7 +148,6 @@ const EditSingleCardModal = ({
               }
               className="select"
             >
-              <option value=""></option>
               <option value="yes">Yes</option>
               <option value="no">No</option>
             </select>
@@ -129,6 +156,7 @@ const EditSingleCardModal = ({
           <div className="select-fields">
             <p>Reverse Holo</p>
             <select
+              value={reverseHolo ? 'yes' : 'no'}
               onChange={(e) =>
                 e.target.value === 'yes'
                   ? setReverseHolo(true)
@@ -136,7 +164,6 @@ const EditSingleCardModal = ({
               }
               className="select"
             >
-              <option value=""></option>
               <option value="yes">Yes</option>
               <option value="no">No</option>
             </select>
@@ -147,11 +174,10 @@ const EditSingleCardModal = ({
             <select
               onChange={(e) => {
                 setLanguage(e.target.value);
-                }}
-                value={language}
-                className="select"
+              }}
+              value={language}
+              className="select"
             >
-              <option value=""></option>
               <option value="english">English</option>
               <option value="german">German</option>
               <option value="japanese">Japanese</option>
@@ -258,12 +284,12 @@ const EditSingleCardModal = ({
           <div className="select-fields">
             <p>Collection</p>
             <select
+              value={collection}
               onChange={(e) => {
                 setCollection(e.target.value);
               }}
               className="select"
             >
-              <option value=""></option>
               {userData.collections.map((entry, index) => {
                 return (
                   <option key={index} value={entry.collectionName}>
@@ -276,7 +302,7 @@ const EditSingleCardModal = ({
         </div>
         <button
           onClick={() => {
-            handleAddCard();
+            handleUpdateCard();
             toggleEditSingleCardModal();
           }}
           className="add-button"
