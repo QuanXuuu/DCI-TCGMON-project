@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './EditSealedProductModal.scss';
 
@@ -9,10 +10,12 @@ const EditSealedProductModal = ({
   toggleEditSealedProductModal,
   content,
   sealedProductData,
+  toggleSuccessModal,
 }) => {
   const params = useParams();
 
   const { userData, setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const [firstEdition, setFirstEdition] = useState(content.firstEdition);
   const [language, setLanguage] = useState(content.language);
@@ -78,6 +81,9 @@ const EditSealedProductModal = ({
     });
 
     setUserData(data);
+    setSuccessModalText(`${sealedProductData.name} successfully updated`);
+    toggleEditSealedProductModal();
+    toggleSuccessModal();
   };
 
   return (
@@ -227,7 +233,6 @@ const EditSealedProductModal = ({
         <button
           onClick={() => {
             handleUpdateProduct();
-            toggleEditSealedProductModal();
           }}
           className="add-button"
         >

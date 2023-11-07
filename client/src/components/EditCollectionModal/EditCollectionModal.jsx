@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './EditCollectionModal.scss';
 
@@ -8,11 +9,13 @@ const EditCollectionModal = ({
   isEditCollectionModalOpen,
   toggleEditCollectionModal,
   collectionData,
+  toggleSuccessModal,
 }) => {
   const params = useParams();
   const navigate = useNavigate();
 
   const { setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const [collectionName, setCollectionName] = useState(params.id);
   const [collectionTCG, setCollectionTCG] = useState(
@@ -41,7 +44,10 @@ const EditCollectionModal = ({
     });
 
     setUserData(data);
+    setSuccessModalText('Collection name successfully updated');
     navigate(`/collections/${collectionName}`);
+    toggleEditCollectionModal();
+    toggleSuccessModal();
   };
 
   const handleDeleteCollection = async () => {
@@ -65,7 +71,9 @@ const EditCollectionModal = ({
     });
 
     setUserData(data);
+    setSuccessModalText(`Collection ${collectionName} successfully deleted`);
     navigate('/collections');
+    toggleSuccessModal();
   };
 
   return (
@@ -104,7 +112,6 @@ const EditCollectionModal = ({
           className="Button"
           onClick={() => {
             handleUpdateCollection();
-            toggleEditCollectionModal();
           }}
         >
           Update collection
