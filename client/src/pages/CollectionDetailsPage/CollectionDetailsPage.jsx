@@ -29,6 +29,16 @@ const CollectionDetailsPage = () => {
   const [isEditCollectionModalOpen, setIsEditCollectionModalOpen] =
     useState(false);
 
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const toggleIsSuccessModalOpen = () => {
+    setIsSuccessModalOpen((prev) => !prev);
+    
+    setTimeout(() => {
+      setIsSuccessModalOpen((prev) => !prev);
+    }, 3000);
+  };
+
   const toggleEditCollectionModal = () => {
     setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
   };
@@ -274,8 +284,6 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.sealedProducts}
               sealedProductData={pokemonDataSealedProducts}
               marketTotal={marketTotal}
-              collectionData={collectionData}
-              collectionNameProp={collectionData.collectionName}
             />
           ) : (
             <></>
@@ -286,14 +294,20 @@ const CollectionDetailsPage = () => {
         customClassName="floating-success-modal"
         easmText={'Collection successfully updated'}
       /> */}
-      <ErrorAndSuccessModal
+      {/* <ErrorAndSuccessModal
         customClassName="floating-success-modal"
-        easmText={'Single card successfully updated'}
-      />
+        easmText={''}
+      /> */}
       {/*   <ErrorAndSuccessModal
         customClassName="floating-success-modal"
-        easmText={'Sealed product successfully updated'}
+        easmText={'Product successfully updated'}
       /> */}
+      {isSuccessModalOpen ? (
+        <ErrorAndSuccessModal
+        customClassName="floating-success-modal"
+        easmText={'Card successfully updated'}
+      />
+      ) : <></>}
     </div>
   );
 };

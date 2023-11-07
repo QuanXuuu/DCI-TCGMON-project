@@ -6,7 +6,6 @@ const CollectionDetailsSingleCardsContent = ({
   content,
   singleCardData,
   marketTotal,
-  collectionNameProp
 }) => {
   return (
     <div className="CollectionDetailsSingleCardsContent">
@@ -19,7 +18,6 @@ const CollectionDetailsSingleCardsContent = ({
               content={entry}
               singleCardData={singleCardData}
               marketTotal={marketTotal}
-              collectionNameProp={collectionNameProp}
             />
           );
         })}
