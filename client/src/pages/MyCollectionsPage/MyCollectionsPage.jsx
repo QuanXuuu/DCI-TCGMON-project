@@ -5,6 +5,7 @@ import Button from '../../components/Button/Button';
 import CollectionSummaryContainer from '../../components/CollectionSummaryContainer/CollectionSummaryContainer';
 import AddCollectionButton from '../../components/AddCollectionButton/AddCollectionButton';
 import AddCollectionModal from '../../components/AddCollectionModal/AddCollectionModal';
+import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal';
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
@@ -14,6 +15,16 @@ const MyCollectionsPage = () => {
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState(
     {}
   );
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const toggleIsSuccessModalOpen = () => {
+    setIsSuccessModalOpen((prev) => !prev);
+    
+    setTimeout(() => {
+      setIsSuccessModalOpen((prev) => !prev);
+    }, 3000);
+  };
+
 
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
@@ -111,11 +122,19 @@ const MyCollectionsPage = () => {
             <AddCollectionModal
               isAddCollectionModalOpen={isAddCollectionModalOpen}
               toggleAddCollectionModal={toggleAddCollectionModal}
+              toggleSuccessModal={toggleIsSuccessModalOpen}
             />
           )}
           <Button text={'Search'} link={'search'} />
         </div>
       </div>
+      {isSuccessModalOpen ? (
+        <ErrorAndSuccessModal
+        customClassName="floating-success-modal"
+        easmText={'New collection successfully created'}
+      />
+      ) : <></>}
+      
     </div>
   );
 };

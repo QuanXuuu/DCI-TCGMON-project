@@ -6,6 +6,7 @@ import './AddCollectionModal.scss';
 const AddCollectionModal = ({
   isAddCollectionModalOpen,
   toggleAddCollectionModal,
+  toggleSuccessModal
 }) => {
   const { userData, setUserData } = useContext(UserDataContext);
 
@@ -77,6 +78,7 @@ const AddCollectionModal = ({
           onClick={() => {
             handleCreateCollection();
             toggleAddCollectionModal();
+            toggleSuccessModal();
           }}
         >
           Create new collection
