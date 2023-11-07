@@ -1,16 +1,17 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
+import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import './DeleteConfirmationModal.scss';
 
-const DeleteConfirmationModal = ({
-  toggleDeleteConfirmationModal,
-  collectionData,
-}) => {
+const DeleteConfirmationModal = ({ toggleDeleteConfirmationModal }) => {
   const params = useParams();
   const navigate = useNavigate();
 
   const { setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
+  const { triggerSuccessModal } = useContext(TriggerSuccessModalContext);
 
   const handleDeleteCollection = async () => {
     const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
@@ -33,12 +34,14 @@ const DeleteConfirmationModal = ({
     });
 
     setUserData(data);
+    setSuccessModalText(`Collection ${params.id} successfully deleted!`);
     navigate('/collections');
+    triggerSuccessModal();
   };
 
   return (
     <div className="DeleteConfirmationModal">
-      <div className='confirmation-content'>
+      <div className="confirmation-content">
         <p>Are you sure you want to delete {params.id}?</p>
         <button
           className="delete-button"

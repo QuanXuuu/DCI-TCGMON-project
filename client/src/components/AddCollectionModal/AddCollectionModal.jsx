@@ -1,14 +1,16 @@
 import { useState, useContext } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './AddCollectionModal.scss';
 
 const AddCollectionModal = ({
   isAddCollectionModalOpen,
   toggleAddCollectionModal,
-  toggleSuccessModal
+  toggleSuccessModal,
 }) => {
-  const { userData, setUserData } = useContext(UserDataContext);
+  const { setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const [collectionName, setCollectionName] = useState('');
   const [collectionTCG, setCollectionTCG] = useState('');
@@ -41,6 +43,9 @@ const AddCollectionModal = ({
       });
 
       setUserData(data);
+      setSuccessModalText('New collection successfully created!');
+      toggleAddCollectionModal();
+      toggleSuccessModal();
     } else console.log('Error: Duplicate detected, need error modal popup');
   };
 
@@ -77,8 +82,6 @@ const AddCollectionModal = ({
           className="Button"
           onClick={() => {
             handleCreateCollection();
-            toggleAddCollectionModal();
-            toggleSuccessModal();
           }}
         >
           Create new collection

@@ -33,12 +33,12 @@ const CollectionDetailsPage = () => {
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
-  const toggleIsSuccessModalOpen = () => {
+  const toggleCollectionDetailsSuccessModal = () => {
     setIsSuccessModalOpen((prev) => !prev);
 
     setTimeout(() => {
       setIsSuccessModalOpen((prev) => !prev);
-    }, 3000);
+    }, 4000);
   };
 
   const toggleEditCollectionModal = () => {
@@ -206,7 +206,7 @@ const CollectionDetailsPage = () => {
               isEditCollectionModalOpen={isEditCollectionModalOpen}
               toggleEditCollectionModal={toggleEditCollectionModal}
               collectionData={collectionData}
-              toggleSuccessModal={toggleIsSuccessModalOpen}
+              toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
           )}
         </div>
@@ -278,7 +278,7 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.singleCards}
               singleCardData={pokemonDataSingleCards}
               marketTotal={marketTotal}
-              toggleSuccessModal={toggleIsSuccessModalOpen}
+              toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
           ) : (
             <></>
@@ -288,7 +288,7 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.sealedProducts}
               sealedProductData={pokemonDataSealedProducts}
               marketTotal={marketTotal}
-              toggleSuccessModal={toggleIsSuccessModalOpen}
+              toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
           ) : (
             <></>

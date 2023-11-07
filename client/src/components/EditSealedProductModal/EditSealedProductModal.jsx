@@ -81,7 +81,7 @@ const EditSealedProductModal = ({
     });
 
     setUserData(data);
-    setSuccessModalText(`${sealedProductData.name} successfully updated`);
+    setSuccessModalText(`${sealedProductData.name} successfully updated!`);
     toggleEditSealedProductModal();
     toggleSuccessModal();
   };
