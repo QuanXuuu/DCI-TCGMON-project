@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import CloseButton from '../CloseButton/CloseButton';
+import DeleteConfirmationModal from '../DeleteConfirmationModal/DeleteConfirmationModal';
 import './EditCollectionModal.scss';
 
 const EditCollectionModal = ({
@@ -18,6 +19,11 @@ const EditCollectionModal = ({
   const [collectionTCG, setCollectionTCG] = useState(
     collectionData.collectionTCG
   );
+  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
+
+  const toggleDeleteConfirmationModal = () => {
+    setIsDeleteConfirmationModalOpen(!isDeleteConfirmationModalOpen);
+  };
 
   const handleUpdateCollection = async () => {
     const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
@@ -42,30 +48,6 @@ const EditCollectionModal = ({
 
     setUserData(data);
     navigate(`/collections/${collectionName}`);
-  };
-
-  const handleDeleteCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
-      method: 'GET',
-    });
-    const data = await fetchUserData.json();
-
-    const collectionIndex = data.collections.findIndex(
-      (entry) => entry.collectionName === params.id
-    );
-
-    if (collectionIndex !== -1) {
-      data.collections.splice(collectionIndex, 1);
-    }
-
-    await fetch(`/api/users/bob@bob.de`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-
-    setUserData(data);
-    navigate('/collections');
   };
 
   return (
@@ -112,12 +94,17 @@ const EditCollectionModal = ({
         <button
           className="delete-button"
           onClick={() => {
-            handleDeleteCollection();
+            toggleDeleteConfirmationModal();
           }}
         >
           Delete collection
         </button>
       </div>
+      {isDeleteConfirmationModalOpen ? (
+        <DeleteConfirmationModal
+        toggleDeleteConfirmationModal={toggleDeleteConfirmationModal}
+        />
+      ) : <></>}
     </div>
   );
 };
