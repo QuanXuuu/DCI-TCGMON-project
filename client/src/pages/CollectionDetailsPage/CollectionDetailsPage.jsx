@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +18,7 @@ const CollectionDetailsPage = () => {
   const params = useParams();
 
   const { userData, setUserData } = useContext(UserDataContext);
+  const { successModalText } = useContext(SuccessModalTextContext);
 
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState();
@@ -33,7 +35,7 @@ const CollectionDetailsPage = () => {
 
   const toggleIsSuccessModalOpen = () => {
     setIsSuccessModalOpen((prev) => !prev);
-    
+
     setTimeout(() => {
       setIsSuccessModalOpen((prev) => !prev);
     }, 3000);
@@ -204,6 +206,7 @@ const CollectionDetailsPage = () => {
               isEditCollectionModalOpen={isEditCollectionModalOpen}
               toggleEditCollectionModal={toggleEditCollectionModal}
               collectionData={collectionData}
+              toggleSuccessModal={toggleIsSuccessModalOpen}
             />
           )}
         </div>
@@ -275,6 +278,7 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.singleCards}
               singleCardData={pokemonDataSingleCards}
               marketTotal={marketTotal}
+              toggleSuccessModal={toggleIsSuccessModalOpen}
             />
           ) : (
             <></>
@@ -284,30 +288,21 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.sealedProducts}
               sealedProductData={pokemonDataSealedProducts}
               marketTotal={marketTotal}
+              toggleSuccessModal={toggleIsSuccessModalOpen}
             />
           ) : (
             <></>
           )}
         </div>
       </div>
-      {/*   <ErrorAndSuccessModal
-        customClassName="floating-success-modal"
-        easmText={'Collection successfully updated'}
-      /> */}
-      {/* <ErrorAndSuccessModal
-        customClassName="floating-success-modal"
-        easmText={''}
-      /> */}
-      {/*   <ErrorAndSuccessModal
-        customClassName="floating-success-modal"
-        easmText={'Product successfully updated'}
-      /> */}
       {isSuccessModalOpen ? (
         <ErrorAndSuccessModal
-        customClassName="floating-success-modal"
-        easmText={'Card successfully updated'}
-      />
-      ) : <></>}
+          customClassName="floating-success-modal"
+          easmText={successModalText}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

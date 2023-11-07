@@ -6,6 +6,7 @@ const CollectionDetailsSingleCardsContent = ({
   content,
   singleCardData,
   marketTotal,
+  toggleSuccessModal,
 }) => {
   return (
     <div className="CollectionDetailsSingleCardsContent">
@@ -18,6 +19,7 @@ const CollectionDetailsSingleCardsContent = ({
               content={entry}
               singleCardData={singleCardData}
               marketTotal={marketTotal}
+              toggleSuccessModal={toggleSuccessModal}
             />
           );
         })}

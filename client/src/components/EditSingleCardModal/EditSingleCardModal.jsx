@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './EditSingleCardModal.scss';
 
@@ -9,10 +10,12 @@ const EditSingleCardModal = ({
   toggleEditSingleCardModal,
   content,
   singleCardData,
+  toggleSuccessModal,
 }) => {
   const params = useParams();
 
   const { userData, setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const [firstEdition, setFirstEdition] = useState(content.firstEdition);
   const [reverseHolo, setReverseHolo] = useState(content.reverseHolo);
@@ -104,6 +107,11 @@ const EditSingleCardModal = ({
     });
 
     setUserData(data);
+    setSuccessModalText(
+      `${singleCardData.name} (${singleCardData.number} | ${singleCardData.set.printedTotal}) successfully updated`
+    );
+    toggleEditSingleCardModal();
+    toggleSuccessModal();
   };
 
   return (
@@ -303,7 +311,6 @@ const EditSingleCardModal = ({
         <button
           onClick={() => {
             handleUpdateCard();
-            toggleEditSingleCardModal();
           }}
           className="add-button"
         >

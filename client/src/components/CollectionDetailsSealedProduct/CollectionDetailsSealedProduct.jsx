@@ -11,6 +11,7 @@ const CollectionDetailsSealedProduct = ({
   content,
   sealedProductData,
   marketTotal,
+  toggleSuccessModal,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [sealedProduct, setSealedProduct] = useState();
@@ -69,6 +70,7 @@ const CollectionDetailsSealedProduct = ({
           toggleEditSealedProductModal={toggleEditSealedProductModal}
           content={content}
           sealedProductData={sealedProduct[0]}
+          toggleSuccessModal={toggleSuccessModal}
         />
       )}
       <div className="cdsp-content-wrapper">
