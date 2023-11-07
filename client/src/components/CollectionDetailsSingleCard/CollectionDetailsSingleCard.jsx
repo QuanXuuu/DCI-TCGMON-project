@@ -11,6 +11,7 @@ const CollectionDetailsSingleCard = ({
   content,
   singleCardData,
   marketTotal,
+  toggleSuccessModal,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [singleCard, setSingleCard] = useState();
@@ -66,6 +67,7 @@ const CollectionDetailsSingleCard = ({
           toggleEditSingleCardModal={toggleEditSingleCardModal}
           content={content}
           singleCardData={singleCard[0]}
+          toggleSuccessModal={toggleSuccessModal}
         />
       )}
       <div className="cdsc-content-wrapper">
