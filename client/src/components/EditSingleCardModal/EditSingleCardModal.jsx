@@ -108,7 +108,7 @@ const EditSingleCardModal = ({
 
     setUserData(data);
     setSuccessModalText(
-      `${singleCardData.name} (${singleCardData.number} | ${singleCardData.set.printedTotal}) successfully updated`
+      `${singleCardData.name} (${singleCardData.set.name}) successfully updated!`
     );
     toggleEditSingleCardModal();
     toggleSuccessModal();

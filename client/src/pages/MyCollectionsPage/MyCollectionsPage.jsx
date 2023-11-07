@@ -1,5 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
+import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import CollectionSummaryContainer from '../../components/CollectionSummaryContainer/CollectionSummaryContainer';
@@ -10,22 +12,17 @@ import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
   const { userData, setUserData } = useContext(UserDataContext);
+  const { successModalText } = useContext(SuccessModalTextContext);
+  const { isMyCollectionsSuccessModalOpen } = useContext(
+    TriggerSuccessModalContext
+  );
+  const { triggerSuccessModal } = useContext(TriggerSuccessModalContext);
+
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState({});
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState(
     {}
   );
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
-  const toggleIsSuccessModalOpen = () => {
-    setIsSuccessModalOpen((prev) => !prev);
-    
-    setTimeout(() => {
-      setIsSuccessModalOpen((prev) => !prev);
-    }, 3000);
-  };
-
-
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
 
@@ -122,19 +119,20 @@ const MyCollectionsPage = () => {
             <AddCollectionModal
               isAddCollectionModalOpen={isAddCollectionModalOpen}
               toggleAddCollectionModal={toggleAddCollectionModal}
-              toggleSuccessModal={toggleIsSuccessModalOpen}
+              toggleSuccessModal={triggerSuccessModal}
             />
           )}
           <Button text={'Search'} link={'search'} />
         </div>
       </div>
-      {isSuccessModalOpen ? (
+      {isMyCollectionsSuccessModalOpen ? (
         <ErrorAndSuccessModal
-        customClassName="floating-success-modal"
-        easmText={'New collection successfully created'}
-      />
-      ) : <></>}
-      
+          customClassName="floating-success-modal"
+          easmText={successModalText}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

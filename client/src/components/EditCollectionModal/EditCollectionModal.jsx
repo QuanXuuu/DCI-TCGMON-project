@@ -22,7 +22,8 @@ const EditCollectionModal = ({
   const [collectionTCG, setCollectionTCG] = useState(
     collectionData.collectionTCG
   );
-  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
+  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
+    useState(false);
 
   const toggleDeleteConfirmationModal = () => {
     setIsDeleteConfirmationModalOpen(!isDeleteConfirmationModalOpen);
@@ -50,7 +51,7 @@ const EditCollectionModal = ({
     });
 
     setUserData(data);
-    setSuccessModalText('Collection name successfully updated');
+    setSuccessModalText('Collection name successfully updated!');
     navigate(`/collections/${collectionName}`);
     toggleEditCollectionModal();
     toggleSuccessModal();
@@ -107,9 +108,11 @@ const EditCollectionModal = ({
       </div>
       {isDeleteConfirmationModalOpen ? (
         <DeleteConfirmationModal
-        toggleDeleteConfirmationModal={toggleDeleteConfirmationModal}
+          toggleDeleteConfirmationModal={toggleDeleteConfirmationModal}
         />
-      ) : <></>}
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

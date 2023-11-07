@@ -1,3 +1,3 @@
 import { createContext } from 'react';
-const SuccessModalTextContext = createContext(null);
+const SuccessModalTextContext = createContext();
 export default SuccessModalTextContext;
