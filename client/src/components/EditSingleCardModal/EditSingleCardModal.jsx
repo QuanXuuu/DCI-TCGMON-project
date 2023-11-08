@@ -1,8 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
+import DeleteCardConfirmationModal from '../DeleteCardConfirmationModal/DeleteCardConfirmationModal';
 import './EditSingleCardModal.scss';
 
 const EditSingleCardModal = ({
@@ -27,6 +28,24 @@ const EditSingleCardModal = ({
   );
   const [collection, setCollection] = useState(params.id);
   const [initialCollection] = useState(params.id);
+  const [isDeleteCardConfirmationModalOpen, setIsDeleteCardConfirmationModalOpen] =
+  useState(false);
+
+  const toggleDeleteCardConfirmationModal = () => {
+  setIsDeleteCardConfirmationModalOpen(!isDeleteCardConfirmationModalOpen);
+  };
+
+/*   useEffect(() => {
+    if (isDeleteCardConfirmationModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isDeleteCardConfirmationModalOpen]); */
 
   const handleConditionSelection = (e) => {
     const selectedCondition = e.target.value;
@@ -117,8 +136,9 @@ const EditSingleCardModal = ({
   return (
     <div
       className="EditSingleCardModal"
-      style={{ overflowY: isEditSingleCardModalOpen ? 'scroll' : 'hidden' }}
+      style={{ overflowY: isEditSingleCardModalOpen ? 'scroll' : 'hidden' } && {overflowY: isDeleteCardConfirmationModalOpen ? 'hidden' : 'scroll'}}
     >
+      <div className='dccm-wrapper'>
       <div className="close-button-wrapper">
         <CloseButton
           isEditSingleCardModalOpen={isEditSingleCardModalOpen}
@@ -308,6 +328,7 @@ const EditSingleCardModal = ({
             </select>
           </div>
         </div>
+        <div className='escm-button-wrapper'>
         <button
           onClick={() => {
             handleUpdateCard();
@@ -316,6 +337,25 @@ const EditSingleCardModal = ({
         >
           Update card
         </button>
+        <button
+          className="escm-delete-button"
+          onClick={() => {
+            toggleDeleteCardConfirmationModal();
+          }}
+        >
+          Delete Card
+        </button>
+        </div>
+      </div>
+      
+      {isDeleteCardConfirmationModalOpen ? (
+        <DeleteCardConfirmationModal
+          isDeleteCardConfirmationModalOpen=      {isDeleteCardConfirmationModalOpen}
+          toggleDeleteCardConfirmationModal={toggleDeleteCardConfirmationModal}
+        />
+      ) : (
+        <></>
+        )}
       </div>
     </div>
   );
