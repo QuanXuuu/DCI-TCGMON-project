@@ -258,7 +258,9 @@ const CollectionDetailsPage = () => {
               </div>
               <div className="text-wrapper">
                 <span className={`bold ${color}`}>
-                  {((marketTotal / purchaseTotal - 1) * 100).toFixed(2) < 0
+                  {purchaseTotal === '0.00'
+                    ? '∞ %'
+                    : ((marketTotal / purchaseTotal - 1) * 100).toFixed(2) < 0
                     ? `${((marketTotal / purchaseTotal - 1) * 100).toFixed(
                         2
                       )} %`

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import AddSingleCardModal from '../AddSingleCardModal/AddSingleCardModal';
 import './SearchResultCard.scss';
 
-const SearchResultCard = ({ content }) => {
+const SearchResultCard = ({ content, toggleSuccessModal }) => {
   const [isAddSingleCardModalOpen, setIsAddSingleCardModalOpen] =
     useState(false);
 
@@ -34,6 +34,7 @@ const SearchResultCard = ({ content }) => {
           content={content}
           isAddSingleCardModalOpen={isAddSingleCardModalOpen}
           toggleAddSingleCardModal={toggleAddSingleCardModal}
+          toggleSuccessModal={toggleSuccessModal}
         />
       )}
     </div>

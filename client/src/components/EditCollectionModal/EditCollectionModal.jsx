@@ -35,13 +35,23 @@ const EditCollectionModal = ({
     });
     const data = await fetchUserData.json();
 
-    const collectionIndex = data.collections.findIndex(
-      (entry) => entry.collectionName === params.id
+    const initialCollectionIndex = data.collections.findIndex(
+      (entry) => entry.collectionName.toLowerCase() === params.id.toLowerCase()
+    );
+    const newCollectionIndex = data.collections.findIndex(
+      (entry) =>
+        entry.collectionName.toLowerCase() === collectionName.toLowerCase()
     );
 
-    if (collectionIndex !== -1) {
-      data.collections[collectionIndex].collectionName = collectionName;
-      data.collections[collectionIndex].collectionTCG = collectionTCG;
+    if (initialCollectionIndex === newCollectionIndex) {
+      data.collections[initialCollectionIndex].collectionName = collectionName;
+      data.collections[initialCollectionIndex].collectionTCG = collectionTCG;
+    } else if (newCollectionIndex !== -1) {
+      console.log('Duplicate name detected');
+      return;
+    } else {
+      data.collections[initialCollectionIndex].collectionName = collectionName;
+      data.collections[initialCollectionIndex].collectionTCG = collectionTCG;
     }
 
     await fetch(`/api/users/bob@bob.de`, {
@@ -73,12 +83,18 @@ const EditCollectionModal = ({
           placeholder="Collection name"
           value={collectionName}
           onChange={(e) => {
-            setCollectionName(e.target.value);
+            const regex = /^[a-zA-Z0-9]*( [a-zA-Z0-9]+)* ?$/;
+            if (regex.test(e.target.value)) {
+              setCollectionName(e.target.value);
+            }
+          }}
+          onBlur={(e) => {
+            let newValue = e.target.value.trim();
+            setCollectionName(newValue);
           }}
         />
         <div className="select-wrapper">
           <select
-            name="TCGs"
             id="TCGname"
             value={collectionTCG}
             onChange={(e) => {

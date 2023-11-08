@@ -129,7 +129,10 @@ const CollectionDetailsSealedProduct = ({
                       )} €`}
                 </p>
                 <p className={`bold ${sealedProductColor}`}>
-                  {(content.marketPrice / content.purchasePrice - 1) * 100 < 0
+                  {content.purchasePrice === 0
+                    ? '∞ %'
+                    : (content.marketPrice / content.purchasePrice - 1) * 100 <
+                      0
                     ? `${(
                         (content.marketPrice / content.purchasePrice - 1) *
                         100

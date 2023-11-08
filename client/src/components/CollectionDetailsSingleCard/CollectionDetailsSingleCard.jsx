@@ -139,7 +139,10 @@ const CollectionDetailsSingleCard = ({
                       )} €`}
                 </p>
                 <p className={`bold ${singleCardColor}`}>
-                  {(content.marketPrice / content.purchasePrice - 1) * 100 < 0
+                  {content.purchasePrice === 0
+                    ? '∞ %'
+                    : (content.marketPrice / content.purchasePrice - 1) * 100 <
+                      0
                     ? `${(
                         (content.marketPrice / content.purchasePrice - 1) *
                         100
