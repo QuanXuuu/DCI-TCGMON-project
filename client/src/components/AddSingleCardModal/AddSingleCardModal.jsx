@@ -1,14 +1,17 @@
 import { useState, useContext } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './AddSingleCardModal.scss';
 
 const AddSingleCardModal = ({
+  content,
   isAddSingleCardModalOpen,
   toggleAddSingleCardModal,
-  content,
+  toggleSuccessModal,
 }) => {
   const { userData, setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const [firstEdition, setFirstEdition] = useState(false);
   const [reverseHolo, setReverseHolo] = useState(false);
@@ -42,11 +45,12 @@ const AddSingleCardModal = ({
 
   const handleAddCard = async () => {
     const newSingleCard = {
+      entryId: crypto.randomUUID(),
       id: content.id,
       firstEdition: firstEdition,
       reverseHolo: reverseHolo,
-      language: language,
-      condition: condition,
+      language: language === '' ? 'english' : language,
+      condition: condition === '' && grade === '' ? 'near mint' : condition,
       grade: grade === '' ? grade : Number(grade),
       purchasePrice: Number(purchasePrice),
     };
@@ -74,6 +78,11 @@ const AddSingleCardModal = ({
     });
 
     setUserData(data);
+    setSuccessModalText(
+      `${content.name} (${content.set.name}) successfully added to ${selectedCollection}!`
+    );
+    toggleAddSingleCardModal();
+    toggleSuccessModal();
   };
 
   return (
@@ -258,20 +267,19 @@ const AddSingleCardModal = ({
               className="select"
             >
               <option value=""></option>
-              {/* {userData.collections.map((entry, index) => {
+              {userData.collections.map((entry, index) => {
                 return (
                   <option key={index} value={entry.collectionName}>
                     {entry.collectionName}
                   </option>
                 );
-              })} */}
+              })}
             </select>
           </div>
         </div>
         <button
           onClick={() => {
             handleAddCard();
-            toggleAddSingleCardModal();
           }}
           className="add-button"
         >

@@ -1,14 +1,17 @@
 import { useState, useContext } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './AddSealedProductModal.scss';
 
 const AddSealedProductModal = ({
+  content,
   isAddSealedProductModalOpen,
   toggleAddSealedProductModal,
-  content,
+  toggleSuccessModal,
 }) => {
   const { userData, setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const [firstEdition, setFirstEdition] = useState(false);
   const [language, setLanguage] = useState('');
@@ -18,11 +21,12 @@ const AddSealedProductModal = ({
 
   const handleAddProduct = async () => {
     const newSealedProduct = {
+      entryId: crypto.randomUUID(),
       id: content.id,
       firstEdition: firstEdition,
-      language: language,
+      language: language === '' ? 'english' : language,
       purchasePrice: Number(purchasePrice),
-      amount: Number(amount),
+      amount: Number(amount) === 0 ? 1 : Number(amount),
     };
 
     const selectedCollection = collection;
@@ -48,6 +52,11 @@ const AddSealedProductModal = ({
     });
 
     setUserData(data);
+    setSuccessModalText(
+      `${content.name} successfully added to ${selectedCollection}!`
+    );
+    toggleAddSealedProductModal();
+    toggleSuccessModal();
   };
 
   return (
@@ -179,13 +188,13 @@ const AddSealedProductModal = ({
               className="select"
             >
               <option value=""></option>
-              {/* {userData.collections.map((entry, index) => {
+              {userData.collections.map((entry, index) => {
                 return (
                   <option key={index} value={entry.collectionName}>
                     {entry.collectionName}
                   </option>
                 );
-              })} */}
+              })}
             </select>
           </div>
         </div>
@@ -193,7 +202,6 @@ const AddSealedProductModal = ({
         <button
           onClick={() => {
             handleAddProduct();
-            toggleAddSealedProductModal();
           }}
           className="add-button"
         >

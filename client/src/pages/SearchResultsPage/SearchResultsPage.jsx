@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import SearchQueryContext from '../../contexts/SearchQueryContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
 import SingleCardsResults from '../../components/SingleCardsResults/SingleCardsResults';
@@ -9,11 +10,21 @@ import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
   const searchQuery = useContext(SearchQueryContext);
+  const { successModalText } = useContext(SuccessModalTextContext);
 
   const [singleCardSearchResults, setSingleCardSearchResults] = useState({});
   const [sealedProductSearchResults, setSealedProductSearchResults] = useState(
     {}
   );
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const toggleSearchResultsSuccessModal = () => {
+    setIsSuccessModalOpen((prev) => !prev);
+
+    setTimeout(() => {
+      setIsSuccessModalOpen((prev) => !prev);
+    }, 4000);
+  };
 
   useEffect(() => {
     if (
@@ -116,27 +127,31 @@ const SearchResultsPage = () => {
         </div>
         <div className="results-wrapper">
           {singleCardSearchResults.count > 0 ? (
-            <SingleCardsResults content={singleCardSearchResults} />
+            <SingleCardsResults
+              content={singleCardSearchResults}
+              toggleSuccessModal={toggleSearchResultsSuccessModal}
+            />
           ) : (
             <></>
           )}
           {sealedProductSearchResults.count > 0 ? (
-            <SealedProductsResults content={sealedProductSearchResults} />
+            <SealedProductsResults
+              content={sealedProductSearchResults}
+              toggleSuccessModal={toggleSearchResultsSuccessModal}
+            />
           ) : (
             <></>
           )}
         </div>
       </div>
-
-      <ErrorAndSuccessModal
-        customClassName="floating-success-modal"
-        easmText={
-          <div className="easm-text">
-            <span style={{ fontWeight: 700 }}>Raikou</span> successfully added
-            to <span style={{ fontWeight: 700 }}>Collection#1</span>
-          </div>
-        }
-      />
+      {isSuccessModalOpen ? (
+        <ErrorAndSuccessModal
+          customClassName="floating-success-modal"
+          easmText={successModalText}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

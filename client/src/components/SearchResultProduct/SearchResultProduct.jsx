@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import AddSealedProductModal from '../AddSealedProductModal/AddSealedProductModal';
 import './SearchResultProduct.scss';
 
-const SearchResultProduct = ({ content }) => {
+const SearchResultProduct = ({ content, toggleSuccessModal }) => {
   const [isAddSealedProductModalOpen, setIsAddSealedProductModalOpen] =
     useState(false);
 
@@ -42,6 +42,7 @@ const SearchResultProduct = ({ content }) => {
           content={content}
           isAddSealedProductModalOpen={isAddSealedProductModalOpen}
           toggleAddSealedProductModal={toggleAddSealedProductModal}
+          toggleSuccessModal={toggleSuccessModal}
         />
       )}
     </div>
