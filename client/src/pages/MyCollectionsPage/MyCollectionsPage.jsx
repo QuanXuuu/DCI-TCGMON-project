@@ -8,12 +8,16 @@ import AddCollectionModal from '../../components/AddCollectionModal/AddCollectio
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
-  const { userData, setUserData } = useContext(UserDataContext);
+  const userData = useContext(UserDataContext);
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState({});
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState(
     {}
   );
+  console.log('userData', userData);
+  // console.log('setuserData', setUserData);
+  // console.log('userDataEmail', userData.email);
+  // console.log('userDataParser', JSON.parse(userData));
 
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
@@ -24,11 +28,11 @@ const MyCollectionsPage = () => {
 
   useEffect(() => {
     const generateCollectionsData = async () => {
-      const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+      const fetchUserData = await fetch(`/api/users/john@abc.com`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
-      setUserData(userData);
+      // setUserData(userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];

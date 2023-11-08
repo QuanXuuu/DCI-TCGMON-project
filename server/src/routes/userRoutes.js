@@ -15,12 +15,3 @@ userRouter
   .delete("/users", userController.deleteAllUsers);
 
 export default userRouter;
-
-// .get("/user", userController.getUser) => no plural instead of /:id
-// .get("/user", userController.getAllUsers) => no need
-// .patch("/user", userController.updateUser)
-// .delete("/user", userController.deleteUser);
-// .delete("/users", userController.deleteAllUsers); => no need
-
-// GET /user/123456
-// GEt /user/147258

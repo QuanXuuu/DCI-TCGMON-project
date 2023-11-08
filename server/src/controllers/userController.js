@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js";
 
-export const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+export const signToken = (_id) => {
+  return jwt.sign({ _id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
@@ -20,7 +20,6 @@ export const createSendToken = (user, statusCode, res) => {
   res.cookie("jwt", token, cookieOptions);
 
   res.status(statusCode).json({
-    status: "success",
     token,
     data: {
       user,

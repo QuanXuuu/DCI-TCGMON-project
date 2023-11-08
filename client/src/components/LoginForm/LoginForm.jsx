@@ -1,17 +1,20 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserDataContext from '../../contexts/UserDataContext';
 import './LoginForm.scss';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(userData); // bob
 
     try {
-      await fetch(`/api/login`, {
+      const response = await fetch(`/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -19,8 +22,18 @@ const LoginForm = () => {
         body: JSON.stringify({ email, password }),
       });
 
+      const json = await response.json();
+      const userLoggedIn = json.data.user;
+      console.log('userLoggedIn', userLoggedIn); // john
+
       // redirect
-      navigate('/collections');
+      if (response.ok) {
+        setUserData(userData);
+        navigate('/collections');
+      } else {
+        navigate('/login');
+        console.log('Please double check password');
+      }
     } catch (err) {
       console.log(err.message);
     }
