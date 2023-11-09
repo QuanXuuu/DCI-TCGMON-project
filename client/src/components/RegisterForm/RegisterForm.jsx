@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import './RegisterForm.scss';
 
 const RegisterForm = ({ onAddUsers }) => {
@@ -7,6 +8,7 @@ const RegisterForm = ({ onAddUsers }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+  const { dispatch } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ const RegisterForm = ({ onAddUsers }) => {
       const response = await newUserData.json();
       console.log('newUserData:', response);
 
+      dispatch({ type: 'LOGIN', payload: response });
       setEmail('');
       setPassword('');
       setConfirmPassword('');

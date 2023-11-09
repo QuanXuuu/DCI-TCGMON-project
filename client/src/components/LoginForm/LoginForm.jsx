@@ -1,17 +1,16 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserDataContext from '../../contexts/UserDataContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import './LoginForm.scss';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
+  const { dispatch } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(userData); // bob
 
     try {
       const response = await fetch(`/api/login`, {
@@ -23,12 +22,10 @@ const LoginForm = () => {
       });
 
       const json = await response.json();
-      const userLoggedIn = json.data.user;
-      console.log('userLoggedIn', userLoggedIn); // john
 
       // redirect
       if (response.ok) {
-        setUserData(userData);
+        dispatch({ type: 'LOGIN', payload: json });
         navigate('/collections');
       } else {
         navigate('/login');

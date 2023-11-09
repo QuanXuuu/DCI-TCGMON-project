@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import CollectionSummaryContainer from '../../components/CollectionSummaryContainer/CollectionSummaryContainer';
@@ -8,16 +9,14 @@ import AddCollectionModal from '../../components/AddCollectionModal/AddCollectio
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
-  const userData = useContext(UserDataContext);
+  const { userData, setUserData } = useContext(UserDataContext);
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState({});
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState(
     {}
   );
-  console.log('userData', userData);
-  // console.log('setuserData', setUserData);
-  // console.log('userDataEmail', userData.email);
-  // console.log('userDataParser', JSON.parse(userData));
+  const { user } = useAuthContext();
+  const userLoggedIn = user.data.user;
 
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
@@ -28,11 +27,12 @@ const MyCollectionsPage = () => {
 
   useEffect(() => {
     const generateCollectionsData = async () => {
-      const fetchUserData = await fetch(`/api/users/john@abc.com`, {
+      const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
-      // setUserData(userData);
+      setUserData(userData);
+      console.log('updatedUserData', userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];
