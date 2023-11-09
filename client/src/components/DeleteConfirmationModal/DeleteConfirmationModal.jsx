@@ -34,7 +34,7 @@ const DeleteConfirmationModal = ({ toggleDeleteConfirmationModal }) => {
     });
 
     setUserData(data);
-    setSuccessModalText(`Collection ${params.id} successfully deleted!`);
+    setSuccessModalText(`Collection successfully deleted!`);
     navigate('/collections');
     triggerSuccessModal();
   };
