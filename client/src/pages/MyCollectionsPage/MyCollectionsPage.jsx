@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import Header from '../../components/Header/Header';
@@ -23,6 +24,11 @@ const MyCollectionsPage = () => {
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState(
     {}
   );
+
+  const { user } = useAuthContext();
+  const userLoggedIn = user.data.user;
+  console.log('updatedUserData1', userLoggedIn);
+
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
 
@@ -32,11 +38,13 @@ const MyCollectionsPage = () => {
 
   useEffect(() => {
     const generateCollectionsData = async () => {
-      const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+      const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
+      console.log(userData);
       setUserData(userData);
+      console.log('updatedUserData2', userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];
@@ -127,7 +135,7 @@ const MyCollectionsPage = () => {
       </div>
       {isMyCollectionsSuccessModalOpen ? (
         <ErrorAndSuccessModal
-          customClassName="floating-success-modal"
+          customClassName="success-modal"
           easmText={successModalText}
         />
       ) : (

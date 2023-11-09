@@ -141,7 +141,7 @@ const EditSingleCardModal = ({
         }
       }
     >
-      <div className="dccm-wrapper">
+      <div className="escm-wrapper">
         <div className="close-button-wrapper">
           <CloseButton
             isEditSingleCardModalOpen={isEditSingleCardModalOpen}
@@ -338,7 +338,7 @@ const EditSingleCardModal = ({
               }}
               className="add-button"
             >
-              Update card
+              Update Card
             </button>
             <button
               className="escm-delete-button"

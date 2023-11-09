@@ -27,7 +27,7 @@
   top: 0;
 }
 
-.floating-success-modal {
+/* .floating-success-modal {
   bottom: 2.4rem;
   left: 50%;
   transform: translateX(-50%);
@@ -38,4 +38,10 @@
   background-color: #47bd4c;
   font-size: $font4;
   box-shadow: 0 0 2.4rem rgba(0, 0, 0, 0.5);
+} */
+
+.success-modal {
+  width: 100%;
+  background-color: #47bd4c;
+  bottom: 0;
 }
