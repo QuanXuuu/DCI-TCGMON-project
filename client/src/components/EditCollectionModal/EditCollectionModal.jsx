@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './EditCollectionModal.scss';
 
@@ -19,8 +20,11 @@ const EditCollectionModal = ({
     collectionData.collectionTCG
   );
 
+  const { user } = useAuthContext();
+  const userLoggedIn = user.data.user;
+
   const handleUpdateCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+    const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -34,7 +38,7 @@ const EditCollectionModal = ({
       data.collections[collectionIndex].collectionTCG = collectionTCG;
     }
 
-    await fetch(`/api/users/bob@bob.de`, {
+    await fetch(`/api/users/${userLoggedIn.email}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -45,7 +49,7 @@ const EditCollectionModal = ({
   };
 
   const handleDeleteCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+    const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -58,7 +62,7 @@ const EditCollectionModal = ({
       data.collections.splice(collectionIndex, 1);
     }
 
-    await fetch(`/api/users/bob@bob.de`, {
+    await fetch(`/api/users/${userLoggedIn.email}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),

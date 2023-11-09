@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import CloseButton from '../CloseButton/CloseButton';
 import './AddCollectionModal.scss';
 
@@ -11,8 +12,11 @@ const AddCollectionModal = ({
   const [collectionName, setCollectionName] = useState('');
   const [collectionTCG, setCollectionTCG] = useState('');
 
+  const { user } = useAuthContext();
+  const userLoggedIn = user.data.user;
+
   const handleCreateCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+    const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -32,13 +36,14 @@ const AddCollectionModal = ({
         },
       });
 
-      await fetch(`/api/users/bob@bob.de`, {
+      await fetch(`/api/users/${userLoggedIn.email}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
       setUserData(data);
+      console.log('updatedAddModal', userData);
     } else console.log('Error: Duplicate detected, need error modal popup');
   };
 

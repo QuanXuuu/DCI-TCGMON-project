@@ -17,6 +17,7 @@ const MyCollectionsPage = () => {
   );
   const { user } = useAuthContext();
   const userLoggedIn = user.data.user;
+  console.log('updatedUserData1', userLoggedIn);
 
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
@@ -31,8 +32,9 @@ const MyCollectionsPage = () => {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
+      console.log(userData);
       setUserData(userData);
-      console.log('updatedUserData', userData);
+      console.log('updatedUserData2', userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];

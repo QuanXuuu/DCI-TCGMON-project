@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -32,13 +33,17 @@ const CollectionDetailsPage = () => {
     setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
   };
 
+  const { user } = useAuthContext();
+  const userLoggedIn = user.data.user;
+
   useEffect(() => {
     const generateCollectionDetailsData = async () => {
-      const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+      const fetchUserData = await fetch(`/api/users/${userLoggedIn}`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
       setUserData(userData);
+      console.log('updatedUserData', userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];
