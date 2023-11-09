@@ -178,7 +178,7 @@
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
-      gap: 1.6rem;
+      gap: 2.4rem;
 
       .add-button {
         width: 100%;
@@ -191,22 +191,23 @@
         text-align: center;
         cursor: pointer;
       }
-  
+
       .escm-delete-button {
-        /* width: 100%;
+        width: 100%;
         max-width: 40rem;
-        height: 5.6rem; */
-        /* margin: auto 0 1.6rem 0; */
-        margin: 2.4rem 0 1.6rem 0;
-        color: #e24a5d;
+        height: 5.6rem;
+        margin-bottom: 1.6rem;
+        border-radius: $button-border-radius;
+        background-color: #e24a5d;
+        color: $secondary-text;
         font-size: $font3;
-        font-weight: 700;
+        font-weight: 400;
         text-align: center;
         cursor: pointer;
       }
     }
-
   }
+
   .dccm-wrapper {
     position: relative;
   }
