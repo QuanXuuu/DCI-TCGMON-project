@@ -7,10 +7,10 @@ import DeleteCardConfirmationModal from '../DeleteCardConfirmationModal/DeleteCa
 import './EditSingleCardModal.scss';
 
 const EditSingleCardModal = ({
-  isEditSingleCardModalOpen,
-  toggleEditSingleCardModal,
   content,
   singleCardData,
+  isEditSingleCardModalOpen,
+  toggleEditSingleCardModal,
   toggleSuccessModal,
 }) => {
   const params = useParams();
@@ -361,6 +361,7 @@ const EditSingleCardModal = ({
               toggleDeleteCardConfirmationModal
             }
             toggleEditSingleCardModal={toggleEditSingleCardModal}
+            toggleSuccessModal={toggleSuccessModal}
           />
         ) : (
           <></>

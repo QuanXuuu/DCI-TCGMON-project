@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
-import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import './DeleteCardConfirmationModal.scss';
 
 const DeleteCardConfirmationModal = ({
@@ -11,12 +10,12 @@ const DeleteCardConfirmationModal = ({
   singleCardData,
   toggleDeleteCardConfirmationModal,
   toggleEditSingleCardModal,
+  toggleSuccessModal,
 }) => {
   const params = useParams();
 
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
-  const { triggerSuccessModal } = useContext(TriggerSuccessModalContext);
 
   const handleDeleteCard = async () => {
     const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
@@ -49,9 +48,9 @@ const DeleteCardConfirmationModal = ({
     setSuccessModalText(
       `${singleCardData.name} (${singleCardData.set.name}) successfully removed from collection ${params.id}!`
     );
-    toggleDeleteCardConfirmationModal;
+    toggleDeleteCardConfirmationModal();
     toggleEditSingleCardModal();
-    triggerSuccessModal();
+    toggleSuccessModal();
   };
 
   return (
