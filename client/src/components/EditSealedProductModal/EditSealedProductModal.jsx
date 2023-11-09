@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
+import DeleteProductConfirmationModal from '../DeleteProductConfirmationModal/DeleteProductConfirmationModal';
 import './EditSealedProductModal.scss';
 
 const EditSealedProductModal = ({
@@ -25,6 +26,17 @@ const EditSealedProductModal = ({
   const [amount, setAmount] = useState(content.amount);
   const [collection, setCollection] = useState(params.id);
   const [initialCollection] = useState(params.id);
+
+  const [scrollY, setScrollY] = useState(0);
+
+  const [
+    isDeleteProductConfirmationModalOpen,
+    setIsDeleteProductConfirmationModalOpen,
+  ] = useState(false);
+
+  const toggleDeleteProductConfirmationModal = () => {
+    setIsDeleteProductConfirmationModalOpen(!isDeleteProductConfirmationModalOpen);
+  };
 
   const handleUpdateProduct = async () => {
     const updatedSealedProduct = {
@@ -86,11 +98,23 @@ const EditSealedProductModal = ({
     toggleSuccessModal();
   };
 
+  const handleScrollCalculation = () => {
+    const scrollValue = Math.round(
+      document.querySelector('.EditSealedProductModal').scrollTop
+    );
+    setScrollY(scrollValue);
+  };
+
   return (
     <div
       className="EditSealedProductModal"
-      style={{ overflowY: isEditSealedProductModalOpen ? 'scroll' : 'hidden' }}
+      style={
+        { overflowY: isEditSealedProductModalOpen ? 'scroll' : 'hidden' } && {
+          overflowY: isDeleteProductConfirmationModalOpen ? 'hidden' : 'scroll',
+        }
+      }
     >
+    <div className='espm-wrapper'>
       <div className="close-button-wrapper">
         <CloseButton
           isEditSealedProductModalOpen={isEditSealedProductModalOpen}
@@ -230,14 +254,39 @@ const EditSealedProductModal = ({
             </select>
           </div>
         </div>
+        <div className='espm-button-wrapper'>
         <button
           onClick={() => {
             handleUpdateProduct();
           }}
           className="add-button"
         >
-          Update product
+          Update Product
         </button>
+        <button
+              className="espm-delete-button"
+              onClick={() => {
+                handleScrollCalculation();
+                toggleDeleteProductConfirmationModal();
+              }}
+            >
+              Delete Product
+        </button>
+        </div>  
+        </div>
+        {isDeleteProductConfirmationModalOpen ? (
+          <DeleteProductConfirmationModal
+            scrollY={scrollY}
+            content={content}
+            sealedProductData={sealedProductData}
+            toggleDeleteProductConfirmationModal={
+              toggleDeleteProductConfirmationModal
+            }
+            toggleEditSealedProductModal={toggleEditSealedProductModal}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
