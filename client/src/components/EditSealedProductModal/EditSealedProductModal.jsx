@@ -1,32 +1,51 @@
 import { useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
-import './AddSealedProductModal.scss';
+import DeleteProductConfirmationModal from '../DeleteProductConfirmationModal/DeleteProductConfirmationModal';
+import './EditSealedProductModal.scss';
 
-const AddSealedProductModal = ({
+const EditSealedProductModal = ({
+  isEditSealedProductModalOpen,
+  toggleEditSealedProductModal,
   content,
-  isAddSealedProductModalOpen,
-  toggleAddSealedProductModal,
+  sealedProductData,
   toggleSuccessModal,
 }) => {
+  const params = useParams();
+
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
-  const [firstEdition, setFirstEdition] = useState(false);
-  const [language, setLanguage] = useState('');
-  const [purchasePrice, setPurchasePrice] = useState('');
-  const [amount, setAmount] = useState('');
-  const [collection, setCollection] = useState('');
+  const [firstEdition, setFirstEdition] = useState(content.firstEdition);
+  const [language, setLanguage] = useState(content.language);
+  const [purchasePrice, setPurchasePrice] = useState(
+    content.purchasePrice.toFixed(2)
+  );
+  const [amount, setAmount] = useState(content.amount);
+  const [collection, setCollection] = useState(params.id);
+  const [initialCollection] = useState(params.id);
 
-  const handleAddProduct = async () => {
-    const newSealedProduct = {
-      entryId: crypto.randomUUID(),
+  const [scrollY, setScrollY] = useState(0);
+
+  const [
+    isDeleteProductConfirmationModalOpen,
+    setIsDeleteProductConfirmationModalOpen,
+  ] = useState(false);
+
+  const toggleDeleteProductConfirmationModal = () => {
+    setIsDeleteProductConfirmationModalOpen(!isDeleteProductConfirmationModalOpen);
+  };
+
+  const handleUpdateProduct = async () => {
+    const updatedSealedProduct = {
+      entryId: content.entryId,
       id: content.id,
       firstEdition: firstEdition,
-      language: language === '' ? 'english' : language,
+      language: language,
       purchasePrice: Number(purchasePrice),
-      amount: Number(amount) === 0 ? 1 : Number(amount),
+      amount: Number(amount),
     };
 
     const selectedCollection = collection;
@@ -36,14 +55,36 @@ const AddSealedProductModal = ({
     });
     const data = await fetchUserData.json();
 
-    const collectionIndex = data.collections.findIndex(
+    const initialCollectionIndex = data.collections.findIndex(
       (entry) =>
-        entry.collectionName.toLowerCase() === selectedCollection.toLowerCase()
+        entry.collectionName.toLowerCase() === initialCollection.toLowerCase()
     );
 
-    data.collections[collectionIndex].collectionContent.sealedProducts.push(
-      newSealedProduct
+    const entryIndex = data.collections[
+      initialCollectionIndex
+    ].collectionContent.sealedProducts.findIndex(
+      (entry) => entry.entryId === content.entryId
     );
+
+    if (selectedCollection.toLowerCase() !== initialCollection.toLowerCase()) {
+      const newCollectionIndex = data.collections.findIndex(
+        (entry) =>
+          entry.collectionName.toLowerCase() ===
+          selectedCollection.toLowerCase()
+      );
+
+      data.collections[
+        initialCollectionIndex
+      ].collectionContent.sealedProducts.splice(entryIndex, 1);
+
+      data.collections[
+        newCollectionIndex
+      ].collectionContent.sealedProducts.push(updatedSealedProduct);
+    } else {
+      data.collections[initialCollectionIndex].collectionContent.sealedProducts[
+        entryIndex
+      ] = updatedSealedProduct;
+    }
 
     await fetch(`/api/users/bob@bob.de`, {
       method: 'PATCH',
@@ -52,42 +93,58 @@ const AddSealedProductModal = ({
     });
 
     setUserData(data);
-    setSuccessModalText(
-      `${content.name} successfully added to ${selectedCollection}!`
-    );
-    toggleAddSealedProductModal();
+    setSuccessModalText(`${sealedProductData.name} successfully updated!`);
+    toggleEditSealedProductModal();
     toggleSuccessModal();
+  };
+
+  const handleScrollCalculation = () => {
+    const scrollValue = Math.round(
+      document.querySelector('.EditSealedProductModal').scrollTop
+    );
+    setScrollY(scrollValue);
   };
 
   return (
     <div
-      className="AddSealedProductModal"
-      style={{ overflowY: isAddSealedProductModalOpen ? 'scroll' : 'hidden' }}
+      className="EditSealedProductModal"
+      style={
+        { overflowY: isEditSealedProductModalOpen ? 'scroll' : 'hidden' } && {
+          overflowY: isDeleteProductConfirmationModalOpen ? 'hidden' : 'scroll',
+        }
+      }
     >
+    <div className='espm-wrapper'>
       <div className="close-button-wrapper">
         <CloseButton
-          isAddSealedProductModalOpen={isAddSealedProductModalOpen}
-          toggleAddSealedProductModal={toggleAddSealedProductModal}
+          isEditSealedProductModalOpen={isEditSealedProductModalOpen}
+          toggleEditSealedProductModal={toggleEditSealedProductModal}
         />
       </div>
 
       <div className="content">
-        <p className="title">{content.name}</p>
+        <p className="title">{sealedProductData.name}</p>
         <div className="img-and-info-wrapper">
           <div className="img-wrapper-sealed">
-            <img src={content.images.small} alt={content.id} />
+            <img
+              src={sealedProductData.images.small}
+              alt={sealedProductData.id}
+            />
           </div>
           <div className="info">
-            <p className="set-infos set-name">{content.type}</p>
-            <p className="cycle-name">{content.set.series}</p>
-            <p className="set-infos set-name">{content.set.name}</p>
-            <p className="set-infos set-name">{content.set.id.toUpperCase()}</p>
+            <p className="set-infos set-name">{sealedProductData.type}</p>
+            <p className="cycle-name">{sealedProductData.set.series}</p>
+            <p className="set-infos set-name">{sealedProductData.set.name}</p>
+            <p className="set-infos set-name">
+              {sealedProductData.set.id.toUpperCase()}
+            </p>
           </div>
         </div>
         <div className="inputs">
           <div className="select-fields">
             <p>1st Edition</p>
             <select
+              value={firstEdition ? 'yes' : 'no'}
               onChange={(e) =>
                 e.target.value === 'yes'
                   ? setFirstEdition(true)
@@ -95,7 +152,6 @@ const AddSealedProductModal = ({
               }
               className="select"
             >
-              <option value=""></option>
               <option value="yes">Yes</option>
               <option value="no">No</option>
             </select>
@@ -107,9 +163,9 @@ const AddSealedProductModal = ({
               onChange={(e) => {
                 setLanguage(e.target.value);
               }}
+              value={language}
               className="select"
             >
-              <option value=""></option>
               <option value="english">English</option>
               <option value="german">German</option>
               <option value="japanese">Japanese</option>
@@ -182,12 +238,12 @@ const AddSealedProductModal = ({
           <div className="select-fields">
             <p>Collection</p>
             <select
+              value={collection}
               onChange={(e) => {
                 setCollection(e.target.value);
               }}
               className="select"
             >
-              <option value=""></option>
               {userData.collections.map((entry, index) => {
                 return (
                   <option key={index} value={entry.collectionName}>
@@ -198,18 +254,42 @@ const AddSealedProductModal = ({
             </select>
           </div>
         </div>
-
+        <div className='espm-button-wrapper'>
         <button
           onClick={() => {
-            handleAddProduct();
+            handleUpdateProduct();
           }}
           className="add-button"
         >
-          Add card
+          Update Product
         </button>
+        <button
+              className="espm-delete-button"
+              onClick={() => {
+                handleScrollCalculation();
+                toggleDeleteProductConfirmationModal();
+              }}
+            >
+              Delete Product
+        </button>
+        </div>  
+        </div>
+        {isDeleteProductConfirmationModalOpen ? (
+          <DeleteProductConfirmationModal
+            scrollY={scrollY}
+            content={content}
+            sealedProductData={sealedProductData}
+            toggleDeleteProductConfirmationModal={
+              toggleDeleteProductConfirmationModal
+            }
+            toggleEditSealedProductModal={toggleEditSealedProductModal}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
 };
 
-export default AddSealedProductModal;
+export default EditSealedProductModal;

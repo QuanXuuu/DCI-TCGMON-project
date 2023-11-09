@@ -2,23 +2,30 @@ import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
+import DeleteConfirmationModal from '../DeleteConfirmationModal/DeleteConfirmationModal';
 import './EditCollectionModal.scss';
 
 const EditCollectionModal = ({
   isEditCollectionModalOpen,
   toggleEditCollectionModal,
   collectionData,
+  toggleSuccessModal,
 }) => {
   const params = useParams();
   const navigate = useNavigate();
 
   const { setUserData } = useContext(UserDataContext);
+  const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const [collectionName, setCollectionName] = useState(params.id);
   const [collectionTCG, setCollectionTCG] = useState(
     collectionData.collectionTCG
   );
+  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
+    useState(false);
+
 
   const { user } = useAuthContext();
   const userLoggedIn = user.data.user;
@@ -50,16 +57,35 @@ const EditCollectionModal = ({
 
   const handleDeleteCollection = async () => {
     const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
+method: 'GET, });
+      
+      const toggleDeleteConfirmationModal = () => {
+    setIsDeleteConfirmationModalOpen(!isDeleteConfirmationModalOpen);
+  };
+
+  const handleUpdateCollection = async () => {
+    const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
 
-    const collectionIndex = data.collections.findIndex(
-      (entry) => entry.collectionName === params.id
+    const initialCollectionIndex = data.collections.findIndex(
+      (entry) => entry.collectionName.toLowerCase() === params.id.toLowerCase()
+    );
+    const newCollectionIndex = data.collections.findIndex(
+      (entry) =>
+        entry.collectionName.toLowerCase() === collectionName.toLowerCase()
     );
 
-    if (collectionIndex !== -1) {
-      data.collections.splice(collectionIndex, 1);
+    if (initialCollectionIndex === newCollectionIndex) {
+      data.collections[initialCollectionIndex].collectionName = collectionName;
+      data.collections[initialCollectionIndex].collectionTCG = collectionTCG;
+    } else if (newCollectionIndex !== -1) {
+      console.log('Duplicate name detected');
+      return;
+    } else {
+      data.collections[initialCollectionIndex].collectionName = collectionName;
+      data.collections[initialCollectionIndex].collectionTCG = collectionTCG;
     }
 
     await fetch(`/api/users/${userLoggedIn.email}`, {
@@ -69,7 +95,10 @@ const EditCollectionModal = ({
     });
 
     setUserData(data);
-    navigate('/collections');
+    setSuccessModalText('Collection name successfully updated!');
+    navigate(`/collections/${collectionName}`);
+    toggleEditCollectionModal();
+    toggleSuccessModal();
   };
 
   return (
@@ -88,12 +117,18 @@ const EditCollectionModal = ({
           placeholder="Collection name"
           value={collectionName}
           onChange={(e) => {
-            setCollectionName(e.target.value);
+            const regex = /^[a-zA-Z0-9]*( [a-zA-Z0-9]+)* ?$/;
+            if (regex.test(e.target.value)) {
+              setCollectionName(e.target.value);
+            }
+          }}
+          onBlur={(e) => {
+            let newValue = e.target.value.trim();
+            setCollectionName(newValue);
           }}
         />
         <div className="select-wrapper">
           <select
-            name="TCGs"
             id="TCGname"
             value={collectionTCG}
             onChange={(e) => {
@@ -108,7 +143,6 @@ const EditCollectionModal = ({
           className="Button"
           onClick={() => {
             handleUpdateCollection();
-            toggleEditCollectionModal();
           }}
         >
           Update collection
@@ -116,12 +150,19 @@ const EditCollectionModal = ({
         <button
           className="delete-button"
           onClick={() => {
-            handleDeleteCollection();
+            toggleDeleteConfirmationModal();
           }}
         >
           Delete collection
         </button>
       </div>
+      {isDeleteConfirmationModalOpen ? (
+        <DeleteConfirmationModal
+          toggleDeleteConfirmationModal={toggleDeleteConfirmationModal}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

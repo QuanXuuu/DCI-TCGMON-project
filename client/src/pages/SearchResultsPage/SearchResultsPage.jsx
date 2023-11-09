@@ -1,18 +1,30 @@
 import { useState, useContext, useEffect } from 'react';
 import SearchQueryContext from '../../contexts/SearchQueryContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
 import SingleCardsResults from '../../components/SingleCardsResults/SingleCardsResults';
 import SealedProductsResults from '../../components/SealedProductsResults/SealedProductsResults';
+import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal';
 import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
   const searchQuery = useContext(SearchQueryContext);
+  const { successModalText } = useContext(SuccessModalTextContext);
 
   const [singleCardSearchResults, setSingleCardSearchResults] = useState({});
   const [sealedProductSearchResults, setSealedProductSearchResults] = useState(
     {}
   );
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const toggleSearchResultsSuccessModal = () => {
+    setIsSuccessModalOpen((prev) => !prev);
+
+    setTimeout(() => {
+      setIsSuccessModalOpen((prev) => !prev);
+    }, 4000);
+  };
 
   useEffect(() => {
     if (
@@ -45,6 +57,10 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
+
+        // Pokemon API data check
+        console.log(cardResultData);
+        console.log(sealedResultData);
       };
 
       searchByName();
@@ -78,14 +94,15 @@ const SearchResultsPage = () => {
 
         const sealedResultData = await fetchSealedResults.json();
         setSealedProductSearchResults(sealedResultData);
+
+        // Pokemon API data check
+        console.log(cardResultData);
+        console.log(sealedResultData);
       };
 
       searchBySet();
     } else return;
-  }, [
-    searchQuery.searchQuery.searchValue,
-    searchQuery.searchQuery.searchMethod,
-  ]);
+  }, []);
 
   return (
     <div className="SearchResultsPage">
@@ -110,17 +127,31 @@ const SearchResultsPage = () => {
         </div>
         <div className="results-wrapper">
           {singleCardSearchResults.count > 0 ? (
-            <SingleCardsResults content={singleCardSearchResults} />
+            <SingleCardsResults
+              content={singleCardSearchResults}
+              toggleSuccessModal={toggleSearchResultsSuccessModal}
+            />
           ) : (
             <></>
           )}
           {sealedProductSearchResults.count > 0 ? (
-            <SealedProductsResults content={sealedProductSearchResults} />
+            <SealedProductsResults
+              content={sealedProductSearchResults}
+              toggleSuccessModal={toggleSearchResultsSuccessModal}
+            />
           ) : (
             <></>
           )}
         </div>
       </div>
+      {isSuccessModalOpen ? (
+        <ErrorAndSuccessModal
+          customClassName="floating-success-modal"
+          easmText={successModalText}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

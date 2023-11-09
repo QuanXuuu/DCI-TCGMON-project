@@ -2,7 +2,7 @@ import SearchResultProduct from '../SearchResultProduct/SearchResultProduct';
 import SealedProductsHeader from '../../components/SealedProductsHeader/SealedProductsHeader';
 import './SealedProductsResults.scss';
 
-const SealedProductsResults = ({ content }) => {
+const SealedProductsResults = ({ content, toggleSuccessModal }) => {
   return (
     <div className="SealedProductsResults">
       <SealedProductsHeader />
@@ -50,7 +50,13 @@ const SealedProductsResults = ({ content }) => {
           })
 
           .map((result, index) => {
-            return <SearchResultProduct key={index} content={result} />;
+            return (
+              <SearchResultProduct
+                key={index}
+                content={result}
+                toggleSuccessModal={toggleSuccessModal}
+              />
+            );
           })}
       </div>
     </div>

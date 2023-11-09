@@ -5,7 +5,9 @@
   top: 0;
   left: 0;
   background-color: rgba(35, 35, 35, 0.932);
-  backdrop-filter: blur(15px);
+  /* background-color: $yellow; */
+  /* background-color: rgb(35, 35, 35); */
+  backdrop-filter: blur(30px);
   width: 100vw;
   height: 100vh;
   z-index: 10000;
@@ -20,15 +22,16 @@
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: flex-end;
-    gap: 0.8rem;
-    font-size: $font2;
+    gap: 1.4rem;
+    font-size: 2.4rem;
     color: $secondary-text;
-    font-weight: 700;
-    padding: 1.6rem 1.6rem 0 0;
+    font-weight: 400;
+    padding: 2.4rem 1.6rem 0 0;
 
     button {
       padding: 0.8rem;
     }
+
   }
 
   footer {
@@ -41,10 +44,11 @@
     align-items: center;
     gap: 0.4rem;
     width: calc(100% - 4.8rem);
-    padding: 1.6rem 0;
-    font-size: $font5;
+    padding: 3.2rem 0;
+    font-size: $font4;
+    font-weight: 100;
     color: $secondary-text;
-    border-top: 0.2rem solid $secondary-text;
+    /* border-top: 0.2rem solid $secondary-text; */
 
     button,
     p {

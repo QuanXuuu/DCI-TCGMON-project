@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import LoginPageErrorModal from '../LoginPageErrorModal/LoginPageErrorModal';
 import './LoginForm.scss';
 
 const LoginForm = () => {
@@ -37,6 +38,7 @@ const LoginForm = () => {
   };
   return (
     <div className="LoginForm">
+     <LoginPageErrorModal />
       <form action="/login" method="POST" onSubmit={handleSubmit}>
         <input
           type="email"

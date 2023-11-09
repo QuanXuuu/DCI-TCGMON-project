@@ -2,7 +2,7 @@ import SearchResultCard from '../SearchResultCard/SearchResultCard';
 import SingleCardsHeader from '../SingleCardsHeader/SingleCardsHeader';
 import './SingleCardsResults.scss';
 
-const SingleCardsResults = ({ content }) => {
+const SingleCardsResults = ({ content, toggleSuccessModal }) => {
   return (
     <div className="SingleCardsResults">
       <SingleCardsHeader />
@@ -37,7 +37,13 @@ const SingleCardsResults = ({ content }) => {
           })
 
           .map((result, index) => {
-            return <SearchResultCard key={index} content={result} />;
+            return (
+              <SearchResultCard
+                key={index}
+                content={result}
+                toggleSuccessModal={toggleSuccessModal}
+              />
+            );
           })}
       </div>
     </div>
