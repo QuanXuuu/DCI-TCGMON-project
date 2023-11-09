@@ -1,5 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import CardDataContext from '../../contexts/CardDataContext';
+import ProductDataContext from '../../contexts/ProductDataContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,12 +19,12 @@ import './CollectionDetailsPage.scss';
 const CollectionDetailsPage = () => {
   const params = useParams();
 
+  const { setCardContentData } = useContext(CardDataContext);
+  const { setProductContentData } = useContext(ProductDataContext);
   const { userData, setUserData } = useContext(UserDataContext);
   const { successModalText } = useContext(SuccessModalTextContext);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState();
-  const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState();
   const [collectionData, setCollectionData] = useState();
   const [purchaseTotal, setPurchaseTotal] = useState();
   const [marketTotal, setMarketTotal] = useState();
@@ -63,7 +65,7 @@ const CollectionDetailsPage = () => {
     if (userData) {
       generateCollectionDetailsData();
     }
-  }, [userData, params.id]);
+  }, [userData]);
 
   useEffect(() => {
     if (isEditCollectionModalOpen) {
@@ -81,15 +83,15 @@ const CollectionDetailsPage = () => {
     const singleCardsQueryStringArray = [];
     const sealedProductsQueryStringArray = [];
 
-    const collectionData = userData.collections.find(
+    const collectionDetailsData = userData.collections.find(
       (collection) => collection.collectionName === `${params.id}`
     );
 
-    collectionData.collectionContent.singleCards.map((entry) => {
+    collectionDetailsData.collectionContent.singleCards.map((entry) => {
       return singleCardsQueryStringArray.push(`id:"${entry.id}"`);
     });
 
-    collectionData.collectionContent.sealedProducts.map((entry) => {
+    collectionDetailsData.collectionContent.sealedProducts.map((entry) => {
       return sealedProductsQueryStringArray.push(`id:"${entry.id}"`);
     });
 
@@ -98,9 +100,16 @@ const CollectionDetailsPage = () => {
       sealedProductsQueryStringArray.join(' OR ');
 
     if (!singleCardsQueryString && !sealedProductsQueryString) {
-      setCollectionData(collectionData);
-      setPokemonDataSingleCards({});
-      setPokemonDataSealedProducts({});
+      setCollectionData(collectionDetailsData);
+
+      const newCardData = { collectionDetailsData };
+      setCardContentData(newCardData);
+
+      const newProductData = { collectionDetailsData };
+      setProductContentData(newProductData);
+
+      //   setPokemonDataSingleCards({});
+      //   setPokemonDataSealedProducts({});
       setPurchaseTotal('0.00');
       setMarketTotal('0.00');
       setColor('black');
@@ -116,9 +125,8 @@ const CollectionDetailsPage = () => {
         }
       );
       const pokemonDataSingleCards = await fetchPokemonDataSingleCards.json();
-      setPokemonDataSingleCards(pokemonDataSingleCards);
 
-      collectionData.collectionContent.singleCards.map((userEntry) => {
+      collectionDetailsData.collectionContent.singleCards.map((userEntry) => {
         const priceData = pokemonDataSingleCards.data.filter(
           (pokemonEntry) => userEntry.id === pokemonEntry.id
         );
@@ -126,6 +134,9 @@ const CollectionDetailsPage = () => {
         return (userEntry.marketPrice =
           priceData[0].cardmarket.prices.averageSellPrice);
       });
+
+      const newCardData = { collectionDetailsData, pokemonDataSingleCards };
+      setCardContentData(newCardData);
     }
 
     if (sealedProductsQueryString) {
@@ -137,28 +148,35 @@ const CollectionDetailsPage = () => {
       );
       const pokemonDataSealedProducts =
         await fetchPokemonDataSealedProducts.json();
-      setPokemonDataSealedProducts(pokemonDataSealedProducts);
 
-      collectionData.collectionContent.sealedProducts.map((userEntry) => {
-        const priceData = pokemonDataSealedProducts.data.filter(
-          (pokemonEntry) => userEntry.id === pokemonEntry.id
-        );
+      collectionDetailsData.collectionContent.sealedProducts.map(
+        (userEntry) => {
+          const priceData = pokemonDataSealedProducts.data.filter(
+            (pokemonEntry) => userEntry.id === pokemonEntry.id
+          );
 
-        return (userEntry.marketPrice = 1);
-        // return (userEntry.marketPrice =
-        //   priceData[0].tcgplayer.prices.normal.mid);
-      });
+          return (userEntry.marketPrice = 1);
+          // return (userEntry.marketPrice =
+          //   priceData[0].tcgplayer.prices.normal.mid);
+        }
+      );
+
+      const newProductData = {
+        collectionDetailsData,
+        pokemonDataSealedProducts,
+      };
+      setProductContentData(newProductData);
     }
 
-    setCollectionData(collectionData);
+    setCollectionData(collectionDetailsData);
 
     const setPrices = async () => {
       const purchaseTotal = await (
-        collectionData.collectionContent.singleCards.reduce(
+        collectionDetailsData.collectionContent.singleCards.reduce(
           (total, entry) => total + entry.purchasePrice,
           0
         ) +
-        collectionData.collectionContent.sealedProducts.reduce(
+        collectionDetailsData.collectionContent.sealedProducts.reduce(
           (total, entry) => total + entry.purchasePrice * entry.amount,
           0
         )
@@ -166,11 +184,11 @@ const CollectionDetailsPage = () => {
       setPurchaseTotal(purchaseTotal);
 
       const marketTotal = await (
-        collectionData.collectionContent.singleCards.reduce(
+        collectionDetailsData.collectionContent.singleCards.reduce(
           (total, entry) => total + entry.marketPrice,
           0
         ) +
-        collectionData.collectionContent.sealedProducts.reduce(
+        collectionDetailsData.collectionContent.sealedProducts.reduce(
           (total, entry) => total + entry.marketPrice * entry.amount,
           0
         )
@@ -277,8 +295,6 @@ const CollectionDetailsPage = () => {
         <div className="collection-details-content-wrapper">
           {collectionData.collectionContent.singleCards.length > 0 ? (
             <CollectionDetailsSingleCardsContent
-              content={collectionData.collectionContent.singleCards}
-              singleCardData={pokemonDataSingleCards}
               marketTotal={marketTotal}
               toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
@@ -287,8 +303,6 @@ const CollectionDetailsPage = () => {
           )}
           {collectionData.collectionContent.sealedProducts.length > 0 ? (
             <CollectionDetailsSealedProductsContent
-              content={collectionData.collectionContent.sealedProducts}
-              sealedProductData={pokemonDataSealedProducts}
               marketTotal={marketTotal}
               toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
