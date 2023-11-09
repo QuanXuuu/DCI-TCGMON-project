@@ -1,6 +1,6 @@
 @import '../../default';
 
-.DeleteCardConfirmationModal {
+.DeleteProductConfirmationModal {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   z-index: 9999;
 }
 
-.dccm-confirmation-content {
+.dpcm-confirmation-content {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
