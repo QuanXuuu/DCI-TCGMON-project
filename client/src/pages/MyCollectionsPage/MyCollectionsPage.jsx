@@ -127,7 +127,7 @@ const MyCollectionsPage = () => {
       </div>
       {isMyCollectionsSuccessModalOpen ? (
         <ErrorAndSuccessModal
-          customClassName="floating-success-modal"
+          customClassName="success-modal"
           easmText={successModalText}
         />
       ) : (
