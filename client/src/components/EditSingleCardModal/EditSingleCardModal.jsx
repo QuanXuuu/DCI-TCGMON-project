@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
@@ -28,24 +28,16 @@ const EditSingleCardModal = ({
   );
   const [collection, setCollection] = useState(params.id);
   const [initialCollection] = useState(params.id);
-  const [isDeleteCardConfirmationModalOpen, setIsDeleteCardConfirmationModalOpen] =
-  useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  const [
+    isDeleteCardConfirmationModalOpen,
+    setIsDeleteCardConfirmationModalOpen,
+  ] = useState(false);
 
   const toggleDeleteCardConfirmationModal = () => {
-  setIsDeleteCardConfirmationModalOpen(!isDeleteCardConfirmationModalOpen);
+    setIsDeleteCardConfirmationModalOpen(!isDeleteCardConfirmationModalOpen);
   };
-
-/*   useEffect(() => {
-    if (isDeleteCardConfirmationModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isDeleteCardConfirmationModalOpen]); */
 
   const handleConditionSelection = (e) => {
     const selectedCondition = e.target.value;
@@ -133,228 +125,245 @@ const EditSingleCardModal = ({
     toggleSuccessModal();
   };
 
+  const handleScrollCalculation = () => {
+    const scrollValue = Math.round(
+      document.querySelector('.EditSingleCardModal').scrollTop
+    );
+    setScrollY(scrollValue);
+  };
+
   return (
     <div
       className="EditSingleCardModal"
-      style={{ overflowY: isEditSingleCardModalOpen ? 'scroll' : 'hidden' } && {overflowY: isDeleteCardConfirmationModalOpen ? 'hidden' : 'scroll'}}
+      style={
+        { overflowY: isEditSingleCardModalOpen ? 'scroll' : 'hidden' } && {
+          overflowY: isDeleteCardConfirmationModalOpen ? 'hidden' : 'scroll',
+        }
+      }
     >
-      <div className='dccm-wrapper'>
-      <div className="close-button-wrapper">
-        <CloseButton
-          isEditSingleCardModalOpen={isEditSingleCardModalOpen}
-          toggleEditSingleCardModal={toggleEditSingleCardModal}
-        />
-      </div>
-
-      <div className="content">
-        <div className="img-and-info-wrapper">
-          <div className="img-wrapper">
-            <img src={singleCardData.images.small} alt={singleCardData.id} />
-          </div>
-          <div className="info">
-            <p className="title">{singleCardData.name}</p>
-            <p className="set-infos">
-              {singleCardData.number} | {singleCardData.set.printedTotal}
-            </p>
-            <p className="set-infos">{singleCardData.rarity}</p>
-            <p className="cycle-name">{singleCardData.set.series}</p>
-            <p className="set-infos set-name">{singleCardData.set.name}</p>
-            <p className="set-infos set-name">
-              {singleCardData.set.id.toUpperCase()}
-            </p>
-          </div>
+      <div className="dccm-wrapper">
+        <div className="close-button-wrapper">
+          <CloseButton
+            isEditSingleCardModalOpen={isEditSingleCardModalOpen}
+            toggleEditSingleCardModal={toggleEditSingleCardModal}
+          />
         </div>
-        <div className="inputs">
-          <div className="select-fields">
-            <p>1st Edition</p>
-            <select
-              value={firstEdition ? 'yes' : 'no'}
-              onChange={(e) =>
-                e.target.value === 'yes'
-                  ? setFirstEdition(true)
-                  : setFirstEdition(false)
-              }
-              className="select"
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
 
-          <div className="select-fields">
-            <p>Reverse Holo</p>
-            <select
-              value={reverseHolo ? 'yes' : 'no'}
-              onChange={(e) =>
-                e.target.value === 'yes'
-                  ? setReverseHolo(true)
-                  : setReverseHolo(false)
-              }
-              className="select"
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p>Language</p>
-            <select
-              onChange={(e) => {
-                setLanguage(e.target.value);
-              }}
-              value={language}
-              className="select"
-            >
-              <option value="english">English</option>
-              <option value="german">German</option>
-              <option value="japanese">Japanese</option>
-              <option value="french">French</option>
-              <option value="dutch">Dutch</option>
-              <option value="spanish">Spanish</option>
-              <option value="portuguese">Portuguese</option>
-              <option value="italian">Italian</option>
-              <option value="korean">Korean</option>
-              <option value="indonesian">Indonesian</option>
-              <option value="thai">Thai</option>
-              <option value="traditional chinese">Traditional Chinese</option>
-              <option value="simplified chinese">Simplified Chinese</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p
-              style={{
-                color: grade ? 'rgb(100, 100, 100)' : '',
-              }}
-            >
-              Condition
-            </p>
-            <select
-              className="select"
-              id="conditionSelection"
-              value={condition}
-              onChange={handleConditionSelection}
-              style={{
-                backgroundColor: grade ? 'rgb(75, 75, 75)' : '',
-              }}
-            >
-              <option value=""></option>
-              <option value="mint">Mint</option>
-              <option value="near mint">Near Mint</option>
-              <option value="excellent">Excellent</option>
-              <option value="good">Good</option>
-              <option value="light played">Light Played</option>
-              <option value="played">Played</option>
-              <option value="poor">Poor</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p
-              style={{
-                color: condition ? 'rgb(100, 100, 100)' : '',
-              }}
-            >
-              Grade
-            </p>
-            <select
-              className="select"
-              id="gradeSelection"
-              value={grade}
-              onChange={handleGradeSelection}
-              style={{
-                backgroundColor: condition ? 'rgb(75, 75, 75)' : '',
-              }}
-            >
-              <option value=""></option>
-              <option value="10">10</option>
-              <option value="9">9</option>
-              <option value="8">8</option>
-              <option value="7">7</option>
-              <option value="6">6</option>
-              <option value="5">5</option>
-              <option value="4">4</option>
-              <option value="3">3</option>
-              <option value="2">2</option>
-              <option value="1.5">1.5</option>
-              <option value="1">1</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p>Purchase Price</p>
-            <div className="select-purchase-price">
-              <input
-                type="number"
-                placeholder="0.00"
-                value={purchasePrice}
-                onChange={(e) => {
-                  setPurchasePrice(e.target.value);
-                }}
-                onFocus={() => {
-                  setPurchasePrice('');
-                }}
-                onBlur={(e) => {
-                  let newValue = 0;
-                  if (e.target.value < 0) {
-                    newValue = (e.target.value * -1).toFixed(2);
-                  } else {
-                    newValue = Number(e.target.value).toFixed(2);
-                  }
-                  setPurchasePrice(newValue);
-                }}
-              />
-              <p className="select-purchase-price-euro">€</p>
+        <div className="content">
+          <div className="img-and-info-wrapper">
+            <div className="img-wrapper">
+              <img src={singleCardData.images.small} alt={singleCardData.id} />
+            </div>
+            <div className="info">
+              <p className="title">{singleCardData.name}</p>
+              <p className="set-infos">
+                {singleCardData.number} | {singleCardData.set.printedTotal}
+              </p>
+              <p className="set-infos">{singleCardData.rarity}</p>
+              <p className="cycle-name">{singleCardData.set.series}</p>
+              <p className="set-infos set-name">{singleCardData.set.name}</p>
+              <p className="set-infos set-name">
+                {singleCardData.set.id.toUpperCase()}
+              </p>
             </div>
           </div>
+          <div className="inputs">
+            <div className="select-fields">
+              <p>1st Edition</p>
+              <select
+                value={firstEdition ? 'yes' : 'no'}
+                onChange={(e) =>
+                  e.target.value === 'yes'
+                    ? setFirstEdition(true)
+                    : setFirstEdition(false)
+                }
+                className="select"
+              >
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
 
-          <div className="select-fields">
-            <p>Collection</p>
-            <select
-              value={collection}
-              onChange={(e) => {
-                setCollection(e.target.value);
+            <div className="select-fields">
+              <p>Reverse Holo</p>
+              <select
+                value={reverseHolo ? 'yes' : 'no'}
+                onChange={(e) =>
+                  e.target.value === 'yes'
+                    ? setReverseHolo(true)
+                    : setReverseHolo(false)
+                }
+                className="select"
+              >
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+
+            <div className="select-fields">
+              <p>Language</p>
+              <select
+                onChange={(e) => {
+                  setLanguage(e.target.value);
+                }}
+                value={language}
+                className="select"
+              >
+                <option value="english">English</option>
+                <option value="german">German</option>
+                <option value="japanese">Japanese</option>
+                <option value="french">French</option>
+                <option value="dutch">Dutch</option>
+                <option value="spanish">Spanish</option>
+                <option value="portuguese">Portuguese</option>
+                <option value="italian">Italian</option>
+                <option value="korean">Korean</option>
+                <option value="indonesian">Indonesian</option>
+                <option value="thai">Thai</option>
+                <option value="traditional chinese">Traditional Chinese</option>
+                <option value="simplified chinese">Simplified Chinese</option>
+              </select>
+            </div>
+
+            <div className="select-fields">
+              <p
+                style={{
+                  color: grade ? 'rgb(100, 100, 100)' : '',
+                }}
+              >
+                Condition
+              </p>
+              <select
+                className="select"
+                id="conditionSelection"
+                value={condition}
+                onChange={handleConditionSelection}
+                style={{
+                  backgroundColor: grade ? 'rgb(75, 75, 75)' : '',
+                }}
+              >
+                <option value=""></option>
+                <option value="mint">Mint</option>
+                <option value="near mint">Near Mint</option>
+                <option value="excellent">Excellent</option>
+                <option value="good">Good</option>
+                <option value="light played">Light Played</option>
+                <option value="played">Played</option>
+                <option value="poor">Poor</option>
+              </select>
+            </div>
+
+            <div className="select-fields">
+              <p
+                style={{
+                  color: condition ? 'rgb(100, 100, 100)' : '',
+                }}
+              >
+                Grade
+              </p>
+              <select
+                className="select"
+                id="gradeSelection"
+                value={grade}
+                onChange={handleGradeSelection}
+                style={{
+                  backgroundColor: condition ? 'rgb(75, 75, 75)' : '',
+                }}
+              >
+                <option value=""></option>
+                <option value="10">10</option>
+                <option value="9">9</option>
+                <option value="8">8</option>
+                <option value="7">7</option>
+                <option value="6">6</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1.5">1.5</option>
+                <option value="1">1</option>
+              </select>
+            </div>
+
+            <div className="select-fields">
+              <p>Purchase Price</p>
+              <div className="select-purchase-price">
+                <input
+                  type="number"
+                  placeholder="0.00"
+                  value={purchasePrice}
+                  onChange={(e) => {
+                    setPurchasePrice(e.target.value);
+                  }}
+                  onFocus={() => {
+                    setPurchasePrice('');
+                  }}
+                  onBlur={(e) => {
+                    let newValue = 0;
+                    if (e.target.value < 0) {
+                      newValue = (e.target.value * -1).toFixed(2);
+                    } else {
+                      newValue = Number(e.target.value).toFixed(2);
+                    }
+                    setPurchasePrice(newValue);
+                  }}
+                />
+                <p className="select-purchase-price-euro">€</p>
+              </div>
+            </div>
+
+            <div className="select-fields">
+              <p>Collection</p>
+              <select
+                value={collection}
+                onChange={(e) => {
+                  setCollection(e.target.value);
+                }}
+                className="select"
+              >
+                {userData.collections.map((entry, index) => {
+                  return (
+                    <option key={index} value={entry.collectionName}>
+                      {entry.collectionName}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="escm-button-wrapper">
+            <button
+              onClick={() => {
+                handleUpdateCard();
               }}
-              className="select"
+              className="add-button"
             >
-              {userData.collections.map((entry, index) => {
-                return (
-                  <option key={index} value={entry.collectionName}>
-                    {entry.collectionName}
-                  </option>
-                );
-              })}
-            </select>
+              Update card
+            </button>
+            <button
+              className="escm-delete-button"
+              onClick={() => {
+                handleScrollCalculation();
+                toggleDeleteCardConfirmationModal();
+              }}
+            >
+              Delete Card
+            </button>
           </div>
         </div>
-        <div className='escm-button-wrapper'>
-        <button
-          onClick={() => {
-            handleUpdateCard();
-          }}
-          className="add-button"
-        >
-          Update card
-        </button>
-        <button
-          className="escm-delete-button"
-          onClick={() => {
-            toggleDeleteCardConfirmationModal();
-          }}
-        >
-          Delete Card
-        </button>
-        </div>
-      </div>
-      
-      {isDeleteCardConfirmationModalOpen ? (
-        <DeleteCardConfirmationModal
-          isDeleteCardConfirmationModalOpen=      {isDeleteCardConfirmationModalOpen}
-          toggleDeleteCardConfirmationModal={toggleDeleteCardConfirmationModal}
-        />
-      ) : (
-        <></>
+
+        {isDeleteCardConfirmationModalOpen ? (
+          <DeleteCardConfirmationModal
+            scrollY={scrollY}
+            content={content}
+            singleCardData={singleCardData}
+            toggleDeleteCardConfirmationModal={
+              toggleDeleteCardConfirmationModal
+            }
+            toggleEditSingleCardModal={toggleEditSingleCardModal}
+          />
+        ) : (
+          <></>
         )}
       </div>
     </div>

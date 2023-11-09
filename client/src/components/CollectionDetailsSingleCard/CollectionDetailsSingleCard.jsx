@@ -38,7 +38,7 @@ const CollectionDetailsSingleCard = ({
     }
 
     setIsLoading(false);
-  }, [singleCardData]);
+  }, [content, singleCardData]);
 
   useEffect(() => {
     if (isEditSingleCardModalOpen) {
