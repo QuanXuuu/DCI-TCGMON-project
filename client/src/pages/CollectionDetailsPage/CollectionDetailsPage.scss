@@ -4,6 +4,7 @@
   background: $bg-color-gradient-mobile;
   background-size: 150%;
   background-attachment: fixed;
+  position: relative;
 
   .page-wrapper {
     display: flex;
@@ -29,6 +30,8 @@
         font-size: $font1;
         font-weight: 700;
         text-align: center;
+        line-height: 1.15;
+        word-break: break-word;
         color: $primary-text;
       }
 

@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
+import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -10,12 +11,14 @@ import CollectionDetailsSingleCardsContent from '../../components/CollectionDeta
 import CollectionDetailsSealedProductsContent from '../../components/CollectionDetailsSealedProductsContent/CollectionDetailsSealedProductsContent';
 import Header from '../../components/Header/Header';
 import ReturnButton from '../../components/ReturnButton/ReturnButton';
+import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal';
 import './CollectionDetailsPage.scss';
 
 const CollectionDetailsPage = () => {
   const params = useParams();
 
   const { userData, setUserData } = useContext(UserDataContext);
+  const { successModalText } = useContext(SuccessModalTextContext);
 
   const [isLoading, setIsLoading] = useState(true);
   const [pokemonDataSingleCards, setPokemonDataSingleCards] = useState();
@@ -28,131 +31,39 @@ const CollectionDetailsPage = () => {
   const [isEditCollectionModalOpen, setIsEditCollectionModalOpen] =
     useState(false);
 
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const toggleCollectionDetailsSuccessModal = () => {
+    setIsSuccessModalOpen((prev) => !prev);
+
+    setTimeout(() => {
+      setIsSuccessModalOpen((prev) => !prev);
+    }, 4000);
+  };
+
   const toggleEditCollectionModal = () => {
     setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
   };
 
   useEffect(() => {
-    const generateCollectionDetailsData = async () => {
-      const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
-        method: 'GET',
-      });
-      const userData = await fetchUserData.json();
-      setUserData(userData);
-
-      const singleCardsQueryStringArray = [];
-      const sealedProductsQueryStringArray = [];
-
-      const collectionData = userData.collections.find(
-        (collection) => collection.collectionName === `${params.id}`
-      );
-
-      collectionData.collectionContent.singleCards.map((entry) => {
-        return singleCardsQueryStringArray.push(`id:"${entry.id}"`);
-      });
-
-      collectionData.collectionContent.sealedProducts.map((entry) => {
-        return sealedProductsQueryStringArray.push(`id:"${entry.id}"`);
-      });
-
-      const singleCardsQueryString = singleCardsQueryStringArray.join(' OR ');
-      const sealedProductsQueryString =
-        sealedProductsQueryStringArray.join(' OR ');
-
-      if (!singleCardsQueryString && !sealedProductsQueryString) {
-        setCollectionData(collectionData);
-        setPokemonDataSingleCards({});
-        setPokemonDataSealedProducts({});
-        setPurchaseTotal('0.00');
-        setMarketTotal('0.00');
-        setColor('black');
-        setIsLoading(false);
-        return;
-      }
-
-      if (singleCardsQueryString) {
-        const fetchPokemonDataSingleCards = await fetch(
-          `https://api.pokemontcg.io/v2/cards?q=(${singleCardsQueryString})`,
-          {
-            method: 'GET',
-          }
-        );
-        const pokemonDataSingleCards = await fetchPokemonDataSingleCards.json();
-        setPokemonDataSingleCards(pokemonDataSingleCards);
-
-        collectionData.collectionContent.singleCards.map((userEntry) => {
-          const priceData = pokemonDataSingleCards.data.filter(
-            (pokemonEntry) => userEntry.id === pokemonEntry.id
-          );
-
-          return (userEntry.marketPrice =
-            priceData[0].cardmarket.prices.averageSellPrice);
+    if (!userData) {
+      const fetchUserData = async () => {
+        const response = await fetch(`/api/users/bob@bob.de`, {
+          method: 'GET',
         });
-      }
-
-      if (sealedProductsQueryString) {
-        const fetchPokemonDataSealedProducts = await fetch(
-          `https://api.pokemontcg.io/v2/sealed?q=(${sealedProductsQueryString})`,
-          {
-            method: 'GET',
-          }
-        );
-        const pokemonDataSealedProducts =
-          await fetchPokemonDataSealedProducts.json();
-        setPokemonDataSealedProducts(pokemonDataSealedProducts);
-
-        collectionData.collectionContent.sealedProducts.map((userEntry) => {
-          const priceData = pokemonDataSealedProducts.data.filter(
-            (pokemonEntry) => userEntry.id === pokemonEntry.id
-          );
-
-          return (userEntry.marketPrice =
-            priceData[0].tcgplayer.prices.normal.market);
-        });
-      }
-
-      setCollectionData(collectionData);
-
-      const setPrices = async () => {
-        const purchaseTotal = await (
-          collectionData.collectionContent.singleCards.reduce(
-            (total, entry) => total + entry.purchasePrice,
-            0
-          ) +
-          collectionData.collectionContent.sealedProducts.reduce(
-            (total, entry) => total + entry.purchasePrice * entry.amount,
-            0
-          )
-        ).toFixed(2);
-        setPurchaseTotal(purchaseTotal);
-
-        const marketTotal = await (
-          collectionData.collectionContent.singleCards.reduce(
-            (total, entry) => total + entry.marketPrice,
-            0
-          ) +
-          collectionData.collectionContent.sealedProducts.reduce(
-            (total, entry) => total + entry.marketPrice * entry.amount,
-            0
-          )
-        ).toFixed(2);
-        setMarketTotal(marketTotal);
-
-        if (Number(purchaseTotal) < Number(marketTotal)) {
-          setColor('green');
-        }
-
-        if (Number(purchaseTotal) > Number(marketTotal)) {
-          setColor('red');
-        }
+        const userData = await response.json();
+        setUserData(userData);
       };
 
-      setPrices();
-      setIsLoading(false);
-    };
+      fetchUserData();
+    }
+  }, []);
 
-    generateCollectionDetailsData();
-  }, [params.id]);
+  useEffect(() => {
+    if (userData) {
+      generateCollectionDetailsData();
+    }
+  }, [userData, params.id]);
 
   useEffect(() => {
     if (isEditCollectionModalOpen) {
@@ -165,6 +76,119 @@ const CollectionDetailsPage = () => {
       document.body.style.overflow = 'auto';
     };
   }, [isEditCollectionModalOpen]);
+
+  const generateCollectionDetailsData = async () => {
+    const singleCardsQueryStringArray = [];
+    const sealedProductsQueryStringArray = [];
+
+    const collectionData = userData.collections.find(
+      (collection) => collection.collectionName === `${params.id}`
+    );
+
+    collectionData.collectionContent.singleCards.map((entry) => {
+      return singleCardsQueryStringArray.push(`id:"${entry.id}"`);
+    });
+
+    collectionData.collectionContent.sealedProducts.map((entry) => {
+      return sealedProductsQueryStringArray.push(`id:"${entry.id}"`);
+    });
+
+    const singleCardsQueryString = singleCardsQueryStringArray.join(' OR ');
+    const sealedProductsQueryString =
+      sealedProductsQueryStringArray.join(' OR ');
+
+    if (!singleCardsQueryString && !sealedProductsQueryString) {
+      setCollectionData(collectionData);
+      setPokemonDataSingleCards({});
+      setPokemonDataSealedProducts({});
+      setPurchaseTotal('0.00');
+      setMarketTotal('0.00');
+      setColor('black');
+      setIsLoading(false);
+      return;
+    }
+
+    if (singleCardsQueryString) {
+      const fetchPokemonDataSingleCards = await fetch(
+        `https://api.pokemontcg.io/v2/cards?q=(${singleCardsQueryString})`,
+        {
+          method: 'GET',
+        }
+      );
+      const pokemonDataSingleCards = await fetchPokemonDataSingleCards.json();
+      setPokemonDataSingleCards(pokemonDataSingleCards);
+
+      collectionData.collectionContent.singleCards.map((userEntry) => {
+        const priceData = pokemonDataSingleCards.data.filter(
+          (pokemonEntry) => userEntry.id === pokemonEntry.id
+        );
+
+        return (userEntry.marketPrice =
+          priceData[0].cardmarket.prices.averageSellPrice);
+      });
+    }
+
+    if (sealedProductsQueryString) {
+      const fetchPokemonDataSealedProducts = await fetch(
+        `https://api.pokemontcg.io/v2/sealed?q=(${sealedProductsQueryString})`,
+        {
+          method: 'GET',
+        }
+      );
+      const pokemonDataSealedProducts =
+        await fetchPokemonDataSealedProducts.json();
+      setPokemonDataSealedProducts(pokemonDataSealedProducts);
+
+      collectionData.collectionContent.sealedProducts.map((userEntry) => {
+        const priceData = pokemonDataSealedProducts.data.filter(
+          (pokemonEntry) => userEntry.id === pokemonEntry.id
+        );
+
+        return (userEntry.marketPrice = 1);
+        // return (userEntry.marketPrice =
+        //   priceData[0].tcgplayer.prices.normal.mid);
+      });
+    }
+
+    setCollectionData(collectionData);
+
+    const setPrices = async () => {
+      const purchaseTotal = await (
+        collectionData.collectionContent.singleCards.reduce(
+          (total, entry) => total + entry.purchasePrice,
+          0
+        ) +
+        collectionData.collectionContent.sealedProducts.reduce(
+          (total, entry) => total + entry.purchasePrice * entry.amount,
+          0
+        )
+      ).toFixed(2);
+      setPurchaseTotal(purchaseTotal);
+
+      const marketTotal = await (
+        collectionData.collectionContent.singleCards.reduce(
+          (total, entry) => total + entry.marketPrice,
+          0
+        ) +
+        collectionData.collectionContent.sealedProducts.reduce(
+          (total, entry) => total + entry.marketPrice * entry.amount,
+          0
+        )
+      ).toFixed(2);
+      setMarketTotal(marketTotal);
+
+      if (Number(purchaseTotal) < Number(marketTotal)) {
+        setColor('green');
+      }
+
+      if (Number(purchaseTotal) > Number(marketTotal)) {
+        setColor('red');
+      }
+    };
+
+    setPrices();
+    setIsLoading(false);
+  };
 
   return isLoading ? null : (
     <div className="CollectionDetailsPage">
@@ -182,6 +206,7 @@ const CollectionDetailsPage = () => {
               isEditCollectionModalOpen={isEditCollectionModalOpen}
               toggleEditCollectionModal={toggleEditCollectionModal}
               collectionData={collectionData}
+              toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
           )}
         </div>
@@ -233,7 +258,9 @@ const CollectionDetailsPage = () => {
               </div>
               <div className="text-wrapper">
                 <span className={`bold ${color}`}>
-                  {((marketTotal / purchaseTotal - 1) * 100).toFixed(2) < 0
+                  {purchaseTotal === '0.00'
+                    ? '∞ %'
+                    : ((marketTotal / purchaseTotal - 1) * 100).toFixed(2) < 0
                     ? `${((marketTotal / purchaseTotal - 1) * 100).toFixed(
                         2
                       )} %`
@@ -253,6 +280,7 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.singleCards}
               singleCardData={pokemonDataSingleCards}
               marketTotal={marketTotal}
+              toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
           ) : (
             <></>
@@ -262,12 +290,21 @@ const CollectionDetailsPage = () => {
               content={collectionData.collectionContent.sealedProducts}
               sealedProductData={pokemonDataSealedProducts}
               marketTotal={marketTotal}
+              toggleSuccessModal={toggleCollectionDetailsSuccessModal}
             />
           ) : (
             <></>
           )}
         </div>
       </div>
+      {isSuccessModalOpen ? (
+        <ErrorAndSuccessModal
+          customClassName="floating-success-modal"
+          easmText={successModalText}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

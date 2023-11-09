@@ -5,7 +5,7 @@ import './MenuHeader.scss';
 const MenuHeader = ({ isMenuOpen, toggleMenu }) => {
   return (
     <div className="MenuHeader">
-      <Logo height={'40'} />
+      {/* <Logo height={'40'} /> */}
       <div className="close-button-wrapper">
         <CloseButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
       </div>

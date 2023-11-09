@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import './RegisterForm.scss';
 
-const RegisterForm = ({ onAddUsers }) => {
+const RegisterForm = ({ onAddUsers, isValidEmail, setIsInvalidEmail }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
@@ -14,6 +15,13 @@ const RegisterForm = ({ onAddUsers }) => {
     e.preventDefault();
     if (!email) return;
     if (password !== confirmPassword) return;
+
+    if (!isValidEmail(email)) {  // !!!!
+      setIsInvalidEmail(true);
+      return;
+    }
+
+  setIsInvalidEmail(false);
 
     try {
       const newUser = { email, password };
@@ -42,7 +50,7 @@ const RegisterForm = ({ onAddUsers }) => {
 
   return (
     <div className="RegisterForm">
-      <form action="" method="POST" onSubmit={handleSubmit}>
+      <form action="" method="POST" onSubmit={handleSubmit} noValidate>
         <input
           className="RegisterFormInputOne"
           type="email"

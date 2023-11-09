@@ -1,6 +1,6 @@
 @import '../../default';
 
-.AddSealedProductModal {
+.EditSealedProductModal {
   position: fixed;
   top: 0;
   left: 0;
@@ -204,17 +204,43 @@
         }
       }
     }
-
-    .add-button {
+    .espm-button-wrapper {
       width: 100%;
-      max-width: 40rem;
-      height: 5.6rem;
-      border-radius: $button-border-radius;
-      background-color: $yellow;
-      font-size: $font3;
-      font-weight: 700;
-      text-align: center;
-      cursor: pointer;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2.4rem;
+
+      .add-button {
+        width: 100%;
+        max-width: 40rem;
+        height: 5.6rem;
+        border-radius: $button-border-radius;
+        background-color: $yellow;
+        font-size: $font3;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .espm-delete-button {
+        width: 100%;
+        max-width: 40rem;
+        height: 5.6rem;
+        margin-bottom: 1.6rem;
+        border-radius: $button-border-radius;
+        background-color: #e24a5d;
+        color: $secondary-text;
+        font-size: $font3;
+        font-weight: 400;
+        text-align: center;
+        cursor: pointer;
+      }
     }
+  }
+
+  .espm-wrapper {
+    position: relative;
   }
 }

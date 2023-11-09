@@ -10,7 +10,7 @@
 
   .sealed-products-results-wrapper {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: center;
     gap: 0.8rem;
