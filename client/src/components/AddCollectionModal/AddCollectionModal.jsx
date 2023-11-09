@@ -9,6 +9,7 @@ const AddCollectionModal = ({
   toggleAddCollectionModal,
   toggleSuccessModal,
 }) => {
+
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 

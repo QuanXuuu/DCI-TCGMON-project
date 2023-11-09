@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import UserDataContext from '../../contexts/UserDataContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import Header from '../../components/Header/Header';
@@ -23,6 +24,10 @@ const MyCollectionsPage = () => {
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState(
     {}
   );
+
+  const { user } = useAuthContext();
+  const userLoggedIn = user.data.user;
+
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
 
@@ -32,11 +37,12 @@ const MyCollectionsPage = () => {
 
   useEffect(() => {
     const generateCollectionsData = async () => {
-      const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+      const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
       setUserData(userData);
+      console.log('updatedUserData', userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];
