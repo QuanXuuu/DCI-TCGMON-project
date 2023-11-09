@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import catchAsync from "../utils/catchAsync.js";
 
-export const signToken = (_id) => {
-  return jwt.sign({ _id }, process.env.JWT_SECRET, {
+export const signToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
