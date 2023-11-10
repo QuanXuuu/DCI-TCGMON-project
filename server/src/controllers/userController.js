@@ -20,18 +20,17 @@ export const createSendToken = (user, statusCode, res) => {
   res.cookie("jwt", token, cookieOptions);
 
   res.status(statusCode).json({
-    // token,
+    token,
     data: {
       user,
     },
   });
 };
 
-export const register = catchAsync(async (req, res, next) => {
+export const register = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
   const exists = await User.findOne({ email });
-
   if (exists) {
     res.status(400).json({
       success: false,
@@ -62,13 +61,13 @@ export const login = catchAsync(async (req, res) => {
   }
 });
 
-export const getUser = catchAsync(async (req, res, next) => {
+export const getUser = catchAsync(async (req, res) => {
   const response = await User.findOne({ email: req.params.id });
 
   res.status(200).json(response);
 });
 
-export const getAllUsers = catchAsync(async (req, res, next) => {
+export const getAllUsers = catchAsync(async (req, res) => {
   const response = await User.find();
   res.status(200).json({
     success: true,
@@ -77,7 +76,7 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-export const updateUser = catchAsync(async (req, res, next) => {
+export const updateUser = catchAsync(async (req, res) => {
   const response = await User.findOne({ email: req.params.id });
   const { collections } = req.body;
   response.collections = collections;
@@ -90,7 +89,7 @@ export const updateUser = catchAsync(async (req, res, next) => {
   });
 });
 
-export const deleteUser = catchAsync(async (req, res, next) => {
+export const deleteUser = catchAsync(async (req, res) => {
   await User.findByIdAndDelete(req.params.id);
   res.status(200).json({
     success: true,
@@ -98,7 +97,7 @@ export const deleteUser = catchAsync(async (req, res, next) => {
   });
 });
 
-export const deleteAllUsers = catchAsync(async (req, res, next) => {
+export const deleteAllUsers = catchAsync(async (req, res) => {
   await User.deleteMany();
   res.status(200).json({
     success: true,

@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
     joined: {
       type: String,
       default: new Date().toLocaleDateString("fr-CA", {
-        // French Canada ==> de-DE
+        // French Canada ==> de-DE ??
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
