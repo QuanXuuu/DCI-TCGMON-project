@@ -26,40 +26,10 @@ const EditCollectionModal = ({
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false);
 
-
   const { user } = useAuthContext();
   const userLoggedIn = user.data.user;
 
-  const handleUpdateCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
-      method: 'GET',
-    });
-    const data = await fetchUserData.json();
-
-    const collectionIndex = data.collections.findIndex(
-      (entry) => entry.collectionName === params.id
-    );
-
-    if (collectionIndex !== -1) {
-      data.collections[collectionIndex].collectionName = collectionName;
-      data.collections[collectionIndex].collectionTCG = collectionTCG;
-    }
-
-    await fetch(`/api/users/${userLoggedIn.email}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-
-    setUserData(data);
-    navigate(`/collections/${collectionName}`);
-  };
-
-  const handleDeleteCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
-method: 'GET, });
-      
-      const toggleDeleteConfirmationModal = () => {
+  const toggleDeleteConfirmationModal = () => {
     setIsDeleteConfirmationModalOpen(!isDeleteConfirmationModalOpen);
   };
 
