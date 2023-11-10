@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import './RegisterForm.scss';
 
 const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEmail, isNotSamePassword, setisNotSamePassword}) => {
@@ -8,13 +9,14 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigate = useNavigate();
+  const { dispatch } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
+
     if (password !== confirmPassword) {
       setisNotSamePassword(!isNotSamePassword);
-      return console.log('Please enter the same password again.');
+ 
     }
 
     if (!isValidEmail(email)) {  // !!!!
@@ -39,6 +41,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
       const response = await newUserData.json();
       console.log('newUserData:', response);
 
+      dispatch({ type: 'LOGIN', payload: response });
       setEmail('');
       setPassword('');
       setConfirmPassword('');
@@ -54,17 +57,17 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
         <input
           className={`input ${isInvalidEmail ? 'invalid-border' : ''}`} // !!! 
           type="email"
+          placeholder="Email address"
           name="email"
           value={email}
-          placeholder="Email address"
           required
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           className={`input ${isNotSamePassword ? 'invalid-border' : ''}`}
           type="password"
-          name="password"
           placeholder="Password"
+          name="password"
           value={password}
           required
           onChange={(e) => setPassword(e.target.value)}
@@ -79,7 +82,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
           required
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button className="signup-button">Sign Up</button>
+        <button className="signup-button">Create account</button>
       </form>
     </div>
   );

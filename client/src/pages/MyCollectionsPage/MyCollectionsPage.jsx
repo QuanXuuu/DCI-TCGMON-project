@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
@@ -11,6 +12,7 @@ import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAnd
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
+  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { successModalText } = useContext(SuccessModalTextContext);
   const { isMyCollectionsSuccessModalOpen } = useContext(
@@ -23,6 +25,7 @@ const MyCollectionsPage = () => {
   const [pokemonDataSealedProducts, setPokemonDataSealedProducts] = useState(
     {}
   );
+
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
 
@@ -32,7 +35,7 @@ const MyCollectionsPage = () => {
 
   useEffect(() => {
     const generateCollectionsData = async () => {
-      const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+      const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
@@ -107,9 +110,15 @@ const MyCollectionsPage = () => {
       <Header />
       <div className="page-wrapper">
         <h1>My Collections</h1>
-        <CollectionSummaryContainer
-          data={{ userData, pokemonDataSingleCards, pokemonDataSealedProducts }}
-        />
+        {userData.collections.length > 0 && (
+          <CollectionSummaryContainer
+            data={{
+              userData,
+              pokemonDataSingleCards,
+              pokemonDataSealedProducts,
+            }}
+          />
+        )}
         <div className="button-wrapper">
           <AddCollectionButton
             text={'Create new collection'}

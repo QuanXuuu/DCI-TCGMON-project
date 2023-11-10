@@ -14,7 +14,7 @@ const CollectionDetailsSingleCard = ({
   toggleSuccessModal,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [singleCard, setSingleCard] = useState();
+  const [singleCard, setSingleCard] = useState([]);
   const [singleCardColor, setSingleCardColor] = useState('');
   const [isEditSingleCardModalOpen, setIsEditSingleCardModalOpen] =
     useState(false);
@@ -38,7 +38,7 @@ const CollectionDetailsSingleCard = ({
     }
 
     setIsLoading(false);
-  }, [content, singleCardData]);
+  }, [singleCardData]);
 
   useEffect(() => {
     if (isEditSingleCardModalOpen) {

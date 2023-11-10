@@ -5,6 +5,7 @@ import Button from '../../components/Button/Button.jsx';
 import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal.jsx';
 import LoginPageErrorModal from '../../components/LoginPageErrorModal/LoginPageErrorModal.jsx';
 
+
 import './LoginPage.scss';
 
 const LoginPage = () => {
@@ -13,6 +14,9 @@ const LoginPage = () => {
   return (
     <div className="LoginPage">
       <Logo height={'80'} />
+
+    <LoginPageErrorModal /> 
+
 
       <div className="LoginTextAndFormBox">
         <div>
@@ -27,7 +31,7 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="LoginAndRegisterContainer">
-        <Button text={'Login'} link={'collections'} />
+        {/* <Button text={'Login'} link={'collections'} /> */}
         <button
           className="LoginPageRegisterButton"
           onClick={() => navigate('/register')}

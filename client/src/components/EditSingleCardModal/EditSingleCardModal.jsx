@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -7,14 +8,15 @@ import DeleteCardConfirmationModal from '../DeleteCardConfirmationModal/DeleteCa
 import './EditSingleCardModal.scss';
 
 const EditSingleCardModal = ({
-  isEditSingleCardModalOpen,
-  toggleEditSingleCardModal,
   content,
   singleCardData,
+  isEditSingleCardModalOpen,
+  toggleEditSingleCardModal,
   toggleSuccessModal,
 }) => {
   const params = useParams();
 
+  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -75,7 +77,7 @@ const EditSingleCardModal = ({
 
     const selectedCollection = collection;
 
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+    const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -111,7 +113,7 @@ const EditSingleCardModal = ({
       ] = updatedSingleCard;
     }
 
-    await fetch(`/api/users/bob@bob.de`, {
+    await fetch(`/api/user/${user.data.user.email}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -361,6 +363,7 @@ const EditSingleCardModal = ({
               toggleDeleteCardConfirmationModal
             }
             toggleEditSingleCardModal={toggleEditSingleCardModal}
+            toggleSuccessModal={toggleSuccessModal}
           />
         ) : (
           <></>

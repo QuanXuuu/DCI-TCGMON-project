@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import CardDataContext from './contexts/CardDataContext.jsx';
+import ProductDataContext from './contexts/ProductDataContext.jsx';
 import SearchQueryContext from './contexts/SearchQueryContext';
 import SuccessModalTextContext from './contexts/SuccessModalTextContext.jsx';
 import TriggerSuccessModalContext from './contexts/TriggerSuccessModal.jsx';
@@ -14,6 +16,8 @@ import CollectionDetailsPage from './pages/CollectionDetailsPage/CollectionDetai
 import './App.scss';
 
 const App = () => {
+  const [cardContentData, setCardContentData] = useState({});
+  const [productContentData, setProductContentData] = useState({});
   const [searchQuery, setSearchQuery] = useState({});
   const [successModalText, setSuccessModalText] = useState();
   const [userData, setUserData] = useState(null);
@@ -28,6 +32,8 @@ const App = () => {
     }, 4000);
   };
 
+  const cardData = { cardContentData, setCardContentData };
+  const productData = { productContentData, setProductContentData };
   const search = { searchQuery, setSearchQuery };
   const modalText = { successModalText, setSuccessModalText };
   const triggerModal = {
@@ -42,27 +48,34 @@ const App = () => {
       <SuccessModalTextContext.Provider value={modalText}>
         <SearchQueryContext.Provider value={search}>
           <TriggerSuccessModalContext.Provider value={triggerModal}>
-            <div className="App">
-              <BrowserRouter>
-                <div className="page">
-                  <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route
-                      path="/collections"
-                      element={<MyCollectionsPage />}
-                    />
-                    <Route
-                      path="/collections/:id"
-                      element={<CollectionDetailsPage />}
-                    />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/results" element={<SearchResultsPage />} />
-                  </Routes>
+            <CardDataContext.Provider value={cardData}>
+              <ProductDataContext.Provider value={productData}>
+                <div className="App">
+                  <BrowserRouter>
+                    <div className="page">
+                      <Routes>
+                        <Route path="/" element={<LandingPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route
+                          path="/collections"
+                          element={<MyCollectionsPage />}
+                        />
+                        <Route
+                          path="/collections/:id"
+                          element={<CollectionDetailsPage />}
+                        />
+                        <Route path="/search" element={<SearchPage />} />
+                        <Route
+                          path="/results"
+                          element={<SearchResultsPage />}
+                        />
+                      </Routes>
+                    </div>
+                  </BrowserRouter>
                 </div>
-              </BrowserRouter>
-            </div>
+              </ProductDataContext.Provider>
+            </CardDataContext.Provider>
           </TriggerSuccessModalContext.Provider>
         </SearchQueryContext.Provider>
       </SuccessModalTextContext.Provider>

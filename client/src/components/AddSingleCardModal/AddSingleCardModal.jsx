@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -10,6 +11,7 @@ const AddSingleCardModal = ({
   toggleAddSingleCardModal,
   toggleSuccessModal,
 }) => {
+  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -57,7 +59,7 @@ const AddSingleCardModal = ({
 
     const selectedCollection = collection;
 
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+    const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -71,7 +73,7 @@ const AddSingleCardModal = ({
       newSingleCard
     );
 
-    await fetch(`/api/users/bob@bob.de`, {
+    await fetch(`/api/user/${user.data.user.email}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -80,9 +82,12 @@ const AddSingleCardModal = ({
     setUserData(data);
     setSuccessModalText(
       <p>
-      <span style={{ fontWeight: 'bold' }}>{content.name} ({content.set.name})</span> successfully added to{' '}
-      <span style={{ fontWeight: 'bold' }}>{selectedCollection}</span>!
-    </p>
+        <span style={{ fontWeight: 'bold' }}>
+          {content.name} ({content.set.name})
+        </span>{' '}
+        successfully added to{' '}
+        <span style={{ fontWeight: 'bold' }}>{selectedCollection}</span>!
+      </p>
     );
     toggleAddSingleCardModal();
     toggleSuccessModal();
