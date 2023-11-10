@@ -49,7 +49,13 @@ const DeleteProductConfirmationModal = ({
 
     setUserData(data);
     setSuccessModalText(
-      `${sealedProductData.name} (${sealedProductData.set.name}) successfully removed from collection ${params.id}!`
+      <p>
+        <span style={{ fontWeight: 700 }}>
+          {sealedProductData.name} ({sealedProductData.set.name})
+        </span>{' '}
+        successfully removed from collection{' '}
+        <span style={{ fontWeight: 700 }}>{params.id}</span>!
+      </p>
     );
     toggleDeleteProductConfirmationModal();
     toggleEditSealedProductModal();

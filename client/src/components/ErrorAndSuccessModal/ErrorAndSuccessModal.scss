@@ -3,15 +3,22 @@
 .ErrorAndSuccessModal {
   position: fixed;
   width: 100%;
-  padding: 0.8rem;
+  padding: 1.2rem 1.6rem;
   z-index: 9999;
   font-size: $font4;
-  line-height: 1.3;
   color: white;
 
   .easm-text {
     text-align: center;
     word-break: break-word;
+
+    p {
+      line-height: 1.3;
+
+      span {
+        line-height: 1.3;
+      }
+    }
   }
 }
 

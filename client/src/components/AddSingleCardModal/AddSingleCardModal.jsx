@@ -82,11 +82,11 @@ const AddSingleCardModal = ({
     setUserData(data);
     setSuccessModalText(
       <p>
-        <span style={{ fontWeight: 'bold' }}>
+        <span style={{ fontWeight: 700 }}>
           {content.name} ({content.set.name})
         </span>{' '}
-        successfully added to{' '}
-        <span style={{ fontWeight: 'bold' }}>{selectedCollection}</span>!
+        successfully added to collection{' '}
+        <span style={{ fontWeight: 700 }}>{selectedCollection}</span>!
       </p>
     );
     toggleAddSingleCardModal();

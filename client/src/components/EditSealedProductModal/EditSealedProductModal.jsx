@@ -96,7 +96,12 @@ const EditSealedProductModal = ({
     });
 
     setUserData(data);
-    setSuccessModalText(`${sealedProductData.name} successfully updated!`);
+    setSuccessModalText(
+      <p>
+        <span style={{ fontWeight: 700 }}>{sealedProductData.name}</span>{' '}
+        successfully updated!
+      </p>
+    );
     toggleEditSealedProductModal();
     toggleSuccessModal();
   };

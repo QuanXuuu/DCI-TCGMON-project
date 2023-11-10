@@ -56,9 +56,9 @@ const AddSealedProductModal = ({
     setUserData(data);
     setSuccessModalText(
       <p>
-        <span style={{ fontWeight: 'bold' }}>{content.name}</span> successfully
-        added to{' '}
-        <span style={{ fontWeight: 'bold' }}>{selectedCollection}</span>!
+        <span style={{ fontWeight: 700 }}>{content.name}</span> successfully
+        added to collection{' '}
+        <span style={{ fontWeight: 700 }}>{selectedCollection}</span>!
       </p>
     );
     toggleAddSealedProductModal();
@@ -211,7 +211,7 @@ const AddSealedProductModal = ({
           }}
           className="add-button"
         >
-          Add card
+          Add product
         </button>
       </div>
     </div>
