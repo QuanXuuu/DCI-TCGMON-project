@@ -36,6 +36,9 @@ const CollectionDetailsPage = () => {
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
+  const { user } = useAuthContext();
+  const userLoggedIn = user.data.user;
+
   const toggleCollectionDetailsSuccessModal = () => {
     setIsSuccessModalOpen((prev) => !prev);
 
@@ -48,26 +51,15 @@ const CollectionDetailsPage = () => {
     setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
   };
 
-  const { user } = useAuthContext();
-  const userLoggedIn = user.data.user;
-
   useEffect(() => {
-    const generateCollectionDetailsData = async () => {
     if (!userData) {
-      const fetchUserData = await fetch(`/api/users/${userLoggedIn}`, {
-        method: 'GET',
-      });
-      const userData = await fetchUserData.json();
-      setUserData(userData);
-      console.log('updatedUserData', userData);
-
-      const singleCardsQueryStringArray = [];
-      const sealedProductsQueryStringArray = [];
-
-      const collectionData = userData.collections.find(
-        (collection) => collection.collectionName === `${params.id}`
-      );
-
+      const fetchUserData = async () => {
+        const response = await fetch(`/api/users/bob@bob.de`, {
+          method: 'GET',
+        });
+        const userData = await response.json();
+        setUserData(userData);
+      };
       fetchUserData();
     }
   }, []);
@@ -76,7 +68,7 @@ const CollectionDetailsPage = () => {
     if (userData) {
       generateCollectionDetailsData();
     }
-  }, [userData]);
+  }, [userData, params.id]);
 
   useEffect(() => {
     if (isEditCollectionModalOpen) {
@@ -119,8 +111,6 @@ const CollectionDetailsPage = () => {
       const newProductData = { collectionDetailsData };
       setProductContentData(newProductData);
 
-      //   setPokemonDataSingleCards({});
-      //   setPokemonDataSealedProducts({});
       setPurchaseTotal('0.00');
       setMarketTotal('0.00');
       setColor('black');
