@@ -48,7 +48,13 @@ const DeleteCardConfirmationModal = ({
 
     setUserData(data);
     setSuccessModalText(
-      `${singleCardData.name} (${singleCardData.set.name}) successfully removed from collection ${params.id}!`
+      <p>
+        <span style={{ fontWeight: 700 }}>
+          {singleCardData.name} ({singleCardData.set.name})
+        </span>{' '}
+        successfully removed from collection{' '}
+        <span style={{ fontWeight: 700 }}>{params.id}</span>!
+      </p>
     );
     toggleDeleteCardConfirmationModal();
     toggleEditSingleCardModal();

@@ -121,7 +121,12 @@ const EditSingleCardModal = ({
 
     setUserData(data);
     setSuccessModalText(
-      `${singleCardData.name} (${singleCardData.set.name}) successfully updated!`
+      <p>
+        <span style={{ fontWeight: 700 }}>
+          {singleCardData.name} (${singleCardData.set.name})
+        </span>{' '}
+        successfully updated!
+      </p>
     );
     toggleEditSingleCardModal();
     toggleSuccessModal();
