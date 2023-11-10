@@ -39,8 +39,8 @@ const LoginPage = () => {
           Register
         </button>
       </div>
-      {/* <ErrorAndSuccessModal customClassName="rp-lp-error-style" easmText={'Wrong username and/or password'} /> */}
-      <ErrorAndSuccessModal customClassName="lp-success-style" easmText={'Successfully registered to TCGmon!'} />
+      <ErrorAndSuccessModal customClassName="rp-lp-error-style" easmText={'Wrong username and/or password'} />
+      {/* <ErrorAndSuccessModal customClassName="success-modal" easmText={'Successfully registered to TCGmon!'} /> */}
     </div>
   );
 };
