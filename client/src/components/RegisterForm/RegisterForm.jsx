@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RegisterForm.scss';
 
-const RegisterForm = ({ onAddUsers, isValidEmail, setIsInvalidEmail }) => {
+const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEmail }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -51,7 +51,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, setIsInvalidEmail }) => {
     <div className="RegisterForm">
       <form action="" method="POST" onSubmit={handleSubmit} noValidate>
         <input
-          className="RegisterFormInputOne"
+          className={`input ${isInvalidEmail ? 'invalid-email' : ''}`} // !!! 
           type="email"
           name="email"
           value={email}
@@ -60,6 +60,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, setIsInvalidEmail }) => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          className='input'
           type="password"
           name="password"
           placeholder="Password"
@@ -68,6 +69,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, setIsInvalidEmail }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
+          className='input'
           type="password"
           id="confirmPassword"
           name="confirmPassword"

@@ -26,7 +26,7 @@ const RegisterPage = () => {
           <h1>Welcome!</h1>
           <h2>Sign up now, it&apos;s free.</h2>
         </div>
-        <RegisterForm onAddUsers={handleAddUsers} isValidEmail={isValidEmail} setIsInvalidEmail={setIsInvalidEmail} />
+        <RegisterForm onAddUsers={handleAddUsers} isValidEmail={isValidEmail} isInvalidEmail={isInvalidEmail} setIsInvalidEmail={setIsInvalidEmail} />
       </div>
       <div className="RegisterPageButtonsWrapper">
         <button

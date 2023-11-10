@@ -146,7 +146,7 @@ const SearchResultsPage = () => {
       </div>
       {isSuccessModalOpen ? (
         <ErrorAndSuccessModal
-          customClassName="floating-success-modal"
+          customClassName="success-modal"
           easmText={successModalText}
         />
       ) : (

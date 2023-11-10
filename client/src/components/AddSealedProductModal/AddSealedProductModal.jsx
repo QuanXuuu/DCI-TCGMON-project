@@ -53,7 +53,10 @@ const AddSealedProductModal = ({
 
     setUserData(data);
     setSuccessModalText(
-      `${content.name} successfully added to ${selectedCollection}!`
+      <p>
+      <span style={{ fontWeight: 'bold' }}>{content.name}</span> successfully added to{' '}
+      <span style={{ fontWeight: 'bold' }}>{selectedCollection}</span>!
+    </p>
     );
     toggleAddSealedProductModal();
     toggleSuccessModal();
