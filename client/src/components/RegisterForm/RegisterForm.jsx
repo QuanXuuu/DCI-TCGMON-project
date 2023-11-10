@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import './RegisterForm.scss';
 
-const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEmail }) => {
+const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEmail, isNotSamePassword, setisNotSamePassword}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,8 +13,11 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
-    if (password !== confirmPassword) return;
+
+    if (password !== confirmPassword) {
+      setisNotSamePassword(!isNotSamePassword);
+ 
+    }
 
     if (!isValidEmail(email)) {  // !!!!
       setIsInvalidEmail(true);
@@ -52,7 +55,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
     <div className="RegisterForm">
       <form action="" method="POST" onSubmit={handleSubmit} noValidate>
         <input
-          className={`input ${isInvalidEmail ? 'invalid-email' : ''}`} // !!! 
+          className={`input ${isInvalidEmail ? 'invalid-border' : ''}`} // !!! 
           type="email"
           placeholder="Email address"
           name="email"
@@ -61,7 +64,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className='input'
+          className={`input ${isNotSamePassword ? 'invalid-border' : ''}`}
           type="password"
           placeholder="Password"
           name="password"
@@ -70,7 +73,7 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
-          className='input'
+          className={`input ${isNotSamePassword ? 'invalid-border' : ''}`}
           type="password"
           id="confirmPassword"
           name="confirmPassword"
