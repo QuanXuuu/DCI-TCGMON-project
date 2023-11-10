@@ -29,7 +29,7 @@ const LoginForm = () => {
         dispatch({ type: 'LOGIN', payload: json });
         navigate('/collections');
       } else {
-        navigate('/login');
+        navigate('/login'); // OR redirect to landingPage?
         console.log('Please double check password');
       }
     } catch (err) {
@@ -38,7 +38,7 @@ const LoginForm = () => {
   };
   return (
     <div className="LoginForm">
-     <LoginPageErrorModal />
+      <LoginPageErrorModal />
       <form action="/login" method="POST" onSubmit={handleSubmit}>
         <input
           type="email"

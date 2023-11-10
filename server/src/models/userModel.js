@@ -25,13 +25,14 @@ const userSchema = new mongoose.Schema(
     joined: {
       type: String,
       default: new Date().toLocaleDateString("fr-CA", {
+        // French Canada ==> de-DE
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
       }),
     },
-    loggedIn: { type: Boolean, default: false },
-    lastLogin: { type: Date, default: "" },
+    loggedIn: { type: Boolean, default: false }, // ??
+    lastLogin: { type: Date, default: "" }, // ??
     collections: { type: Array, default: [] },
   },
   {

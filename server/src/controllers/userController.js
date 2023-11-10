@@ -20,7 +20,7 @@ export const createSendToken = (user, statusCode, res) => {
   res.cookie("jwt", token, cookieOptions);
 
   res.status(statusCode).json({
-    token,
+    // token,
     data: {
       user,
     },
@@ -30,11 +30,19 @@ export const createSendToken = (user, statusCode, res) => {
 export const register = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const newUser = new User({ email });
-  newUser.password = newUser.encryptPassword(password);
-  await newUser.save();
+  const exists = await User.findOne({ email });
 
-  createSendToken(newUser, 201, res);
+  if (exists) {
+    res.status(400).json({
+      success: false,
+      message: "Email already in use, please use another one",
+    });
+  } else {
+    const newUser = new User({ email });
+    newUser.password = newUser.encryptPassword(password);
+    await newUser.save();
+    createSendToken(newUser, 201, res);
+  }
 });
 
 export const login = catchAsync(async (req, res) => {

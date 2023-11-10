@@ -10,8 +10,6 @@ const checkAuth = (req, res, next) => {
       id: payload.id,
     };
 
-    console.log(req.user);
-
     next();
   } catch (err) {
     res.clearCookie("token");
