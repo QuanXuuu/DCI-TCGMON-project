@@ -32,6 +32,7 @@ const CollectionSummary = ({
     );
 
     return (userEntry.marketPrice = 1);
+    // return (userEntry.marketPrice = priceData[0].tcgplayer.prices.normal.mid);
   });
 
   const totalValue =

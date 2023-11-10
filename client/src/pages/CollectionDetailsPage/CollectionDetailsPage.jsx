@@ -2,8 +2,8 @@ import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CardDataContext from '../../contexts/CardDataContext';
 import ProductDataContext from '../../contexts/ProductDataContext';
-import UserDataContext from '../../contexts/UserDataContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +22,7 @@ const CollectionDetailsPage = () => {
 
   const { setCardContentData } = useContext(CardDataContext);
   const { setProductContentData } = useContext(ProductDataContext);
+  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { successModalText } = useContext(SuccessModalTextContext);
 
@@ -35,9 +36,6 @@ const CollectionDetailsPage = () => {
     useState(false);
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
-  const { user } = useAuthContext();
-  const userLoggedIn = user.data.user;
 
   const toggleCollectionDetailsSuccessModal = () => {
     setIsSuccessModalOpen((prev) => !prev);
@@ -54,7 +52,7 @@ const CollectionDetailsPage = () => {
   useEffect(() => {
     if (!userData) {
       const fetchUserData = async () => {
-        const response = await fetch(`/api/users/bob@bob.de`, {
+        const response = await fetch(`/api/user/${user.data.user.email}`, {
           method: 'GET',
         });
         const userData = await response.json();

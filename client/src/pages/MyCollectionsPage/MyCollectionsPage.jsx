@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
-import UserDataContext from '../../contexts/UserDataContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import Header from '../../components/Header/Header';
@@ -12,6 +12,7 @@ import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAnd
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
+  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { successModalText } = useContext(SuccessModalTextContext);
   const { isMyCollectionsSuccessModalOpen } = useContext(
@@ -25,10 +26,6 @@ const MyCollectionsPage = () => {
     {}
   );
 
-  const { user } = useAuthContext();
-  const userLoggedIn = user.data.user;
-  console.log('updatedUserData1', userLoggedIn);
-
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
 
@@ -38,13 +35,11 @@ const MyCollectionsPage = () => {
 
   useEffect(() => {
     const generateCollectionsData = async () => {
-      const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
+      const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
-      console.log(userData);
       setUserData(userData);
-      console.log('updatedUserData2', userData);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];
@@ -115,9 +110,15 @@ const MyCollectionsPage = () => {
       <Header />
       <div className="page-wrapper">
         <h1>My Collections</h1>
-        <CollectionSummaryContainer
-          data={{ userData, pokemonDataSingleCards, pokemonDataSealedProducts }}
-        />
+        {userData.collections.length > 0 && (
+          <CollectionSummaryContainer
+            data={{
+              userData,
+              pokemonDataSingleCards,
+              pokemonDataSealedProducts,
+            }}
+          />
+        )}
         <div className="button-wrapper">
           <AddCollectionButton
             text={'Create new collection'}

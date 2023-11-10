@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import UserDataContext from '../../contexts/UserDataContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
 import DeleteConfirmationModal from '../DeleteConfirmationModal/DeleteConfirmationModal';
@@ -16,6 +16,7 @@ const EditCollectionModal = ({
   const params = useParams();
   const navigate = useNavigate();
 
+  const { user } = useAuthContext();
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -26,15 +27,12 @@ const EditCollectionModal = ({
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false);
 
-  const { user } = useAuthContext();
-  const userLoggedIn = user.data.user;
-
   const toggleDeleteConfirmationModal = () => {
     setIsDeleteConfirmationModalOpen(!isDeleteConfirmationModalOpen);
   };
 
   const handleUpdateCollection = async () => {
-    const fetchUserData = await fetch(`/api/users/${userLoggedIn.email}`, {
+    const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -58,7 +56,7 @@ const EditCollectionModal = ({
       data.collections[initialCollectionIndex].collectionTCG = collectionTCG;
     }
 
-    await fetch(`/api/users/${userLoggedIn.email}`, {
+    await fetch(`/api/user/${user.data.user.email}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
