@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
@@ -14,12 +15,13 @@ const DeleteProductConfirmationModal = ({
 }) => {
   const params = useParams();
 
+  const { user } = useAuthContext();
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
   const { triggerSuccessModal } = useContext(TriggerSuccessModalContext);
 
   const handleDeleteProduct = async () => {
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+    const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -39,7 +41,7 @@ const DeleteProductConfirmationModal = ({
       1
     );
 
-    await fetch(`/api/users/bob@bob.de`, {
+    await fetch(`/api/user/${user.data.user.email}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -49,7 +51,7 @@ const DeleteProductConfirmationModal = ({
     setSuccessModalText(
       `${sealedProductData.name} (${sealedProductData.set.name}) successfully removed from collection ${params.id}!`
     );
-    toggleDeleteProductConfirmationModal;
+    toggleDeleteProductConfirmationModal();
     toggleEditSealedProductModal();
     triggerSuccessModal();
   };

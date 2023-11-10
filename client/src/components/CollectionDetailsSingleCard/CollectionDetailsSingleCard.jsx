@@ -73,7 +73,7 @@ const CollectionDetailsSingleCard = ({
       <div className="cdsc-content-wrapper">
         <div className="cdsc-content-top-wrapper">
           <div className="cdsc-content-top-image">
-            {singleCard[0]?.images && <img src={singleCard[0].images.small} />}
+            <img src={singleCard[0].images.small} />
           </div>
           <div className="cdsc-content-top-data-wrapper">
             <div className="cdsc-content-top-data-title-wrapper">

@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -15,6 +16,7 @@ const EditSealedProductModal = ({
 }) => {
   const params = useParams();
 
+  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -26,7 +28,6 @@ const EditSealedProductModal = ({
   const [amount, setAmount] = useState(content.amount);
   const [collection, setCollection] = useState(params.id);
   const [initialCollection] = useState(params.id);
-
   const [scrollY, setScrollY] = useState(0);
 
   const [
@@ -35,7 +36,9 @@ const EditSealedProductModal = ({
   ] = useState(false);
 
   const toggleDeleteProductConfirmationModal = () => {
-    setIsDeleteProductConfirmationModalOpen(!isDeleteProductConfirmationModalOpen);
+    setIsDeleteProductConfirmationModalOpen(
+      !isDeleteProductConfirmationModalOpen
+    );
   };
 
   const handleUpdateProduct = async () => {
@@ -50,7 +53,7 @@ const EditSealedProductModal = ({
 
     const selectedCollection = collection;
 
-    const fetchUserData = await fetch(`/api/users/bob@bob.de`, {
+    const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
@@ -86,7 +89,7 @@ const EditSealedProductModal = ({
       ] = updatedSealedProduct;
     }
 
-    await fetch(`/api/users/bob@bob.de`, {
+    await fetch(`/api/user/${user.data.user.email}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -114,156 +117,156 @@ const EditSealedProductModal = ({
         }
       }
     >
-    <div className='espm-wrapper'>
-      <div className="close-button-wrapper">
-        <CloseButton
-          isEditSealedProductModalOpen={isEditSealedProductModalOpen}
-          toggleEditSealedProductModal={toggleEditSealedProductModal}
-        />
-      </div>
-
-      <div className="content">
-        <p className="title">{sealedProductData.name}</p>
-        <div className="img-and-info-wrapper">
-          <div className="img-wrapper-sealed">
-            <img
-              src={sealedProductData.images.small}
-              alt={sealedProductData.id}
-            />
-          </div>
-          <div className="info">
-            <p className="set-infos set-name">{sealedProductData.type}</p>
-            <p className="cycle-name">{sealedProductData.set.series}</p>
-            <p className="set-infos set-name">{sealedProductData.set.name}</p>
-            <p className="set-infos set-name">
-              {sealedProductData.set.id.toUpperCase()}
-            </p>
-          </div>
+      <div className="espm-wrapper">
+        <div className="close-button-wrapper">
+          <CloseButton
+            isEditSealedProductModalOpen={isEditSealedProductModalOpen}
+            toggleEditSealedProductModal={toggleEditSealedProductModal}
+          />
         </div>
-        <div className="inputs">
-          <div className="select-fields">
-            <p>1st Edition</p>
-            <select
-              value={firstEdition ? 'yes' : 'no'}
-              onChange={(e) =>
-                e.target.value === 'yes'
-                  ? setFirstEdition(true)
-                  : setFirstEdition(false)
-              }
-              className="select"
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
 
-          <div className="select-fields">
-            <p>Language</p>
-            <select
-              onChange={(e) => {
-                setLanguage(e.target.value);
-              }}
-              value={language}
-              className="select"
-            >
-              <option value="english">English</option>
-              <option value="german">German</option>
-              <option value="japanese">Japanese</option>
-              <option value="french">French</option>
-              <option value="dutch">Dutch</option>
-              <option value="spanish">Spanish</option>
-              <option value="portuguese">Portuguese</option>
-              <option value="italian">Italian</option>
-              <option value="korean">Korean</option>
-              <option value="indonesian">Indonesian</option>
-              <option value="thai">Thai</option>
-              <option value="traditional chinese">Traditional Chinese</option>
-              <option value="simplified chinese">Simplified Chinese</option>
-            </select>
-          </div>
-
-          <div className="select-fields">
-            <p>Purchase Price</p>
-            <div className="select-purchase-price">
-              <input
-                type="number"
-                placeholder="0.00"
-                value={purchasePrice}
-                onChange={(e) => {
-                  setPurchasePrice(e.target.value);
-                }}
-                onFocus={() => {
-                  setPurchasePrice('');
-                }}
-                onBlur={(e) => {
-                  let newValue = 0;
-                  if (e.target.value < 0) {
-                    newValue = (e.target.value * -1).toFixed(2);
-                  } else {
-                    newValue = Number(e.target.value).toFixed(2);
-                  }
-                  setPurchasePrice(newValue);
-                }}
-              />
-              <p className="select-purchase-price-euro">€</p>
-            </div>
-          </div>
-
-          <div className="select-fields">
-            <p>Amount</p>
-            <div className="select-amount">
-              <input
-                type="number"
-                placeholder="0"
-                value={amount}
-                onChange={(e) => {
-                  setAmount(e.target.value);
-                }}
-                onFocus={() => {
-                  setAmount('');
-                }}
-                onBlur={(e) => {
-                  let newValue = 0;
-                  if (e.target.value < 0) {
-                    newValue = Math.trunc(e.target.value * -1);
-                  } else {
-                    newValue = Math.trunc(e.target.value);
-                  }
-                  setAmount(newValue);
-                }}
+        <div className="content">
+          <p className="title">{sealedProductData.name}</p>
+          <div className="img-and-info-wrapper">
+            <div className="img-wrapper-sealed">
+              <img
+                src={sealedProductData.images.small}
+                alt={sealedProductData.id}
               />
             </div>
+            <div className="info">
+              <p className="set-infos set-name">{sealedProductData.type}</p>
+              <p className="cycle-name">{sealedProductData.set.series}</p>
+              <p className="set-infos set-name">{sealedProductData.set.name}</p>
+              <p className="set-infos set-name">
+                {sealedProductData.set.id.toUpperCase()}
+              </p>
+            </div>
           </div>
+          <div className="inputs">
+            <div className="select-fields">
+              <p>1st Edition</p>
+              <select
+                value={firstEdition ? 'yes' : 'no'}
+                onChange={(e) =>
+                  e.target.value === 'yes'
+                    ? setFirstEdition(true)
+                    : setFirstEdition(false)
+                }
+                className="select"
+              >
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
 
-          <div className="select-fields">
-            <p>Collection</p>
-            <select
-              value={collection}
-              onChange={(e) => {
-                setCollection(e.target.value);
-              }}
-              className="select"
-            >
-              {userData.collections.map((entry, index) => {
-                return (
-                  <option key={index} value={entry.collectionName}>
-                    {entry.collectionName}
-                  </option>
-                );
-              })}
-            </select>
+            <div className="select-fields">
+              <p>Language</p>
+              <select
+                onChange={(e) => {
+                  setLanguage(e.target.value);
+                }}
+                value={language}
+                className="select"
+              >
+                <option value="english">English</option>
+                <option value="german">German</option>
+                <option value="japanese">Japanese</option>
+                <option value="french">French</option>
+                <option value="dutch">Dutch</option>
+                <option value="spanish">Spanish</option>
+                <option value="portuguese">Portuguese</option>
+                <option value="italian">Italian</option>
+                <option value="korean">Korean</option>
+                <option value="indonesian">Indonesian</option>
+                <option value="thai">Thai</option>
+                <option value="traditional chinese">Traditional Chinese</option>
+                <option value="simplified chinese">Simplified Chinese</option>
+              </select>
+            </div>
+
+            <div className="select-fields">
+              <p>Purchase Price</p>
+              <div className="select-purchase-price">
+                <input
+                  type="number"
+                  placeholder="0.00"
+                  value={purchasePrice}
+                  onChange={(e) => {
+                    setPurchasePrice(e.target.value);
+                  }}
+                  onFocus={() => {
+                    setPurchasePrice('');
+                  }}
+                  onBlur={(e) => {
+                    let newValue = 0;
+                    if (e.target.value < 0) {
+                      newValue = (e.target.value * -1).toFixed(2);
+                    } else {
+                      newValue = Number(e.target.value).toFixed(2);
+                    }
+                    setPurchasePrice(newValue);
+                  }}
+                />
+                <p className="select-purchase-price-euro">€</p>
+              </div>
+            </div>
+
+            <div className="select-fields">
+              <p>Amount</p>
+              <div className="select-amount">
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}
+                  onFocus={() => {
+                    setAmount('');
+                  }}
+                  onBlur={(e) => {
+                    let newValue = 0;
+                    if (e.target.value < 0) {
+                      newValue = Math.trunc(e.target.value * -1);
+                    } else {
+                      newValue = Math.trunc(e.target.value);
+                    }
+                    setAmount(newValue);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="select-fields">
+              <p>Collection</p>
+              <select
+                value={collection}
+                onChange={(e) => {
+                  setCollection(e.target.value);
+                }}
+                className="select"
+              >
+                {userData.collections.map((entry, index) => {
+                  return (
+                    <option key={index} value={entry.collectionName}>
+                      {entry.collectionName}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
           </div>
-        </div>
-        <div className='espm-button-wrapper'>
-        <button
-          onClick={() => {
-            handleUpdateProduct();
-          }}
-          className="add-button"
-        >
-          Update Product
-        </button>
-        <button
+          <div className="espm-button-wrapper">
+            <button
+              onClick={() => {
+                handleUpdateProduct();
+              }}
+              className="add-button"
+            >
+              Update Product
+            </button>
+            <button
               className="espm-delete-button"
               onClick={() => {
                 handleScrollCalculation();
@@ -271,8 +274,8 @@ const EditSealedProductModal = ({
               }}
             >
               Delete Product
-        </button>
-        </div>  
+            </button>
+          </div>
         </div>
         {isDeleteProductConfirmationModalOpen ? (
           <DeleteProductConfirmationModal
