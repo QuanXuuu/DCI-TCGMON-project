@@ -12,7 +12,7 @@ import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAnd
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { successModalText } = useContext(SuccessModalTextContext);
   const { isMyCollectionsSuccessModalOpen } = useContext(
@@ -33,12 +33,15 @@ const MyCollectionsPage = () => {
     setIsAddCollectionModalOpen(!isAddCollectionModalOpen);
   };
 
+  console.log('userFromAuthContext', user);
+
   useEffect(() => {
     const generateCollectionsData = async () => {
       const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
         method: 'GET',
       });
       const userData = await fetchUserData.json();
+      dispatch({ type: 'LOGIN', payload: userData });
       setUserData(userData);
 
       const singleCardsQueryStringArray = [];
@@ -91,6 +94,7 @@ const MyCollectionsPage = () => {
     };
 
     generateCollectionsData();
+    dispatch({ type: 'LOGIN', payload: user });
   }, []);
 
   useEffect(() => {

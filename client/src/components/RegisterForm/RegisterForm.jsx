@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import './RegisterForm.scss';
 
 const RegisterForm = ({
@@ -13,6 +14,7 @@ const RegisterForm = ({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { dispatch } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -47,6 +49,8 @@ const RegisterForm = ({
         console.log(response.message);
         navigate('/register');
       } else {
+        localStorage.setItem('user', JSON.stringify(response));
+        dispatch({ type: 'LOGIN', payload: response });
         setEmail('');
         setPassword('');
         setConfirmPassword('');
@@ -59,7 +63,7 @@ const RegisterForm = ({
 
   return (
     <div className="RegisterForm">
-      <form action="" method="POST" onSubmit={handleSubmit} noValidate>
+      <form method="POST" onSubmit={handleSubmit} noValidate>
         <input
           className={`input ${isInvalidEmail ? 'invalid-border' : ''}`} // !!!
           type="email"

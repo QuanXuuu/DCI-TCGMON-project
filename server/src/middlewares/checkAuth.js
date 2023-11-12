@@ -12,7 +12,7 @@ const checkAuth = (req, res, next) => {
 
     next();
   } catch (err) {
-    res.clearCookie("token");
+    res.clearCookie("jwt");
     return res.redirect("/");
   }
 };

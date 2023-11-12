@@ -47,6 +47,13 @@ export const register = catchAsync(async (req, res) => {
 export const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "All fields must be filled",
+    });
+  }
+
   const user = await User.findOne({ email }).select("+password");
   const correct = await user.comparePassword(password, user.password);
 
@@ -54,11 +61,16 @@ export const login = catchAsync(async (req, res) => {
     createSendToken(user, 200, res);
     console.log(`${user.email} successfully logged in.`);
   } else {
-    res.status(401).send({
+    res.status(401).json({
       status: "fail",
-      message: "Incorrect password",
+      message: "Incorrect password, please double check",
     });
   }
+});
+
+export const logout = catchAsync(async (req, res) => {
+  res.clearCookie("connect.sid");
+  res.redirect("/");
 });
 
 export const getUser = catchAsync(async (req, res) => {

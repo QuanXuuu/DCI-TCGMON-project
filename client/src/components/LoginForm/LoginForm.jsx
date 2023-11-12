@@ -24,13 +24,14 @@ const LoginForm = () => {
 
       const json = await response.json();
 
-      // redirect
       if (response.ok) {
+        localStorage.setItem('user', JSON.stringify(json));
         dispatch({ type: 'LOGIN', payload: json });
         navigate('/collections');
       } else {
         navigate('/login'); // OR redirect to landingPage?
-        console.log('Please double check password');
+        // will insert modal accordingly
+        console.log(json.message);
       }
     } catch (err) {
       console.log(err.message);
