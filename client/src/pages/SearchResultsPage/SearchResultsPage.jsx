@@ -1,4 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import SearchQueryContext from '../../contexts/SearchQueryContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import Header from '../../components/Header/Header';
@@ -9,6 +11,7 @@ import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAnd
 import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
+  const { user } = useAuthContext();
   const searchQuery = useContext(SearchQueryContext);
   const { successModalText } = useContext(SuccessModalTextContext);
 
@@ -26,7 +29,13 @@ const SearchResultsPage = () => {
     }, 4000);
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (user === null) {
+      return navigate('/');
+    }
+
     if (
       searchQuery.searchQuery.searchValue !== '' &&
       searchQuery.searchQuery.searchMethod === 'name'

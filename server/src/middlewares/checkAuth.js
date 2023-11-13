@@ -1,19 +1,18 @@
 import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
 
-const checkAuth = (req, res, next) => {
+const checkAuth = async (req, res, next) => {
   const token = req.cookies.jwt;
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const { _id } = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = {
-      id: payload.id,
-    };
+    req.user = await User.findOne({ _id }).select("_id");
 
     next();
-  } catch (err) {
-    res.clearCookie("jwt");
-    return res.redirect("/");
+  } catch (error) {
+    console.log("Authorization token required");
+    res.status(401).json({ error: "Request is not authorized" });
   }
 };
 
