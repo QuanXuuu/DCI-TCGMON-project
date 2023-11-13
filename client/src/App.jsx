@@ -23,6 +23,7 @@ const App = () => {
   const [userData, setUserData] = useState(null);
   const [isMyCollectionsSuccessModalOpen, setIsMyCollectionsSuccessModalOpen] =
     useState(false);
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
 
   const triggerSuccessModal = () => {
     setIsMyCollectionsSuccessModalOpen((prev) => !prev);
@@ -55,8 +56,8 @@ const App = () => {
                     <div className="page">
                       <Routes>
                         <Route path="/" element={<LandingPage />} />
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage isRegisterSuccess={isRegisterSuccess} setIsRegisterSuccess={setIsRegisterSuccess}/>} />
+                        <Route path="/login" element={<LoginPage isRegisterSuccess={isRegisterSuccess} setIsRegisterSuccess={setIsRegisterSuccess} />} />
                         <Route
                           path="/collections"
                           element={<MyCollectionsPage />}
