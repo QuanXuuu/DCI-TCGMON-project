@@ -29,7 +29,7 @@ const LoginForm = () => {
         dispatch({ type: 'LOGIN', payload: json });
         navigate('/collections');
       } else {
-        navigate('/login'); // OR redirect to landingPage?
+        navigate('/login');
         // will insert modal accordingly
         console.log(json.message);
       }

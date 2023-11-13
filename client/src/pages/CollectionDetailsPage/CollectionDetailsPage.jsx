@@ -22,7 +22,7 @@ const CollectionDetailsPage = () => {
 
   const { setCardContentData } = useContext(CardDataContext);
   const { setProductContentData } = useContext(ProductDataContext);
-  const { user, dispatch } = useAuthContext();
+  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { successModalText } = useContext(SuccessModalTextContext);
 
@@ -58,7 +58,6 @@ const CollectionDetailsPage = () => {
           method: 'GET',
         });
         const userData = await response.json();
-        dispatch({ type: 'LOGIN', payload: userData });
         setUserData(userData);
       };
       fetchUserData();
