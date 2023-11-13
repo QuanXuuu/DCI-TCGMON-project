@@ -25,6 +25,10 @@ const RegisterForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      return
+    }
+
     if (!isValidEmail(email)) {
       return setIsInvalidEmail(true);
     }
