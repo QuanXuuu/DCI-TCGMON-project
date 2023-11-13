@@ -1,11 +1,11 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
+import CollectionSummaryPlaceholder from '../../components/CollectionSummaryPlaceholder/CollectionSummaryPlaceholder';
 import CollectionSummaryContainer from '../../components/CollectionSummaryContainer/CollectionSummaryContainer';
 import AddCollectionButton from '../../components/AddCollectionButton/AddCollectionButton';
 import AddCollectionModal from '../../components/AddCollectionModal/AddCollectionModal';
@@ -13,9 +13,9 @@ import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAnd
 import './MyCollectionsPage.scss';
 
 const MyCollectionsPage = () => {
-  const { user } = useAuthContext();
-  const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
+
+  const { userData, setUserData } = useContext(UserDataContext);
   const { successModalText } = useContext(SuccessModalTextContext);
   const { isMyCollectionsSuccessModalOpen } = useContext(
     TriggerSuccessModalContext
@@ -37,6 +37,8 @@ const MyCollectionsPage = () => {
 
   useEffect(() => {
     const generateCollectionsData = async () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+
       if (user === null) return navigate('/');
 
       const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
@@ -65,6 +67,7 @@ const MyCollectionsPage = () => {
         sealedProductsQueryStringArray.join(' OR ');
 
       if (!singleCardsQueryString && !sealedProductsQueryString) {
+        setIsLoading(false);
         return;
       }
 
@@ -114,7 +117,11 @@ const MyCollectionsPage = () => {
       <Header />
       <div className="page-wrapper">
         <h1>My Collections</h1>
-        {userData.collections.length > 0 && (
+        {userData.collections.length === 0 ? (
+          <CollectionSummaryPlaceholder
+            toggleAddCollectionModal={toggleAddCollectionModal}
+          />
+        ) : (
           <CollectionSummaryContainer
             data={{
               userData,
