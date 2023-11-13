@@ -7,7 +7,20 @@ const Menu = ({ isMenuOpen, toggleMenu }) => {
   const navigate = useNavigate();
   const { logout } = useLogout();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`/api/logout`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(),
+      });
+      const json = await response.json();
+      console.log(json);
+    } catch (err) {
+      console.log(err);
+    }
     logout();
     navigate('/login');
   };

@@ -68,10 +68,11 @@ export const login = catchAsync(async (req, res) => {
   }
 });
 
-export const logout = catchAsync(async (req, res) => {
-  res.clearCookie("connect.sid");
-  res.redirect("/");
-});
+export const logout = (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/login");
+  console.log("User logged out.");
+};
 
 export const getUser = catchAsync(async (req, res) => {
   const response = await User.findOne({ email: req.params.id });
