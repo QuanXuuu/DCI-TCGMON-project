@@ -10,6 +10,10 @@ const RegisterForm = ({
   setIsInvalidEmail,
   isNotSamePassword,
   setisNotSamePassword,
+  isEmailInUse,
+  setIsEmailInUse,
+  isRegisterSuccess,
+  setIsRegisterSuccess
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,7 +49,7 @@ const RegisterForm = ({
       const response = await newUserData.json();
 
       if (!newUserData.ok) {
-        // will insert suitable modal at the later stage
+        setIsEmailInUse(!isEmailInUse);
         console.log(response.message);
         navigate('/register');
       } else {
@@ -55,6 +59,7 @@ const RegisterForm = ({
         setPassword('');
         setConfirmPassword('');
         navigate('/login');
+        setIsRegisterSuccess(!isRegisterSuccess)
       }
     } catch (err) {
       console.log(err.message);
@@ -65,7 +70,7 @@ const RegisterForm = ({
     <div className="RegisterForm">
       <form method="POST" onSubmit={handleSubmit} noValidate>
         <input
-          className={`input ${isInvalidEmail ? 'invalid-border' : ''}`} // !!!
+          className={`input ${isInvalidEmail || isEmailInUse ? 'invalid-border' : ''}`} // !!!
           type="email"
           placeholder="Email address"
           name="email"

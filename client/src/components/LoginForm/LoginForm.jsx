@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import LoginPageErrorModal from '../LoginPageErrorModal/LoginPageErrorModal';
 import './LoginForm.scss';
 
-const LoginForm = () => {
+const LoginForm = ({isWrongPassword, setIsWrongPassword}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -30,8 +29,8 @@ const LoginForm = () => {
         navigate('/collections');
       } else {
         navigate('/login');
-        // will insert modal accordingly
         console.log(json.message);
+        setIsWrongPassword(!isWrongPassword)
       }
     } catch (err) {
       console.log(err.message);
@@ -39,7 +38,6 @@ const LoginForm = () => {
   };
   return (
     <div className="LoginForm">
-      <LoginPageErrorModal />
       <form action="/login" method="POST" onSubmit={handleSubmit}>
         <input
           type="email"
