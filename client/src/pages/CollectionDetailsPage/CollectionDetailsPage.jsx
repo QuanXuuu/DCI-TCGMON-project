@@ -49,6 +49,8 @@ const CollectionDetailsPage = () => {
     setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
   };
 
+  console.log('userFromAuthContext', user);
+
   useEffect(() => {
     if (!userData) {
       const fetchUserData = async () => {

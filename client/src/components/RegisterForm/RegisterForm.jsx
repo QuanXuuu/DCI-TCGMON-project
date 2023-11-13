@@ -3,28 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import './RegisterForm.scss';
 
-const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEmail, isNotSamePassword, setisNotSamePassword}) => {
+const RegisterForm = ({
+  onAddUsers,
+  isValidEmail,
+  isInvalidEmail,
+  setIsInvalidEmail,
+  isNotSamePassword,
+  setisNotSamePassword,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { dispatch } = useAuthContext();
 
   const navigate = useNavigate();
-  const { dispatch } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!isValidEmail(email)) {
+      return setIsInvalidEmail(true);
+    }
+    setIsInvalidEmail(false);
+
     if (password !== confirmPassword) {
-      setisNotSamePassword(!isNotSamePassword);
- 
+      return setisNotSamePassword(!isNotSamePassword);
     }
-
-    if (!isValidEmail(email)) {  // !!!!
-      setIsInvalidEmail(true);
-      return;
-    }
-
-  setIsInvalidEmail(false);
 
     try {
       const newUser = { email, password };
@@ -39,13 +43,19 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
       });
 
       const response = await newUserData.json();
-      console.log('newUserData:', response);
 
-      dispatch({ type: 'LOGIN', payload: response });
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-      navigate('/login');
+      if (response.success === false) {
+        // will insert suitable modal at the later stage
+        console.log(response.message);
+        navigate('/register');
+      } else {
+        localStorage.setItem('user', JSON.stringify(response));
+        dispatch({ type: 'LOGIN', payload: response });
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        navigate('/login');
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -53,9 +63,9 @@ const RegisterForm = ({ onAddUsers, isValidEmail, isInvalidEmail, setIsInvalidEm
 
   return (
     <div className="RegisterForm">
-      <form action="" method="POST" onSubmit={handleSubmit} noValidate>
+      <form method="POST" onSubmit={handleSubmit} noValidate>
         <input
-          className={`input ${isInvalidEmail ? 'invalid-border' : ''}`} // !!! 
+          className={`input ${isInvalidEmail ? 'invalid-border' : ''}`} // !!!
           type="email"
           placeholder="Email address"
           name="email"

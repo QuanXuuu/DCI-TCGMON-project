@@ -27,18 +27,32 @@ export const createSendToken = (user, statusCode, res) => {
   });
 };
 
-export const register = catchAsync(async (req, res, next) => {
+export const register = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
-  const newUser = new User({ email });
-  newUser.password = newUser.encryptPassword(password);
-  await newUser.save();
-
-  createSendToken(newUser, 201, res);
+  const exists = await User.findOne({ email });
+  if (exists) {
+    res.status(400).json({
+      success: false,
+      message: "Email already in use, please use another one",
+    });
+  } else {
+    const newUser = new User({ email });
+    newUser.password = newUser.encryptPassword(password);
+    await newUser.save();
+    createSendToken(newUser, 201, res);
+  }
 });
 
 export const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "All fields must be filled",
+    });
+  }
 
   const user = await User.findOne({ email }).select("+password");
   const correct = await user.comparePassword(password, user.password);
@@ -47,20 +61,25 @@ export const login = catchAsync(async (req, res) => {
     createSendToken(user, 200, res);
     console.log(`${user.email} successfully logged in.`);
   } else {
-    res.status(401).send({
+    res.status(401).json({
       status: "fail",
-      message: "Incorrect password",
+      message: "Incorrect password, please double check",
     });
   }
 });
 
-export const getUser = catchAsync(async (req, res, next) => {
+export const logout = catchAsync(async (req, res) => {
+  res.clearCookie("connect.sid");
+  res.redirect("/");
+});
+
+export const getUser = catchAsync(async (req, res) => {
   const response = await User.findOne({ email: req.params.id });
 
   res.status(200).json(response);
 });
 
-export const getAllUsers = catchAsync(async (req, res, next) => {
+export const getAllUsers = catchAsync(async (req, res) => {
   const response = await User.find();
   res.status(200).json({
     success: true,
@@ -69,7 +88,7 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-export const updateUser = catchAsync(async (req, res, next) => {
+export const updateUser = catchAsync(async (req, res) => {
   const response = await User.findOne({ email: req.params.id });
   const { collections } = req.body;
   response.collections = collections;
@@ -82,7 +101,7 @@ export const updateUser = catchAsync(async (req, res, next) => {
   });
 });
 
-export const deleteUser = catchAsync(async (req, res, next) => {
+export const deleteUser = catchAsync(async (req, res) => {
   await User.findByIdAndDelete(req.params.id);
   res.status(200).json({
     success: true,
@@ -90,7 +109,7 @@ export const deleteUser = catchAsync(async (req, res, next) => {
   });
 });
 
-export const deleteAllUsers = catchAsync(async (req, res, next) => {
+export const deleteAllUsers = catchAsync(async (req, res) => {
   await User.deleteMany();
   res.status(200).json({
     success: true,

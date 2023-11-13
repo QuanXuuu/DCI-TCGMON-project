@@ -24,13 +24,14 @@ const LoginForm = () => {
 
       const json = await response.json();
 
-      // redirect
       if (response.ok) {
+        localStorage.setItem('user', JSON.stringify(json));
         dispatch({ type: 'LOGIN', payload: json });
         navigate('/collections');
       } else {
         navigate('/login');
-        console.log('Please double check password');
+        // will insert modal accordingly
+        console.log(json.message);
       }
     } catch (err) {
       console.log(err.message);
@@ -38,7 +39,7 @@ const LoginForm = () => {
   };
   return (
     <div className="LoginForm">
-     <LoginPageErrorModal />
+      <LoginPageErrorModal />
       <form action="/login" method="POST" onSubmit={handleSubmit}>
         <input
           type="email"

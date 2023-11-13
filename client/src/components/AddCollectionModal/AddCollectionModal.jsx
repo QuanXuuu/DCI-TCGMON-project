@@ -11,6 +11,8 @@ const AddCollectionModal = ({
   toggleSuccessModal,
 }) => {
   const { user } = useAuthContext();
+  console.log('userFromAuthContext', user);
+
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 

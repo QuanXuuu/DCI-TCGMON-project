@@ -33,6 +33,8 @@ const MyCollectionsPage = () => {
     setIsAddCollectionModalOpen(!isAddCollectionModalOpen);
   };
 
+  console.log('userFromAuthContext', user);
+
   useEffect(() => {
     const generateCollectionsData = async () => {
       const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {

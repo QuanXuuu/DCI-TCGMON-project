@@ -21,7 +21,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       select: false,
     },
-    role: { type: String, default: "Member" },
     joined: {
       type: String,
       default: new Date().toLocaleDateString("fr-CA", {
@@ -30,8 +29,6 @@ const userSchema = new mongoose.Schema(
         day: "2-digit",
       }),
     },
-    loggedIn: { type: Boolean, default: false },
-    lastLogin: { type: Date, default: "" },
     collections: { type: Array, default: [] },
   },
   {
