@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm/LoginForm.jsx';
 import Logo from '../../components/Logo/Logo.jsx';
@@ -9,6 +9,18 @@ import './LoginPage.scss';
 const LoginPage = ({ isRegisterSuccess, setIsRegisterSuccess }) => {
   const [isWrongPassword, setIsWrongPassword] = useState(false);
   const navigate = useNavigate();
+
+  const toggleRegisterSuccessModal = () => {
+    setTimeout(() => {
+      setIsRegisterSuccess(!isRegisterSuccess);
+    }, 4000);
+  };
+
+  useEffect(() => {
+    if (isRegisterSuccess) {
+      toggleRegisterSuccessModal();
+    }
+  }, [isRegisterSuccess]);
 
   return (
     <div className="LoginPage">
