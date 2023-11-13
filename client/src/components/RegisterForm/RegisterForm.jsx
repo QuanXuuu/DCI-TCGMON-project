@@ -44,13 +44,13 @@ const RegisterForm = ({
 
       const response = await newUserData.json();
 
-      if (response.success === false) {
+      if (!newUserData.ok) {
         // will insert suitable modal at the later stage
         console.log(response.message);
         navigate('/register');
       } else {
-        localStorage.setItem('user', JSON.stringify(response));
-        dispatch({ type: 'LOGIN', payload: response });
+        // localStorage.setItem('user', JSON.stringify(response));
+        // dispatch({ type: 'LOGIN', payload: response });
         setEmail('');
         setPassword('');
         setConfirmPassword('');
