@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
@@ -14,6 +15,7 @@ import './MyCollectionsPage.scss';
 const MyCollectionsPage = () => {
   const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
+  const navigate = useNavigate();
   const { successModalText } = useContext(SuccessModalTextContext);
   const { isMyCollectionsSuccessModalOpen } = useContext(
     TriggerSuccessModalContext
@@ -33,10 +35,10 @@ const MyCollectionsPage = () => {
     setIsAddCollectionModalOpen(!isAddCollectionModalOpen);
   };
 
-  console.log('userFromAuthContext', user);
-
   useEffect(() => {
     const generateCollectionsData = async () => {
+      if (user === null) return navigate('/');
+
       const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
         method: 'GET',
       });

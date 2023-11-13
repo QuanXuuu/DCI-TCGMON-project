@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import CardDataContext from '../../contexts/CardDataContext';
 import ProductDataContext from '../../contexts/ProductDataContext';
@@ -24,6 +25,7 @@ const CollectionDetailsPage = () => {
   const { setProductContentData } = useContext(ProductDataContext);
   const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
+  const navigate = useNavigate();
   const { successModalText } = useContext(SuccessModalTextContext);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +54,8 @@ const CollectionDetailsPage = () => {
   console.log('userFromAuthContext', user);
 
   useEffect(() => {
+    if (user === null) return navigate('/');
+
     if (!userData) {
       const fetchUserData = async () => {
         const response = await fetch(`/api/user/${user.data.user.email}`, {

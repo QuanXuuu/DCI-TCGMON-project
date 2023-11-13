@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import Header from '../../components/Header/Header';
 import SearchByCard from '../../components/SearchByCard/SearchByCard';
 import SearchBySet from '../../components/SearchBySet/SearchBySet';
 import './SearchPage.scss';
 
 const SearchPage = () => {
+  const { user } = useAuthContext();
   const [sets, setSets] = useState();
   const [selectedOption, setSelectedOption] = useState('set');
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (user === null) {
+      return navigate('/');
+    }
+
     const getSetNames = async () => {
       const fetchSets = await fetch(`https://api.pokemontcg.io/v2/sets`, {
         method: 'GET',

@@ -23,7 +23,7 @@ const App = () => {
   const [userData, setUserData] = useState(null);
   const [isMyCollectionsSuccessModalOpen, setIsMyCollectionsSuccessModalOpen] =
     useState(false);
-  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false)
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
 
   const triggerSuccessModal = () => {
     setIsMyCollectionsSuccessModalOpen((prev) => !prev);
@@ -43,6 +43,7 @@ const App = () => {
     triggerSuccessModal,
   };
   const user = { userData, setUserData };
+  console.log('userinAPPjs', user);
 
   return (
     <UserDataContext.Provider value={user}>
@@ -56,8 +57,24 @@ const App = () => {
                     <div className="page">
                       <Routes>
                         <Route path="/" element={<LandingPage />} />
-                        <Route path="/register" element={<RegisterPage isRegisterSuccess={isRegisterSuccess} setIsRegisterSuccess={setIsRegisterSuccess}/>} />
-                        <Route path="/login" element={<LoginPage isRegisterSuccess={isRegisterSuccess} setIsRegisterSuccess={setIsRegisterSuccess} />} />
+                        <Route
+                          path="/register"
+                          element={
+                            <RegisterPage
+                              isRegisterSuccess={isRegisterSuccess}
+                              setIsRegisterSuccess={setIsRegisterSuccess}
+                            />
+                          }
+                        />
+                        <Route
+                          path="/login"
+                          element={
+                            <LoginPage
+                              isRegisterSuccess={isRegisterSuccess}
+                              setIsRegisterSuccess={setIsRegisterSuccess}
+                            />
+                          }
+                        />
                         <Route
                           path="/collections"
                           element={<MyCollectionsPage />}
@@ -66,6 +83,7 @@ const App = () => {
                           path="/collections/:id"
                           element={<CollectionDetailsPage />}
                         />
+
                         <Route path="/search" element={<SearchPage />} />
                         <Route
                           path="/results"
