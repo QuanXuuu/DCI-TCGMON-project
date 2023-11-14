@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
@@ -10,12 +9,13 @@ const DeleteConfirmationModal = ({ toggleDeleteConfirmationModal }) => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { user } = useAuthContext();
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
   const { triggerSuccessModal } = useContext(TriggerSuccessModalContext);
 
   const handleDeleteCollection = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
@@ -38,10 +38,7 @@ const DeleteConfirmationModal = ({ toggleDeleteConfirmationModal }) => {
     setUserData(data);
     setSuccessModalText(
       <p>
-        Collection{' '}
-        <span style={{ fontWeight: 700 }}>
-          {data.collections[collectionIndex].collectionName}
-        </span>{' '}
+        Collection <span style={{ fontWeight: 700 }}>{params.id}</span>{' '}
         successfully deleted!
       </p>
     );
