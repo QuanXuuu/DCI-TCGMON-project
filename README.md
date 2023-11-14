@@ -24,11 +24,12 @@
 ## NPM module
 
 > - sass
-> - dotenv
 > - react router
 > - react bootstrap (optional)
 > - mongoose
+> - cookie-parser
 > - cors
+> - dotenv
 > - express
 > - jsonwebtoken
 > - validator
@@ -36,8 +37,3 @@
 ## API
 
 [Pokémon API](https://pokemontcg.io/)
-
-## Project Setup
-
-- Clone this repository
-- Install all dependencies with '$ npm install'
