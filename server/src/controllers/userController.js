@@ -69,8 +69,9 @@ export const login = catchAsync(async (req, res) => {
 });
 
 export const logout = catchAsync(async (req, res) => {
-  res.clearCookie("connect.sid");
-  res.redirect("/");
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/login");
+  console.log("User logged out.");
 });
 
 export const getUser = catchAsync(async (req, res) => {

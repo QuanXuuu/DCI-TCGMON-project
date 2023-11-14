@@ -7,6 +7,7 @@ const userRouter = Router();
 userRouter
   .post("/register", userController.register)
   .post("/login", userController.login)
+  .get("/logout", userController.logout)
 
   .get("/user/:id", checkAuth, userController.getUser)
   .get("/user", userController.getAllUsers)

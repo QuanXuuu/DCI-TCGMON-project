@@ -43,7 +43,6 @@ const App = () => {
     triggerSuccessModal,
   };
   const user = { userData, setUserData };
-  console.log('userinAPPjs', user);
 
   return (
     <UserDataContext.Provider value={user}>
