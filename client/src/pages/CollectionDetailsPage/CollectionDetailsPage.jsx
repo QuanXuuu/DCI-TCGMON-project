@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import CardDataContext from '../../contexts/CardDataContext';
 import ProductDataContext from '../../contexts/ProductDataContext';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +22,6 @@ const CollectionDetailsPage = () => {
 
   const { setCardContentData } = useContext(CardDataContext);
   const { setProductContentData } = useContext(ProductDataContext);
-  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
   const { successModalText } = useContext(SuccessModalTextContext);
@@ -51,9 +49,9 @@ const CollectionDetailsPage = () => {
     setIsEditCollectionModalOpen(!isEditCollectionModalOpen);
   };
 
-  console.log('userFromAuthContext', user);
-
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     if (user === null) return navigate('/');
 
     if (!userData) {

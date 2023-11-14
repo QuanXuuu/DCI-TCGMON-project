@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -16,7 +15,6 @@ const EditSingleCardModal = ({
 }) => {
   const params = useParams();
 
-  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -64,6 +62,8 @@ const EditSingleCardModal = ({
   };
 
   const handleUpdateCard = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const updatedSingleCard = {
       entryId: content.entryId,
       id: content.id,
@@ -123,7 +123,7 @@ const EditSingleCardModal = ({
     setSuccessModalText(
       <p>
         <span style={{ fontWeight: 700 }}>
-          {singleCardData.name} (${singleCardData.set.name})
+          {singleCardData.name} ({singleCardData.set.name})
         </span>{' '}
         successfully updated!
       </p>

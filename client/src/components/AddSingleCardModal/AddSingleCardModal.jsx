@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -11,7 +10,6 @@ const AddSingleCardModal = ({
   toggleAddSingleCardModal,
   toggleSuccessModal,
 }) => {
-  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -46,6 +44,8 @@ const AddSingleCardModal = ({
   };
 
   const handleAddCard = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const newSingleCard = {
       entryId: crypto.randomUUID(),
       id: content.id,
