@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import './RegisterForm.scss';
 
 const RegisterForm = ({
@@ -9,33 +8,44 @@ const RegisterForm = ({
   isInvalidEmail,
   setIsInvalidEmail,
   isNotSamePassword,
-  setisNotSamePassword,
+  setIsNotSamePassword,
   isEmailInUse,
   setIsEmailInUse,
   isRegisterSuccess,
-  setIsRegisterSuccess
+  setIsRegisterSuccess,
+  isAllFieldsFilled,
+  setIsAllFieldsFilled,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { dispatch } = useAuthContext();
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email && !password && !confirmPassword) {
+      console.log('All fields must be filled');
+      return setIsAllFieldsFilled(!isAllFieldsFilled);
+    }
 
-    if (!email || !password) {
-      return
+    if (!password || !confirmPassword) {
+      console.log('All fields must be filled');
+      return setIsAllFieldsFilled(!isAllFieldsFilled);
+    }
+
+    if (!email) {
+      console.log('All fields must be filled');
+      return setIsAllFieldsFilled(!isAllFieldsFilled);
+    }
+
+    if (password !== confirmPassword) {
+      console.log('Please enter the same password');
+      return setIsNotSamePassword(!isNotSamePassword);
     }
 
     if (!isValidEmail(email)) {
       return setIsInvalidEmail(true);
-    }
-    setIsInvalidEmail(false);
-
-    if (password !== confirmPassword) {
-      return setisNotSamePassword(!isNotSamePassword);
     }
 
     try {
@@ -51,19 +61,18 @@ const RegisterForm = ({
       });
 
       const response = await newUserData.json();
+      console.log(newUserData);
 
-      if (!newUserData.ok) {
+      if (newUserData.status === 400) {
         setIsEmailInUse(!isEmailInUse);
         console.log(response.message);
         navigate('/register');
       } else {
-        // localStorage.setItem('user', JSON.stringify(response));
-        // dispatch({ type: 'LOGIN', payload: response });
         setEmail('');
         setPassword('');
         setConfirmPassword('');
         navigate('/login');
-        setIsRegisterSuccess(!isRegisterSuccess)
+        setIsRegisterSuccess(!isRegisterSuccess);
       }
     } catch (err) {
       console.log(err.message);
@@ -74,7 +83,9 @@ const RegisterForm = ({
     <div className="RegisterForm">
       <form method="POST" onSubmit={handleSubmit} noValidate>
         <input
-          className={`input ${isInvalidEmail || isEmailInUse ? 'invalid-border' : ''}`} // !!!
+          className={`input ${
+            isInvalidEmail || isEmailInUse ? 'invalid-border' : ''
+          }`} // !!!
           type="email"
           placeholder="Email address"
           name="email"

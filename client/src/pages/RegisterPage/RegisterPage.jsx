@@ -3,13 +3,20 @@ import { useState } from 'react';
 import Logo from '../../components/Logo/Logo.jsx';
 import RegisterForm from '../../components/RegisterForm/RegisterForm.jsx';
 import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAndSuccessModal.jsx';
-import {isValidEmail} from './emailValidation.js'
+import { isValidEmail } from './emailValidation.js';
 import './RegisterPage.scss';
 
-const RegisterPage = ({isRegisterSuccess, setIsRegisterSuccess}) => {
+const RegisterPage = ({
+  isRegisterSuccess,
+  setIsRegisterSuccess,
+  isAllFieldsFilled,
+  setIsAllFieldsFilled,
+  isNotSamePassword,
+  setIsNotSamePassword,
+}) => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  const [isNotSamePassword, setisNotSamePassword] = useState(false);
+
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isEmailInUse, setIsEmailInUse] = useState(false);
 
@@ -25,7 +32,20 @@ const RegisterPage = ({isRegisterSuccess, setIsRegisterSuccess}) => {
           <h1>Welcome!</h1>
           <h2>Sign up now, it&apos;s free.</h2>
         </div>
-        <RegisterForm onAddUsers={handleAddUsers} isValidEmail={isValidEmail} isInvalidEmail={isInvalidEmail} setIsInvalidEmail={setIsInvalidEmail} isNotSamePassword={isNotSamePassword} setisNotSamePassword={setisNotSamePassword} isEmailInUse={isEmailInUse} setIsEmailInUse={setIsEmailInUse} isRegisterSuccess={isRegisterSuccess} setIsRegisterSuccess={setIsRegisterSuccess}/>
+        <RegisterForm
+          onAddUsers={handleAddUsers}
+          isValidEmail={isValidEmail}
+          isInvalidEmail={isInvalidEmail}
+          setIsInvalidEmail={setIsInvalidEmail}
+          isNotSamePassword={isNotSamePassword}
+          setIsNotSamePassword={setIsNotSamePassword}
+          isEmailInUse={isEmailInUse}
+          setIsEmailInUse={setIsEmailInUse}
+          isRegisterSuccess={isRegisterSuccess}
+          setIsRegisterSuccess={setIsRegisterSuccess}
+          isAllFieldsFilled={isAllFieldsFilled}
+          setIsAllFieldsFilled={setIsAllFieldsFilled}
+        />
       </div>
       <div className="RegisterPageButtonsWrapper">
         <button
@@ -35,23 +55,31 @@ const RegisterPage = ({isRegisterSuccess, setIsRegisterSuccess}) => {
           Login
         </button>
       </div>
+      {isAllFieldsFilled && (
+        <ErrorAndSuccessModal
+          customClassName="rp-lp-error-style"
+          easmText={'All fields must be filled'}
+        />
+      )}
       {isInvalidEmail && (
         <ErrorAndSuccessModal
-        customClassName="rp-lp-error-style"
-        easmText={'Invalid email address'}
-      />
+          customClassName="rp-lp-error-style"
+          easmText={'Invalid email address'}
+        />
       )}
+
       {isNotSamePassword && (
         <ErrorAndSuccessModal
-        customClassName="rp-lp-error-style"
-        easmText={'Please enter the same password again'}
-      />
+          customClassName="rp-lp-error-style"
+          easmText={'Please enter the same password again'}
+        />
       )}
+
       {isEmailInUse && (
         <ErrorAndSuccessModal
-        customClassName="rp-lp-error-style"
-        easmText={'Email already in use'}
-      />
+          customClassName="rp-lp-error-style"
+          easmText={'Email already in use'}
+        />
       )}
     </div>
   );

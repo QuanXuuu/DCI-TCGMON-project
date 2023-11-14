@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import './LoginForm.scss';
 
-const LoginForm = ({isWrongPassword, setIsWrongPassword}) => {
+const LoginForm = ({
+  isWrongPassword,
+  setIsWrongPassword,
+  isAllFieldsFilled,
+  setIsAllFieldsFilled,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -11,6 +16,11 @@ const LoginForm = ({isWrongPassword, setIsWrongPassword}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      console.log('All fields must be filled');
+      return setIsAllFieldsFilled(!isAllFieldsFilled);
+    }
 
     try {
       const response = await fetch(`/api/login`, {
@@ -30,7 +40,7 @@ const LoginForm = ({isWrongPassword, setIsWrongPassword}) => {
       } else {
         navigate('/login');
         console.log(json.message);
-        setIsWrongPassword(!isWrongPassword)
+        setIsWrongPassword(!isWrongPassword);
       }
     } catch (err) {
       console.log(err.message);
