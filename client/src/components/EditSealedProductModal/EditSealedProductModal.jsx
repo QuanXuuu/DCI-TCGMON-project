@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -16,7 +15,6 @@ const EditSealedProductModal = ({
 }) => {
   const params = useParams();
 
-  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -42,6 +40,8 @@ const EditSealedProductModal = ({
   };
 
   const handleUpdateProduct = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const updatedSealedProduct = {
       entryId: content.entryId,
       id: content.id,

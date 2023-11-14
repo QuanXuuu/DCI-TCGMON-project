@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
@@ -15,12 +14,13 @@ const DeleteProductConfirmationModal = ({
 }) => {
   const params = useParams();
 
-  const { user } = useAuthContext();
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
   const { triggerSuccessModal } = useContext(TriggerSuccessModalContext);
 
   const handleDeleteProduct = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });

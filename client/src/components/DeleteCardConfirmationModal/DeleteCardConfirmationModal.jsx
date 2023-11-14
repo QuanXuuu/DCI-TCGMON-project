@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import './DeleteCardConfirmationModal.scss';
@@ -15,11 +14,12 @@ const DeleteCardConfirmationModal = ({
 }) => {
   const params = useParams();
 
-  const { user } = useAuthContext();
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
   const handleDeleteCard = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });

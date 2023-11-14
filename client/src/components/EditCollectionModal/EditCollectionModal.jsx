@@ -1,6 +1,5 @@
 import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -16,7 +15,6 @@ const EditCollectionModal = ({
   const params = useParams();
   const navigate = useNavigate();
 
-  const { user } = useAuthContext();
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -32,6 +30,8 @@ const EditCollectionModal = ({
   };
 
   const handleUpdateCollection = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });

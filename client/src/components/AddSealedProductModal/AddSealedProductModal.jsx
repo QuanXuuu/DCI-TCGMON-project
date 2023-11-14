@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -11,7 +10,6 @@ const AddSealedProductModal = ({
   toggleAddSealedProductModal,
   toggleSuccessModal,
 }) => {
-  const { user } = useAuthContext();
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -22,6 +20,8 @@ const AddSealedProductModal = ({
   const [collection, setCollection] = useState('');
 
   const handleAddProduct = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const newSealedProduct = {
       entryId: crypto.randomUUID(),
       id: content.id,
