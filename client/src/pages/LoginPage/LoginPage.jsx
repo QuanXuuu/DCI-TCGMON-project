@@ -6,7 +6,12 @@ import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAnd
 
 import './LoginPage.scss';
 
-const LoginPage = ({ isRegisterSuccess, setIsRegisterSuccess }) => {
+const LoginPage = ({
+  isRegisterSuccess,
+  setIsRegisterSuccess,
+  isAllFieldsFilled,
+  setIsAllFieldsFilled,
+}) => {
   const [isWrongPassword, setIsWrongPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -30,11 +35,16 @@ const LoginPage = ({ isRegisterSuccess, setIsRegisterSuccess }) => {
           <h1>Welcome back!</h1>
         </div>
 
-        <LoginForm isWrongPassword={isWrongPassword} setIsWrongPassword={setIsWrongPassword}/>
+        <LoginForm
+          isWrongPassword={isWrongPassword}
+          setIsWrongPassword={setIsWrongPassword}
+          isAllFieldsFilled={isAllFieldsFilled}
+          setIsAllFieldsFilled={setIsAllFieldsFilled}
+        />
         <div className="LoginFormContainer">
-          <button className="ForgotPasswordButton">
+          {/* <button className="ForgotPasswordButton">
             Forgot your password?
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="LoginAndRegisterContainer">
@@ -52,11 +62,19 @@ const LoginPage = ({ isRegisterSuccess, setIsRegisterSuccess }) => {
           easmText={'Successfully registered to TCGmon!'}
         />
       )}
+
+      {isAllFieldsFilled && (
+        <ErrorAndSuccessModal
+          customClassName="rp-lp-error-style"
+          easmText={'All fields must be filled'}
+        />
+      )}
+
       {isWrongPassword && (
         <ErrorAndSuccessModal
-        customClassName="rp-lp-error-style"
-        easmText={'Wrong password'}
-      />
+          customClassName="rp-lp-error-style"
+          easmText={'Wrong email and/or password'}
+        />
       )}
     </div>
   );
