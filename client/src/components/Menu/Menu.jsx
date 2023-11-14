@@ -38,6 +38,15 @@ const Menu = ({ isMenuOpen, toggleMenu }) => {
           {/* <button onClick={() => navigate('/')}>Impressum</button>
           <button onClick={() => navigate('/')}>Datenschutzerklärung</button> */}
           <p>&#169; 2023 TCGMON</p>
+          <p className="disclaimer">
+            Pokémon and the Pokémon logo are registered trademarks of The
+            Pokémon Company International, Inc. The rights to all
+            Pokémon-related, third-party media displayed on this website belong
+            to The Pokémon Company International, Inc. TCGMON is not associated
+            with The Pokémon Company International, Inc. and this website is not
+            produced by, endorsed by, supported by, or affiliated with The
+            Pokémon Company, Inc.
+          </p>
         </footer>
       </div>
     </div>
