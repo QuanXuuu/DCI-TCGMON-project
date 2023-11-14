@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import { useAuthContext } from '../../hooks/useAuthContext';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import CloseButton from '../CloseButton/CloseButton';
@@ -10,9 +9,6 @@ const AddCollectionModal = ({
   toggleAddCollectionModal,
   toggleSuccessModal,
 }) => {
-  const { user } = useAuthContext();
-  console.log('userFromAuthContext', user);
-
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
@@ -20,6 +16,8 @@ const AddCollectionModal = ({
   const [collectionTCG, setCollectionTCG] = useState('');
 
   const handleCreateCollection = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
