@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
-import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import './DeleteProductConfirmationModal.scss';
 
 const DeleteProductConfirmationModal = ({
@@ -11,12 +10,12 @@ const DeleteProductConfirmationModal = ({
   sealedProductData,
   toggleDeleteProductConfirmationModal,
   toggleEditSealedProductModal,
+  toggleSuccessModal,
 }) => {
   const params = useParams();
 
   const { setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
-  const { triggerSuccessModal } = useContext(TriggerSuccessModalContext);
 
   const handleDeleteProduct = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -59,7 +58,7 @@ const DeleteProductConfirmationModal = ({
     );
     toggleDeleteProductConfirmationModal();
     toggleEditSealedProductModal();
-    triggerSuccessModal();
+    toggleSuccessModal();
   };
 
   return (
@@ -72,7 +71,7 @@ const DeleteProductConfirmationModal = ({
             handleDeleteProduct();
           }}
         >
-          Delete Product
+          Delete product
         </button>
         <button
           className="Button"

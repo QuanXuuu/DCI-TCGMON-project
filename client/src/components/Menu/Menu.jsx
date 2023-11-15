@@ -1,10 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLogout } from '../../hooks/useLogout';
 import MenuHeader from '../MenuHeader/MenuHeader';
 import './Menu.scss';
 
 const Menu = ({ isMenuOpen, toggleMenu }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useLogout();
 
   const handleLogout = async () => {
@@ -30,8 +31,24 @@ const Menu = ({ isMenuOpen, toggleMenu }) => {
       <div className="MenuContent">
         <MenuHeader isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         <div className="MenuOptions">
-          <button onClick={() => navigate('/collections')}> Collections</button>
-          <button onClick={() => navigate('/search')}>Search</button>
+          <button
+            onClick={() =>
+              location.pathname === '/collections'
+                ? toggleMenu()
+                : navigate('/collections')
+            }
+          >
+            My Collections
+          </button>
+          <button
+            onClick={() =>
+              location.pathname === '/search'
+                ? toggleMenu()
+                : navigate('/search')
+            }
+          >
+            Search
+          </button>
           <button onClick={handleLogout}>Log out</button>
         </div>
         <footer>

@@ -1,13 +1,15 @@
 import { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SearchQueryContext from '../../contexts/SearchQueryContext';
-import Button from '../../components/Button/Button';
 import './SearchBySet.scss';
 
 const SearchBySet = ({ setlist }) => {
-  const { setSearchQuery } = useContext(SearchQueryContext);
+  const navigate = useNavigate();
+
+  const { searchQuery, setSearchQuery } = useContext(SearchQueryContext);
 
   useEffect(() => {
-    setSearchQuery({ searchDisplay: '', searchValue: '', searchMethod: '' });
+    setSearchQuery({ searchValue: '', searchMethod: '' });
   }, [setSearchQuery]);
 
   return (
@@ -16,7 +18,6 @@ const SearchBySet = ({ setlist }) => {
         <select
           onChange={(e) => {
             setSearchQuery({
-              searchDisplay: e.target.options[e.target.selectedIndex].text,
               searchValue: e.target.value,
               searchMethod: 'set',
             });
@@ -36,7 +37,18 @@ const SearchBySet = ({ setlist }) => {
             })}
         </select>
       </div>
-      <Button text={'Show search results'} link={'results'} />
+      <button
+        onClick={() =>
+          searchQuery.searchValue === ''
+            ? null
+            : navigate(
+                `/results/q=${searchQuery.searchValue}&m=${searchQuery.searchMethod}`
+              )
+        }
+        className="Button"
+      >
+        Show search results
+      </button>
     </div>
   );
 };

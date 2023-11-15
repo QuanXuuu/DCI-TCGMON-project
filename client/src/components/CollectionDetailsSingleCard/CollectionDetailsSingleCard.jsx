@@ -163,7 +163,7 @@ const CollectionDetailsSingleCard = ({
         </div>
         <div className="cdsc-content-bottom-wrapper">
           <button className="cdsc-content-bottom-market-data-button">
-            Market Data
+            Market data
           </button>
           <div className="cdsc-content-bottom-portfolio-share">
             <div className="cdsc-content-icon-wrapper">

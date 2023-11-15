@@ -191,7 +191,7 @@ const EditSealedProductModal = ({
             </div>
 
             <div className="select-fields">
-              <p>Purchase Price</p>
+              <p>Purchase price</p>
               <div className="select-purchase-price">
                 <input
                   type="number"
@@ -269,7 +269,7 @@ const EditSealedProductModal = ({
               }}
               className="add-button"
             >
-              Update Product
+              Update product
             </button>
             <button
               className="espm-delete-button"
@@ -278,7 +278,7 @@ const EditSealedProductModal = ({
                 toggleDeleteProductConfirmationModal();
               }}
             >
-              Delete Product
+              Delete product
             </button>
           </div>
         </div>
@@ -291,6 +291,7 @@ const EditSealedProductModal = ({
               toggleDeleteProductConfirmationModal
             }
             toggleEditSealedProductModal={toggleEditSealedProductModal}
+            toggleSuccessModal={toggleSuccessModal}
           />
         ) : (
           <></>

@@ -8,7 +8,7 @@ const SealedProductsHeader = () => {
       <button className="options-button">
         <FontAwesomeIcon icon={faSort} className="options-button-icon" />
       </button>
-      <h1>Sealed Products</h1>
+      <h1>Sealed products</h1>
       <button className="options-button">
         <FontAwesomeIcon icon={faFilter} className="options-button-icon" />
       </button>

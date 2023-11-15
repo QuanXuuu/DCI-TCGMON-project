@@ -96,6 +96,10 @@ const App = () => {
                           path="/results"
                           element={<SearchResultsPage />}
                         />
+                        <Route
+                          path="/results/:id"
+                          element={<SearchResultsPage />}
+                        />
                       </Routes>
                     </div>
                   </BrowserRouter>

@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import UserDataContext from '../../contexts/UserDataContext';
 import SearchQueryContext from '../../contexts/SearchQueryContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import Header from '../../components/Header/Header';
@@ -10,6 +11,10 @@ import ErrorAndSuccessModal from '../../components/ErrorAndSuccessModal/ErrorAnd
 import './SearchResultsPage.scss';
 
 const SearchResultsPage = () => {
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const { userData, setUserData } = useContext(UserDataContext);
   const searchQuery = useContext(SearchQueryContext);
   const { successModalText } = useContext(SuccessModalTextContext);
 
@@ -27,17 +32,42 @@ const SearchResultsPage = () => {
     }, 4000);
   };
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
 
-    if (user === null) {
-      return navigate('/');
+    if (user === null) return navigate('/');
+
+    if (!userData) {
+      const fetchUserData = async () => {
+        const response = await fetch(`/api/user/${user.data.user.email}`, {
+          method: 'GET',
+        });
+        const userData = await response.json();
+        setUserData(userData);
+      };
+      fetchUserData();
+    }
+
+    if (Object.keys(searchQuery.searchQuery).length === 0) {
+      const generateSearchQuery = () => {
+        const regex = /q=([^&]+)&m=([^&]+)/;
+        const match = regex.exec(params.id);
+
+        if (match) {
+          const query = match[1];
+          const method = match[2];
+
+          searchQuery.setSearchQuery({
+            searchValue: query,
+            searchMethod: method,
+          });
+        }
+      };
+      generateSearchQuery();
     }
 
     if (
-      searchQuery.searchQuery.searchValue !== '' &&
+      Object.keys(searchQuery.searchQuery).length !== 0 &&
       searchQuery.searchQuery.searchMethod === 'name'
     ) {
       const searchByName = async () => {
@@ -74,7 +104,7 @@ const SearchResultsPage = () => {
 
       searchByName();
     } else if (
-      searchQuery.searchQuery.searchValue !== '' &&
+      Object.keys(searchQuery.searchQuery).length !== 0 &&
       searchQuery.searchQuery.searchMethod === 'set'
     ) {
       const searchBySet = async () => {
@@ -111,7 +141,7 @@ const SearchResultsPage = () => {
 
       searchBySet();
     } else return;
-  }, []);
+  }, [searchQuery.searchQuery]);
 
   return (
     <div className="SearchResultsPage">
@@ -121,7 +151,7 @@ const SearchResultsPage = () => {
         <div className="headline-wrapper">
           <h1>Search results for</h1>
           <h1 className="underlined">
-            &quot;{searchQuery.searchQuery.searchDisplay}&quot;
+            &quot;{searchQuery.searchQuery.searchValue}&quot;
           </h1>
         </div>
         <div className="results-info-wrapper">
