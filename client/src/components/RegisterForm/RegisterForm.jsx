@@ -13,8 +13,8 @@ const RegisterForm = ({
   setIsEmailInUse,
   isRegisterSuccess,
   setIsRegisterSuccess,
-  isAllFieldsFilled,
-  setIsAllFieldsFilled,
+  isAllRegisterFieldsFilled,
+  setIsAllRegisterFieldsFilled,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,22 +26,22 @@ const RegisterForm = ({
     e.preventDefault();
     if (!email && !password && !confirmPassword) {
       console.log('All fields must be filled');
-      return setIsAllFieldsFilled(!isAllFieldsFilled);
+      return setIsAllRegisterFieldsFilled(true);
     }
 
     if (!password || !confirmPassword) {
       console.log('All fields must be filled');
-      return setIsAllFieldsFilled(!isAllFieldsFilled);
+      return setIsAllRegisterFieldsFilled(true);
     }
 
     if (!email) {
       console.log('All fields must be filled');
-      return setIsAllFieldsFilled(!isAllFieldsFilled);
+      return setIsAllRegisterFieldsFilled(true);
     }
 
     if (password !== confirmPassword) {
       console.log('Please enter the same password');
-      return setIsNotSamePassword(!isNotSamePassword);
+      return setIsNotSamePassword(true);
     }
 
     if (!isValidEmail(email)) {

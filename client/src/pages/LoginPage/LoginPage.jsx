@@ -9,8 +9,8 @@ import './LoginPage.scss';
 const LoginPage = ({
   isRegisterSuccess,
   setIsRegisterSuccess,
-  isAllFieldsFilled,
-  setIsAllFieldsFilled,
+  isAllLoginFieldsFilled,
+  setIsAllLoginFieldsFilled,
 }) => {
   const [isWrongPassword, setIsWrongPassword] = useState(false);
   const navigate = useNavigate();
@@ -38,8 +38,8 @@ const LoginPage = ({
         <LoginForm
           isWrongPassword={isWrongPassword}
           setIsWrongPassword={setIsWrongPassword}
-          isAllFieldsFilled={isAllFieldsFilled}
-          setIsAllFieldsFilled={setIsAllFieldsFilled}
+          isAllLoginFieldsFilled={isAllLoginFieldsFilled}
+          setIsAllLoginFieldsFilled={setIsAllLoginFieldsFilled}
         />
         <div className="LoginFormContainer">
           {/* <button className="ForgotPasswordButton">
@@ -63,7 +63,7 @@ const LoginPage = ({
         />
       )}
 
-      {isAllFieldsFilled && (
+      {isAllLoginFieldsFilled && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
           easmText={'All fields must be filled'}
