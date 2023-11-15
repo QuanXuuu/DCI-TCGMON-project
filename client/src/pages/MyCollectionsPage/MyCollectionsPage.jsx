@@ -44,19 +44,19 @@ const MyCollectionsPage = () => {
       const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
         method: 'GET',
       });
-      const userData = await fetchUserData.json();
-      setUserData(userData);
+      const data = await fetchUserData.json();
+      setUserData(data);
 
       const singleCardsQueryStringArray = [];
       const sealedProductsQueryStringArray = [];
 
-      userData.collections.map((collection) => {
+      data.collections.map((collection) => {
         return collection.collectionContent.singleCards.map((entry) => {
           return singleCardsQueryStringArray.push(`id:"${entry.id}"`);
         });
       });
 
-      userData.collections.map((collection) => {
+      data.collections.map((collection) => {
         return collection.collectionContent.sealedProducts.map((entry) => {
           return sealedProductsQueryStringArray.push(`id:"${entry.id}"`);
         });

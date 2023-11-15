@@ -32,7 +32,7 @@ const AddCollectionModal = ({
       data.collections.unshift({
         collectionName:
           collectionName === ''
-            ? `Collection ${Math.floor(Math.random() * 998) + 1}`
+            ? `Collection ${Math.floor(Math.random() * 9998) + 1}`
             : collectionName,
         collectionTCG: collectionTCG === '' ? 'pokemon' : collectionTCG,
         collectionContent: {

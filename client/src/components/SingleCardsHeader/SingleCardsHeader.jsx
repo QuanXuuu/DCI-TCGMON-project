@@ -8,7 +8,7 @@ const SingleCardsHeader = () => {
       <button className="options-button">
         <FontAwesomeIcon icon={faSort} className="options-button-icon" />
       </button>
-      <h1>Single Cards</h1>
+      <h1>Single cards</h1>
       <button className="options-button">
         <FontAwesomeIcon icon={faFilter} className="options-button-icon" />
       </button>

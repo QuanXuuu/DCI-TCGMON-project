@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CardDataContext from '../../contexts/CardDataContext';
 import ProductDataContext from '../../contexts/ProductDataContext';
 import UserDataContext from '../../contexts/UserDataContext';
@@ -134,8 +133,11 @@ const CollectionDetailsPage = () => {
           (pokemonEntry) => userEntry.id === pokemonEntry.id
         );
 
-        return (userEntry.marketPrice =
-          priceData[0].cardmarket.prices.averageSellPrice);
+        if (priceData[0].cardmarket.prices.averageSellPrice === undefined) {
+          return (userEntry.marketPrice = 1);
+        } else
+          return (userEntry.marketPrice =
+            priceData[0].cardmarket.prices.averageSellPrice);
       });
 
       const newCardData = { collectionDetailsData, pokemonDataSingleCards };
@@ -158,9 +160,11 @@ const CollectionDetailsPage = () => {
             (pokemonEntry) => userEntry.id === pokemonEntry.id
           );
 
-          return (userEntry.marketPrice = 1);
-          // return (userEntry.marketPrice =
-          //   priceData[0].tcgplayer.prices.normal.mid);
+          if (priceData[0].tcgplayer.prices === undefined) {
+            return (userEntry.marketPrice = 1);
+          } else
+            return (userEntry.marketPrice =
+              priceData[0].tcgplayer.prices.normal.market);
         }
       );
 
@@ -238,7 +242,7 @@ const CollectionDetailsPage = () => {
               <span className="bold">
                 {collectionData.collectionContent.singleCards.length}
               </span>
-              Single Cards
+              Single cards
             </div>
             <div className="text-wrapper">
               <span className="bold">
@@ -247,7 +251,7 @@ const CollectionDetailsPage = () => {
                   0
                 )}
               </span>
-              Sealed Products
+              Sealed products
             </div>
           </div>
 
@@ -292,7 +296,7 @@ const CollectionDetailsPage = () => {
               </div>
             </div>
           </div>
-          <button className="market-data-button">Market Data</button>
+          <button className="market-data-button">Market data</button>
         </div>
 
         <div className="collection-details-content-wrapper">

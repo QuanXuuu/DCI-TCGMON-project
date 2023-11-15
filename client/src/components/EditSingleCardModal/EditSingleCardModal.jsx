@@ -293,7 +293,7 @@ const EditSingleCardModal = ({
             </div>
 
             <div className="select-fields">
-              <p>Purchase Price</p>
+              <p>Purchase price</p>
               <div className="select-purchase-price">
                 <input
                   type="number"
@@ -345,7 +345,7 @@ const EditSingleCardModal = ({
               }}
               className="add-button"
             >
-              Update Card
+              Update card
             </button>
             <button
               className="escm-delete-button"
@@ -354,7 +354,7 @@ const EditSingleCardModal = ({
                 toggleDeleteCardConfirmationModal();
               }}
             >
-              Delete Card
+              Delete card
             </button>
           </div>
         </div>

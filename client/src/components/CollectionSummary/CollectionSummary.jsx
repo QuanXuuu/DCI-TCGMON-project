@@ -22,8 +22,11 @@ const CollectionSummary = ({
       (pokemonEntry) => userEntry.id === pokemonEntry.id
     );
 
-    return (userEntry.marketPrice =
-      priceData[0].cardmarket.prices.averageSellPrice);
+    if (priceData[0].cardmarket.prices.averageSellPrice === undefined) {
+      return (userEntry.marketPrice = 1);
+    } else
+      return (userEntry.marketPrice =
+        priceData[0].cardmarket.prices.averageSellPrice);
   });
 
   collectionData.collectionContent.sealedProducts.map((userEntry) => {
@@ -31,8 +34,11 @@ const CollectionSummary = ({
       (pokemonEntry) => userEntry.id === pokemonEntry.id
     );
 
-    return (userEntry.marketPrice = 1);
-    // return (userEntry.marketPrice = priceData[0].tcgplayer.prices.normal.mid);
+    if (priceData[0].tcgplayer.prices === undefined) {
+      return (userEntry.marketPrice = 1);
+    } else
+      return (userEntry.marketPrice =
+        priceData[0].tcgplayer.prices.normal.market);
   });
 
   const totalValue =

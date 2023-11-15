@@ -153,7 +153,7 @@ const CollectionDetailsSealedProduct = ({
         </div>
         <div className="cdsp-content-bottom-wrapper">
           <button className="cdsp-content-bottom-market-data-button">
-            Market Data
+            Market data
           </button>
           <div className="cdsp-content-bottom-portfolio-share">
             <div className="cdsp-content-icon-wrapper">

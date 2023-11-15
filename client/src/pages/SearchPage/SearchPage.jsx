@@ -6,6 +6,7 @@ import SearchBySet from '../../components/SearchBySet/SearchBySet';
 import './SearchPage.scss';
 
 const SearchPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [sets, setSets] = useState();
   const [selectedOption, setSelectedOption] = useState('set');
   const navigate = useNavigate();
@@ -27,12 +28,13 @@ const SearchPage = () => {
 
       const setData = await fetchSets.json();
       setSets(setData);
+      setIsLoading(false);
     };
 
     getSetNames();
   }, []);
 
-  return !sets ? null : (
+  return isLoading ? null : (
     <div className="SearchPage">
       <Header />
       <div className="SearchPageWrapper">

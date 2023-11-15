@@ -71,7 +71,7 @@ const DeleteCardConfirmationModal = ({
             handleDeleteCard();
           }}
         >
-          Delete Card
+          Delete card
         </button>
         <button
           className="Button"

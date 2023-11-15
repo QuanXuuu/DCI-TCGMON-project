@@ -31,12 +31,29 @@ const AddSealedProductModal = ({
       amount: Number(amount) === 0 ? 1 : Number(amount),
     };
 
-    const selectedCollection = collection;
+    let selectedCollection = collection;
 
     const fetchUserData = await fetch(`/api/user/${user.data.user.email}`, {
       method: 'GET',
     });
     const data = await fetchUserData.json();
+
+    if (data.collections.length === 0) {
+      const newCollectionName = `Collection ${
+        Math.floor(Math.random() * 9998) + 1
+      }`;
+      const newCollection = {
+        collectionName: newCollectionName,
+        collectionTCG: 'pokemon',
+        collectionContent: {
+          singleCards: [],
+          sealedProducts: [],
+        },
+      };
+
+      selectedCollection = newCollectionName;
+      data.collections.push(newCollection);
+    }
 
     const collectionIndex = data.collections.findIndex(
       (entry) =>
@@ -65,7 +82,7 @@ const AddSealedProductModal = ({
     toggleSuccessModal();
   };
 
-  return (
+  return !userData ? null : (
     <div
       className="AddSealedProductModal"
       style={{ overflowY: isAddSealedProductModalOpen ? 'scroll' : 'hidden' }}
@@ -133,7 +150,7 @@ const AddSealedProductModal = ({
           </div>
 
           <div className="select-fields">
-            <p>Purchase Price</p>
+            <p>Purchase price</p>
             <div className="select-purchase-price">
               <input
                 type="number"
@@ -194,13 +211,14 @@ const AddSealedProductModal = ({
               className="select"
             >
               <option value=""></option>
-              {userData.collections.map((entry, index) => {
-                return (
-                  <option key={index} value={entry.collectionName}>
-                    {entry.collectionName}
-                  </option>
-                );
-              })}
+              {userData.collections.length > 0 &&
+                userData.collections.map((entry, index) => {
+                  return (
+                    <option key={index} value={entry.collectionName}>
+                      {entry.collectionName}
+                    </option>
+                  );
+                })}
             </select>
           </div>
         </div>
@@ -211,7 +229,7 @@ const AddSealedProductModal = ({
           }}
           className="add-button"
         >
-          Add product
+          Add to collection
         </button>
       </div>
     </div>
