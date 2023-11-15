@@ -63,7 +63,7 @@ export const login = catchAsync(async (req, res) => {
   } else {
     res.status(401).json({
       status: "fail",
-      message: "Incorrect password, please double check",
+      message: "Wrong email and/or password, please double check",
     });
   }
 });

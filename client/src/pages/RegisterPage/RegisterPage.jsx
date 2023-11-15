@@ -9,8 +9,6 @@ import './RegisterPage.scss';
 const RegisterPage = ({
   isRegisterSuccess,
   setIsRegisterSuccess,
-  isAllRegisterFieldsFilled,
-  setIsAllRegisterFieldsFilled,
   isNotSamePassword,
   setIsNotSamePassword,
 }) => {
@@ -19,6 +17,8 @@ const RegisterPage = ({
 
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isEmailInUse, setIsEmailInUse] = useState(false);
+  const [isAllRegisterFieldsFilled, setIsAllRegisterFieldsFilled] =
+    useState(false);
 
   function handleAddUsers(user) {
     setUsers((users) => [...users, user]);
@@ -79,6 +79,13 @@ const RegisterPage = ({
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
           easmText={'Email already in use'}
+        />
+      )}
+
+      {isNotSamePassword && isInvalidEmail && (
+        <ErrorAndSuccessModal
+          customClassName="rp-lp-error-style"
+          easmText={'Invalid email address'}
         />
       )}
     </div>
