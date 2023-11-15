@@ -8,6 +8,9 @@ const LoginForm = ({
   setIsWrongPassword,
   isAllLoginFieldsFilled,
   setIsAllLoginFieldsFilled,
+  isValidEmail,
+  isInvalidEmail,
+  setIsInvalidEmail,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,6 +23,10 @@ const LoginForm = ({
     if (!email || !password) {
       console.log('All fields must be filled');
       return setIsAllLoginFieldsFilled(true);
+    }
+
+    if (!isValidEmail(email)) {
+      return setIsInvalidEmail(true);
     }
 
     try {
@@ -48,8 +55,11 @@ const LoginForm = ({
   };
   return (
     <div className="LoginForm">
-      <form action="/login" method="POST" onSubmit={handleSubmit}>
+      <form action="/login" method="POST" onSubmit={handleSubmit} noValidate>
         <input
+          className={`input ${
+            isInvalidEmail || isAllLoginFieldsFilled ? 'invalid-border' : ''
+          }`}
           type="email"
           placeholder="Email address"
           name="email"
@@ -57,6 +67,9 @@ const LoginForm = ({
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          className={`input ${
+            isWrongPassword || isAllLoginFieldsFilled ? 'invalid-border' : ''
+          }`}
           type="password"
           placeholder="Password"
           name="password"

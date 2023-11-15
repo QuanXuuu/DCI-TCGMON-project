@@ -84,8 +84,10 @@ const RegisterForm = ({
       <form method="POST" onSubmit={handleSubmit} noValidate>
         <input
           className={`input ${
-            isInvalidEmail || isEmailInUse ? 'invalid-border' : ''
-          }`} // !!!
+            isInvalidEmail || isEmailInUse || isAllRegisterFieldsFilled
+              ? 'invalid-border'
+              : ''
+          }`}
           type="email"
           placeholder="Email address"
           name="email"
@@ -94,7 +96,11 @@ const RegisterForm = ({
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className={`input ${isNotSamePassword ? 'invalid-border' : ''}`}
+          className={`input ${
+            isNotSamePassword || isAllRegisterFieldsFilled
+              ? 'invalid-border'
+              : ''
+          }`}
           type="password"
           placeholder="Password"
           name="password"
@@ -103,7 +109,11 @@ const RegisterForm = ({
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
-          className={`input ${isNotSamePassword ? 'invalid-border' : ''}`}
+          className={`input ${
+            isNotSamePassword || isAllRegisterFieldsFilled
+              ? 'invalid-border'
+              : ''
+          }`}
           type="password"
           id="confirmPassword"
           name="confirmPassword"

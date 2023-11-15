@@ -7,7 +7,7 @@
   align-items: center;
   gap: 1.6rem;
   width: 100%;
-  position: relative; 
+  position: relative;
 
   form {
     display: flex;
@@ -48,4 +48,9 @@
     text-align: center;
     cursor: pointer;
   }
+}
+
+.invalid-border {
+  border: 3px solid #e24a5cc3;
+  box-sizing: border-box;
 }
