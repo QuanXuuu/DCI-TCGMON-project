@@ -24,7 +24,8 @@ const App = () => {
   const [isMyCollectionsSuccessModalOpen, setIsMyCollectionsSuccessModalOpen] =
     useState(false);
   const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
-  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
+  const [isAllRegisterFieldsFilled, setIsAllRegisterFieldsFilled] = useState(false);
+  const [isAllLoginFieldsFilled, setIsAllLoginFieldsFilled] = useState(false);
   const [isNotSamePassword, setIsNotSamePassword] = useState(false);
 
   const triggerSuccessModal = () => {
@@ -64,8 +65,8 @@ const App = () => {
                             <RegisterPage
                               isRegisterSuccess={isRegisterSuccess}
                               setIsRegisterSuccess={setIsRegisterSuccess}
-                              isAllFieldsFilled={isAllFieldsFilled}
-                              setIsAllFieldsFilled={setIsAllFieldsFilled}
+                              isAllRegisterFieldsFilled={isAllRegisterFieldsFilled}
+                              setIsAllRegisterFieldsFilled={setIsAllRegisterFieldsFilled}
                               isNotSamePassword={isNotSamePassword}
                               setIsNotSamePassword={setIsNotSamePassword}
                             />
@@ -77,8 +78,8 @@ const App = () => {
                             <LoginPage
                               isRegisterSuccess={isRegisterSuccess}
                               setIsRegisterSuccess={setIsRegisterSuccess}
-                              isAllFieldsFilled={isAllFieldsFilled}
-                              setIsAllFieldsFilled={setIsAllFieldsFilled}
+                              isAllLoginFieldsFilled={isAllLoginFieldsFilled}
+                              setIsAllLoginFieldsFilled={setIsAllLoginFieldsFilled}
                             />
                           }
                         />

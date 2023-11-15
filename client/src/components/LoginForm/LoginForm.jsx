@@ -6,8 +6,8 @@ import './LoginForm.scss';
 const LoginForm = ({
   isWrongPassword,
   setIsWrongPassword,
-  isAllFieldsFilled,
-  setIsAllFieldsFilled,
+  isAllLoginFieldsFilled,
+  setIsAllLoginFieldsFilled,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +19,7 @@ const LoginForm = ({
 
     if (!email || !password) {
       console.log('All fields must be filled');
-      return setIsAllFieldsFilled(!isAllFieldsFilled);
+      return setIsAllLoginFieldsFilled(true);
     }
 
     try {

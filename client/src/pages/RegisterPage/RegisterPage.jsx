@@ -9,8 +9,8 @@ import './RegisterPage.scss';
 const RegisterPage = ({
   isRegisterSuccess,
   setIsRegisterSuccess,
-  isAllFieldsFilled,
-  setIsAllFieldsFilled,
+  isAllRegisterFieldsFilled,
+  setIsAllRegisterFieldsFilled,
   isNotSamePassword,
   setIsNotSamePassword,
 }) => {
@@ -43,8 +43,8 @@ const RegisterPage = ({
           setIsEmailInUse={setIsEmailInUse}
           isRegisterSuccess={isRegisterSuccess}
           setIsRegisterSuccess={setIsRegisterSuccess}
-          isAllFieldsFilled={isAllFieldsFilled}
-          setIsAllFieldsFilled={setIsAllFieldsFilled}
+          isAllRegisterFieldsFilled={isAllRegisterFieldsFilled}
+          setIsAllRegisterFieldsFilled={setIsAllRegisterFieldsFilled}
         />
       </div>
       <div className="RegisterPageButtonsWrapper">
@@ -55,7 +55,7 @@ const RegisterPage = ({
           Login
         </button>
       </div>
-      {isAllFieldsFilled && (
+      {isAllRegisterFieldsFilled && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
           easmText={'All fields must be filled'}
