@@ -1,0 +1,51 @@
+@import '../../default';
+
+.SearchBySet {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.6rem;
+  width: 100%;
+
+  .SelectWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 40rem;
+
+    &:after {
+      content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 512 512"><path fill="dimgray" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>');
+      position: absolute;
+      top: 1.9rem;
+      right: 1.6rem;
+      text-align: center;
+      pointer-events: none;
+      cursor: pointer;
+    }
+
+    #SetSelect {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      width: 100%;
+      height: 5.6rem;
+      line-height: 5.6rem;
+      border-radius: $button-border-radius;
+      background-color: $transparent-white50;
+      backdrop-filter: blur(1.6rem);
+      font-size: $font3;
+      text-align: center;
+      text-align-last: center;
+      color: rgba(0, 0, 0, 0.5);
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+    }
+
+    option {
+      color: $primary-text;
+      font-size: $font4;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@import '../../default';
+
+.Menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(35, 35, 35, 0.932);
+  /* background-color: $yellow; */
+  /* background-color: rgb(35, 35, 35); */
+  backdrop-filter: blur(30px);
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.MenuContent {
+  .MenuOptions {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 1.4rem;
+    font-size: 2.4rem;
+    color: $secondary-text;
+    font-weight: 400;
+    padding: 2.4rem 1.6rem 0 0;
+
+    button {
+      padding: 0.8rem;
+    }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    left: calc(100% - (100% - 2.4rem));
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    width: calc(100% - 4.8rem);
+    padding: 3.2rem 0;
+    font-size: $font4;
+    font-weight: 400;
+    text-align: center;
+    color: $secondary-text;
+    /* border-top: 0.2rem solid $secondary-text; */
+
+    button,
+    p {
+      padding: 0.8rem;
+    }
+
+    .disclaimer {
+      font-size: 0.9rem;
+    }
+  }
+}

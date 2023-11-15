@@ -1,0 +1,52 @@
+@import '../../default';
+
+.DeleteCardConfirmationModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(50, 50, 50, 0.85);
+  backdrop-filter: blur(3.2rem);
+  width: 100vw;
+  height: 100%;
+  z-index: 9999;
+}
+
+.dccm-confirmation-content {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2.4rem;
+  height: 100%;
+  padding: 3.2rem;
+
+  p {
+    font-size: $font2;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.3;
+    color: $secondary-text;
+    word-break: break-word;
+  }
+
+  .delete-button {
+    width: 100%;
+    max-width: 40rem;
+    height: 5.6rem;
+    margin: 0;
+    line-height: 5.6rem;
+    border-radius: $button-border-radius;
+    background-color: #e24a5d;
+    color: $secondary-text;
+    font-size: $font3;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .Button {
+    background-color: $transparent-white50;
+    font-size: $font3;
+    font-weight: 400;
+    margin-bottom: 1.6rem;
+  }
+}

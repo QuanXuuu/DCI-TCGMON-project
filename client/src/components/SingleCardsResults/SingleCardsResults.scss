@@ -1,0 +1,18 @@
+@import '../../default';
+
+.SingleCardsResults {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2.4rem;
+  width: 100%;
+
+  .single-cards-results-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+  }
+}

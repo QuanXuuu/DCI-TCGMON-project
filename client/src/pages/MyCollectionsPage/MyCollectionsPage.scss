@@ -1,0 +1,35 @@
+@import '../../default';
+
+.MyCollectionsPage {
+  background: $bg-cover url(../../assets/images/background-portrait.jpg);
+  background-blend-mode: darken;
+  background-size: cover;
+
+  .page-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - 6.4rem);
+    padding: 3.2rem 0;
+
+    h1 {
+      font-size: $font1;
+      font-weight: 700;
+      color: $secondary-text;
+    }
+  }
+
+  .button-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    width: 100%;
+    padding: 0 3.2rem;
+    margin-bottom: 1.6rem;
+  }
+}

@@ -1,0 +1,16 @@
+@import '../../default';
+
+.Hamburger {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  cursor: pointer;
+
+  .hamburger-icon {
+    height: 2.4rem;
+    color: $secondary-text;
+  }
+}

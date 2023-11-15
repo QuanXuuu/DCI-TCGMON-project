@@ -1,0 +1,76 @@
+@import '../../default';
+
+.CollectionSummary {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.6rem;
+  min-width: 21.6rem;
+  max-width: 21.6rem;
+  margin: 0 auto;
+  padding: 0.8rem 2.4rem 2.4rem 2.4rem;
+  border-radius: 2.4rem;
+  color: $secondary-text;
+  background-color: $transparent-white50;
+  backdrop-filter: blur(1.6rem);
+  box-shadow: 0 0 3.2rem $primary-text;
+
+  .collection-tcg-type-logo {
+    height: 2.4rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  h2 {
+    font-size: $font2;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.15;
+    word-break: break-word;
+  }
+
+  .card-count-wrapper,
+  .product-count-wrapper,
+  .collection-value-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: $font3;
+    font-weight: 700;
+
+    .collection-value {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .icon-wrapper {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+
+  .collection-details-link {
+    width: 100%;
+    font-size: $font4;
+    font-weight: 700;
+    text-align: center;
+    padding: 1.6rem 2.4rem;
+    border: 0.2rem solid $secondary-text;
+    border-radius: 2.5rem;
+    cursor: pointer;
+  }
+}

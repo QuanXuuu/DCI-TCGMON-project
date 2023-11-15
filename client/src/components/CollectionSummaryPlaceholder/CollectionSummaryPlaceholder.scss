@@ -1,0 +1,42 @@
+@import '../../default';
+
+.CollectionSummaryPlaceholder {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 21.6rem;
+  max-width: 21.6rem;
+  height: 267.594px;
+  margin: 3.2rem auto;
+  padding: 3.2rem 2.4rem;
+  border-radius: 2.4rem;
+  color: $secondary-text;
+  background-color: $transparent-white50;
+  backdrop-filter: blur(0.8rem);
+  box-shadow: 0 0 3.2rem $primary-text;
+
+  h2 {
+    font-size: $font2;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.15;
+  }
+
+  .placeholder-button {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 6.4rem;
+    height: 6.4rem;
+    border: 0.4rem solid $secondary-text;
+    border-radius: 3.2rem;
+    cursor: pointer;
+
+    .placeholder-button-icon {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+  }
+}

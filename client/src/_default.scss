@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Outfit';
+  src: url('../src/assets/fonts/outfit-vf.woff2')
+      format('woff2 supports variations'),
+    url('../src/assets/fonts/outfit-vf.woff2') format('woff2-variations');
+  font-weight: 100 900;
+}
+
+*:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+  all: unset;
+  display: revert;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// colors:
+$bg-cover: rgba(0, 0, 0, 0.75);
+$bg-color-gradient-mobile: radial-gradient(
+  145.08% 145.08% at 50% 115.5%,
+  #e089ae 32.04%,
+  #89bbf6 100%
+);
+
+$yellow: rgb(255, 203, 5);
+$green: rgb(50, 110, 50);
+$red: rgb(165, 40, 55);
+
+$transparent-white25: rgba(255, 255, 255, 0.25);
+$transparent-white50: rgba(255, 255, 255, 0.5);
+
+$primary-text: rgba(0, 0, 0, 0.85);
+$secondary-text: rgb(255, 255, 255);
+$disabled: rgba(0, 0, 0, 0.15);
+
+// font size:
+$font1: 3.2rem; // header = H1
+$font2: 2.4rem; // sub-header = H2
+$font3: 1.8rem; // button text, main text, "collections detail info text"
+$font4: 1.4rem; // "collection detail/search result  = set name"
+$font5: 1.2rem; // "card/sealed products information 375px"
+$font6: 1rem; // footer, "card/sealed products information 320px"
+$font7: 0.8rem; // card set number
+
+// box shadow
+
+// Border radius
+$button-border-radius: 2.8rem;
+
+// Box margin, padding
+
+:root {
+  font-family: 'Outfit', sans-serif;
+  font-size: 62.5%;
+  -webkit-text-size-adjust: none;
+  font-weight: 400;
+  line-height: 1;
+  color: $primary-text;
+}

@@ -1,0 +1,30 @@
+@import '../../default';
+
+.SingleCardsHeader {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  h1 {
+    font-size: $font1;
+    font-weight: 700;
+    text-align: center;
+    color: $primary-text;
+  }
+
+  .options-button {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    cursor: pointer;
+
+    .options-button-icon {
+      height: 1.6rem;
+    }
+  }
+}

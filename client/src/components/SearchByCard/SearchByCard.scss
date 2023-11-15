@@ -1,0 +1,34 @@
+@import '../../default';
+
+.SearchByCard {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.6rem;
+  width: 100%;
+
+  .SearchByCardInput {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 40rem;
+    height: 5.6rem;
+    line-height: 5.6rem;
+    border-radius: $button-border-radius;
+    background-color: $transparent-white50;
+    font-size: $font3;
+    text-align: center;
+    backdrop-filter: blur(1.6rem);
+
+    &:focus {
+      border: 3px solid rgb(87, 145, 227);
+    }
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}

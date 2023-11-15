@@ -1,26 +1,29 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "TCG project - server side",
-  "main": "server.js",
-  "type": "module",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/QuanXuuu/TCG-project.git"
-  },
-  "author": "Team4TCG",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/QuanXuuu/TCG-project/issues"
-  },
-  "homepage": "https://github.com/QuanXuuu/TCG-project#readme",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "mongoose": "^7.6.1"
-  }
+	"name": "server",
+	"version": "1.0.0",
+	"description": "TCG project - server side",
+	"main": "server.js",
+	"type": "module",
+	"scripts": {
+		"start": "node --watch server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/QuanXuuu/TCG-project.git"
+	},
+	"author": "Team4TCG",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/QuanXuuu/TCG-project/issues"
+	},
+	"homepage": "https://github.com/QuanXuuu/TCG-project#readme",
+	"dependencies": {
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^7.6.1",
+		"validator": "^13.11.0"
+	}
 }

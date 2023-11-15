@@ -1,0 +1,54 @@
+@import '../../default';
+
+.SearchPage {
+  background: $bg-cover url(../../assets/images/background-portrait.jpg);
+  background-blend-mode: darken;
+  background-size: cover;
+}
+
+.SearchPageWrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3.2rem;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 6.4rem);
+  padding: 3.2rem;
+
+  h1 {
+    font-size: $font1;
+    font-weight: 700;
+    color: $secondary-text;
+  }
+
+  .SearchSwitchButtons {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    width: 100%;
+    margin: 3.2rem 0;
+
+    .SwitchButton {
+      width: 14.4rem;
+      padding: 1.6rem;
+      color: $secondary-text;
+      font-size: 1.4rem;
+      font-weight: 400;
+      text-align: center;
+      border: 0.2rem solid $yellow;
+      border-radius: 2.5rem;
+      backdrop-filter: blur(1.6rem);
+      cursor: pointer;
+
+      &.active {
+        background-color: $yellow;
+        color: $primary-text;
+        font-weight: 600;
+      }
+    }
+  }
+}

@@ -24,11 +24,12 @@
 ## NPM module
 
 > - sass
-> - dotenv
 > - react router
 > - react bootstrap (optional)
 > - mongoose
+> - cookie-parser
 > - cors
+> - dotenv
 > - express
 > - jsonwebtoken
 > - validator
