@@ -58,7 +58,9 @@ const LoginForm = ({
       <form action="/login" method="POST" onSubmit={handleSubmit} noValidate>
         <input
           className={`input ${
-            isInvalidEmail || isAllLoginFieldsFilled ? 'invalid-border' : ''
+            isInvalidEmail || isAllLoginFieldsFilled || isWrongPassword
+              ? 'invalid-border'
+              : ''
           }`}
           type="email"
           placeholder="Email address"
