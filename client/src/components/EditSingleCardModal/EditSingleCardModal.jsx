@@ -247,6 +247,10 @@ const EditSingleCardModal = ({
                 onChange={handleConditionSelection}
                 style={{
                   backgroundColor: grade ? 'rgb(75, 75, 75)' : '',
+                  outline:
+                    condition === '' && !grade
+                      ? '3px solid rgb(87, 145, 227)'
+                      : 'none',
                 }}
               >
                 <option value=""></option>
@@ -275,6 +279,10 @@ const EditSingleCardModal = ({
                 onChange={handleGradeSelection}
                 style={{
                   backgroundColor: condition ? 'rgb(75, 75, 75)' : '',
+                  outline:
+                    grade === '' && !condition
+                      ? '3px solid rgb(87, 145, 227)'
+                      : 'none',
                 }}
               >
                 <option value=""></option>

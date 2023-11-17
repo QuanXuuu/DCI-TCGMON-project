@@ -50,16 +50,18 @@ const SearchResultsPage = () => {
 
     if (Object.keys(searchQuery.searchQuery).length === 0) {
       const generateSearchQuery = () => {
-        const regex = /q=([^&]+)&m=([^&]+)/;
+        const regex = /q=([^&]+)&m=([^&]+)&d=([^&]+)/;
         const match = regex.exec(params.id);
 
         if (match) {
           const query = match[1];
           const method = match[2];
+          const display = match[3];
 
           searchQuery.setSearchQuery({
             searchValue: query,
             searchMethod: method,
+            searchDisplay: display,
           });
         }
       };
@@ -143,7 +145,7 @@ const SearchResultsPage = () => {
         <div className="headline-wrapper">
           <h1>Search results for</h1>
           <h1 className="underlined">
-            &quot;{searchQuery.searchQuery.searchValue}&quot;
+            &quot;{searchQuery.searchQuery.searchDisplay}&quot;
           </h1>
         </div>
         <div className="results-info-wrapper">

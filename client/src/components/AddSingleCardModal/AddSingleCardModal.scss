@@ -104,7 +104,7 @@
         padding: 0 0.8rem;
         line-height: 2.8rem;
         border-radius: 1.4rem;
-        background-color: $transparent-white25;
+        background-color: rgba(255, 255, 255, 0.35);
         backdrop-filter: blur(1.6rem);
         font-size: $font3;
         font-weight: 400;
@@ -122,25 +122,6 @@
         font-size: $font3;
       }
 
-      .grade-select {
-        width: 50%;
-        max-width: 40rem;
-        height: 2.8rem;
-        line-height: 2.8rem;
-        border-radius: $button-border-radius;
-        background-color: rgb(54, 54, 54);
-        backdrop-filter: blur(1.6rem);
-        font-size: $font3;
-        font-weight: 400;
-        text-align: center;
-        text-align-last: center;
-        color: $primary-text;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        cursor: pointer;
-      }
-
       .select-purchase-price {
         display: flex;
         flex-flow: row nowrap;
@@ -154,14 +135,14 @@
           height: 2.8rem;
           line-height: 2.8rem;
           border-radius: 1.4rem;
-          background-color: $transparent-white25;
+          background-color: rgba(255, 255, 255, 0.35);
           backdrop-filter: blur(1.6rem);
           font-size: $font3;
           font-weight: 400;
           text-align: center;
 
           &::placeholder {
-            color: $transparent-white25;
+            color: rgba(255, 255, 255, 0.35);
           }
         }
 

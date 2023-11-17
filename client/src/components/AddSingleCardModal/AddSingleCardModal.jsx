@@ -13,8 +13,8 @@ const AddSingleCardModal = ({
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
-  const [firstEdition, setFirstEdition] = useState(false);
-  const [reverseHolo, setReverseHolo] = useState(false);
+  const [firstEdition, setFirstEdition] = useState('');
+  const [reverseHolo, setReverseHolo] = useState('');
   const [language, setLanguage] = useState('');
   const [condition, setCondition] = useState('');
   const [grade, setGrade] = useState('');
@@ -49,8 +49,8 @@ const AddSingleCardModal = ({
     const newSingleCard = {
       entryId: crypto.randomUUID(),
       id: content.id,
-      firstEdition: firstEdition,
-      reverseHolo: reverseHolo,
+      firstEdition: firstEdition === 'true',
+      reverseHolo: reverseHolo === 'true',
       language: language === '' ? 'english' : language,
       condition: condition === '' && grade === '' ? 'near mint' : condition,
       grade: grade === '' ? grade : Number(grade),
@@ -144,38 +144,46 @@ const AddSingleCardModal = ({
           <div className="select-fields">
             <p>1st Edition</p>
             <select
-              onChange={(e) =>
-                e.target.value === 'yes'
-                  ? setFirstEdition(true)
-                  : setFirstEdition(false)
-              }
+              style={{
+                outline:
+                  firstEdition === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+              }}
+              onChange={(e) => {
+                setFirstEdition(e.target.value);
+              }}
               className="select"
             >
               <option value=""></option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
             </select>
           </div>
 
           <div className="select-fields">
             <p>Reverse Holo</p>
             <select
-              onChange={(e) =>
-                e.target.value === 'yes'
-                  ? setReverseHolo(true)
-                  : setReverseHolo(false)
-              }
+              style={{
+                outline:
+                  reverseHolo === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+              }}
+              onChange={(e) => {
+                setReverseHolo(e.target.value);
+              }}
               className="select"
             >
               <option value=""></option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
             </select>
           </div>
 
           <div className="select-fields">
             <p>Language</p>
             <select
+              style={{
+                outline:
+                  language === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+              }}
               onChange={(e) => {
                 setLanguage(e.target.value);
               }}
@@ -213,6 +221,10 @@ const AddSingleCardModal = ({
               onChange={handleConditionSelection}
               style={{
                 backgroundColor: grade ? 'rgb(75, 75, 75)' : '',
+                outline:
+                  condition === '' && !grade
+                    ? '3px solid rgb(87, 145, 227)'
+                    : 'none',
               }}
             >
               <option value=""></option>
@@ -241,6 +253,10 @@ const AddSingleCardModal = ({
               onChange={handleGradeSelection}
               style={{
                 backgroundColor: condition ? 'rgb(75, 75, 75)' : '',
+                outline:
+                  grade === '' && !condition
+                    ? '3px solid rgb(87, 145, 227)'
+                    : 'none',
               }}
             >
               <option value=""></option>
@@ -265,6 +281,12 @@ const AddSingleCardModal = ({
                 type="number"
                 placeholder="0.00"
                 value={purchasePrice}
+                style={{
+                  outline:
+                    purchasePrice === ''
+                      ? '3px solid rgb(87, 145, 227)'
+                      : 'none',
+                }}
                 onChange={(e) => {
                   setPurchasePrice(e.target.value);
                 }}
@@ -288,6 +310,10 @@ const AddSingleCardModal = ({
           <div className="select-fields">
             <p>Collection</p>
             <select
+              style={{
+                outline:
+                  collection === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+              }}
               onChange={(e) => {
                 setCollection(e.target.value);
               }}

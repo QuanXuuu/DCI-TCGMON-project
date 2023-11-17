@@ -10,7 +10,7 @@ const SearchByCard = () => {
   const { searchQuery, setSearchQuery } = useContext(SearchQueryContext);
 
   useEffect(() => {
-    setSearchQuery({ searchValue: '', searchMethod: '' });
+    setSearchQuery({ searchValue: '', searchMethod: '', searchDisplay: '' });
   }, [setSearchQuery]);
 
   return (
@@ -25,6 +25,7 @@ const SearchByCard = () => {
           setSearchQuery({
             searchValue: e.target.value,
             searchMethod: 'name',
+            searchDisplay: e.target.value,
           });
         }}
       />
@@ -33,7 +34,7 @@ const SearchByCard = () => {
           searchQuery.searchValue === ''
             ? null
             : navigate(
-                `/results/q=${searchQuery.searchValue}&m=${searchQuery.searchMethod}`
+                `/results/q=${searchQuery.searchValue}&m=${searchQuery.searchMethod}&d=${searchQuery.searchDisplay}`
               )
         }
         className="Button"

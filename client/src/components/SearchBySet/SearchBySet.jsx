@@ -9,7 +9,7 @@ const SearchBySet = ({ setlist }) => {
   const { searchQuery, setSearchQuery } = useContext(SearchQueryContext);
 
   useEffect(() => {
-    setSearchQuery({ searchValue: '', searchMethod: '' });
+    setSearchQuery({ searchValue: '', searchMethod: '', searchDisplay: '' });
   }, [setSearchQuery]);
 
   return (
@@ -20,6 +20,7 @@ const SearchBySet = ({ setlist }) => {
             setSearchQuery({
               searchValue: e.target.value,
               searchMethod: 'set',
+              searchDisplay: e.target.options[e.target.selectedIndex].text,
             });
           }}
           id="SetSelect"
@@ -42,7 +43,7 @@ const SearchBySet = ({ setlist }) => {
           searchQuery.searchValue === ''
             ? null
             : navigate(
-                `/results/q=${searchQuery.searchValue}&m=${searchQuery.searchMethod}`
+                `/results/q=${searchQuery.searchValue}&m=${searchQuery.searchMethod}&d=${searchQuery.searchDisplay}`
               )
         }
         className="Button"
