@@ -13,7 +13,7 @@ const AddSealedProductModal = ({
   const { userData, setUserData } = useContext(UserDataContext);
   const { setSuccessModalText } = useContext(SuccessModalTextContext);
 
-  const [firstEdition, setFirstEdition] = useState(false);
+  const [firstEdition, setFirstEdition] = useState('');
   const [language, setLanguage] = useState('');
   const [purchasePrice, setPurchasePrice] = useState('');
   const [amount, setAmount] = useState('');
@@ -25,7 +25,7 @@ const AddSealedProductModal = ({
     const newSealedProduct = {
       entryId: crypto.randomUUID(),
       id: content.id,
-      firstEdition: firstEdition,
+      firstEdition: firstEdition === 'true',
       language: language === '' ? 'english' : language,
       purchasePrice: Number(purchasePrice),
       amount: Number(amount) === 0 ? 1 : Number(amount),
@@ -111,11 +111,13 @@ const AddSealedProductModal = ({
           <div className="select-fields">
             <p>1st Edition</p>
             <select
-              onChange={(e) =>
-                e.target.value === 'yes'
-                  ? setFirstEdition(true)
-                  : setFirstEdition(false)
-              }
+              style={{
+                outline:
+                  firstEdition === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+              }}
+              onChange={(e) => {
+                setFirstEdition(e.target.value);
+              }}
               className="select"
             >
               <option value=""></option>
@@ -127,6 +129,10 @@ const AddSealedProductModal = ({
           <div className="select-fields">
             <p>Language</p>
             <select
+              style={{
+                outline:
+                  language === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+              }}
               onChange={(e) => {
                 setLanguage(e.target.value);
               }}
@@ -156,6 +162,12 @@ const AddSealedProductModal = ({
                 type="number"
                 placeholder="0.00"
                 value={purchasePrice}
+                style={{
+                  outline:
+                    purchasePrice === ''
+                      ? '3px solid rgb(87, 145, 227)'
+                      : 'none',
+                }}
                 onChange={(e) => {
                   setPurchasePrice(e.target.value);
                 }}
@@ -183,6 +195,10 @@ const AddSealedProductModal = ({
                 type="number"
                 placeholder="0"
                 value={amount}
+                style={{
+                  outline:
+                    amount === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+                }}
                 onChange={(e) => {
                   setAmount(e.target.value);
                 }}
@@ -205,6 +221,10 @@ const AddSealedProductModal = ({
           <div className="select-fields">
             <p>Collection</p>
             <select
+              style={{
+                outline:
+                  collection === '' ? '3px solid rgb(87, 145, 227)' : 'none',
+              }}
               onChange={(e) => {
                 setCollection(e.target.value);
               }}
