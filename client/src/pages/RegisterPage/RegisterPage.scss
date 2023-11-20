@@ -42,6 +42,13 @@
     gap: 3.2rem;
     width: 100%;
     margin-bottom: 1.6rem;
+    
+  }
+  
+  @media (max-width: 361px) {
+    .RegisterPageButtonsWrapper {
+      margin-bottom: 3.2rem !important; 
+    }
   }
 
   .RegisterPageLoginButton {
@@ -50,3 +57,4 @@
     cursor: pointer;
   }
 }
+

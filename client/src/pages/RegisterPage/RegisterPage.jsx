@@ -58,34 +58,34 @@ const RegisterPage = ({
       {isAllRegisterFieldsFilled && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'All fields must be filled'}
+          easmText={'Enter your email address and confirm your password.'}
         />
       )}
       {isInvalidEmail && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'Invalid email address'}
+          easmText={'Enter your email address and confirm your password.'}
         />
       )}
 
       {isNotSamePassword && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'Please enter the same password again'}
+          easmText={'Enter your email address and confirm your password.'}
         />
       )}
 
       {isEmailInUse && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'Email already in use'}
+          easmText={'Enter your email address and confirm your password.'}
         />
       )}
 
       {isNotSamePassword && isInvalidEmail && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'Invalid email address'}
+          easmText={'Enter your email address and confirm your password.'}
         />
       )}
     </div>
