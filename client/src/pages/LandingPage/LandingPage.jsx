@@ -56,7 +56,7 @@ const LandingPage = () => {
 
   return (
     <div className="LandingPage">
-      <Logo height={'80'} />
+      <Logo color={'black'} padding={'1.6rem'} />
       <div
         className="image-wrapper"
         style={{ height: `calc(${height}px - 35.2rem)` }}

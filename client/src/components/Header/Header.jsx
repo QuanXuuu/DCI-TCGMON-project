@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Logo from '../Logo/Logo';
 import Hamburger from '../Hamburger/Hamburger';
 import Menu from '../Menu/Menu';
@@ -32,7 +32,9 @@ const Header = ({ color, background }) => {
           : { background: 'rgba(35, 35, 35, 0.850)' }
       }
     >
-      <Logo height={'40'} />
+      <div className="logo-wrapper">
+        <Logo color={color} />
+      </div>
       <div className="hamburger-wrapper">
         <Hamburger
           color={color}
