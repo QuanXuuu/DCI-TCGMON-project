@@ -26,7 +26,7 @@ const RegisterPage = ({
 
   return (
     <div className="RegisterPage">
-      <Logo height={'80'} />
+      <Logo color={'black'} padding={'1.6rem'} />
       <div className="RegisterWelcomeContainer">
         <div>
           <h1>Welcome!</h1>

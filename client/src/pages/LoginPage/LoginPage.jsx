@@ -27,7 +27,7 @@ const LoginPage = ({ isRegisterSuccess, setIsRegisterSuccess }) => {
 
   return (
     <div className="LoginPage">
-      <Logo height={'80'} />
+      <Logo color={'black'} padding={'1.6rem'} />
       <div className="LoginTextAndFormBox">
         <div>
           <h1>Welcome back!</h1>
