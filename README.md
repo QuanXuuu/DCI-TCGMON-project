@@ -1,4 +1,4 @@
-# Trading Card Game (TCG) Project
+# TCGMON - Trading Card Game App
 
 ![LandingPage](TCGMON.png)
 
