@@ -32,9 +32,7 @@ const Header = ({ color, background }) => {
           : { background: 'rgba(35, 35, 35, 0.850)' }
       }
     >
-      <div className="logo-wrapper">
-        <Logo color={color} height={'3.2rem'} />
-      </div>
+      <Logo color={color} height={'2rem'} />
       <div className="hamburger-wrapper">
         <Hamburger
           color={color}
