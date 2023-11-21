@@ -9,7 +9,7 @@
   /* background-color: rgb(35, 35, 35); */
   backdrop-filter: blur(30px);
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   z-index: 10000;
   display: flex;
   flex-direction: column;
@@ -30,6 +30,7 @@
 
     button {
       padding: 0.8rem;
+      cursor: pointer;
     }
   }
 

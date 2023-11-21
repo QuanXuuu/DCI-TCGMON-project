@@ -1,8 +1,15 @@
 import './Logo.scss';
 
-const Logo = ({ color, padding }) => {
+const Logo = ({ color, height, padding }) => {
   return (
-    <div className="Logo" style={padding ? { padding: `0 ${padding}` } : null}>
+    <div
+      className="Logo"
+      style={
+        padding
+          ? { padding: `0 ${padding}`, height: `${height}` }
+          : { height: `${height}` }
+      }
+    >
       <svg
         version="1.1"
         id="Layer_1"

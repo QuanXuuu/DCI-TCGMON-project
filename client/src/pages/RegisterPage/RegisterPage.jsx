@@ -13,7 +13,7 @@ const RegisterPage = ({
   setIsNotSamePassword,
 }) => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
+  const [setUsers] = useState([]);
 
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isEmailInUse, setIsEmailInUse] = useState(false);
@@ -26,7 +26,7 @@ const RegisterPage = ({
 
   return (
     <div className="RegisterPage">
-      <Logo color={'black'} padding={'1.6rem'} />
+      <Logo color={'black'} height={'4rem'} padding={'1.6rem'} />
       <div className="RegisterWelcomeContainer">
         <div>
           <h1>Welcome!</h1>

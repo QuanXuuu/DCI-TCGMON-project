@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'Outfit';
-  src: url('../src/assets/fonts/outfit-vf.woff2')
-      format('woff2 supports variations'),
-    url('../src/assets/fonts/outfit-vf.woff2') format('woff2-variations');
+  src: url('/fonts/outfit-vf.woff2') format('woff2-variations'),
+    url('/fonts/outfit-vf.woff2') format('woff2'),
+    url('/fonts/outfit-vf.ttf') format('truetype');
   font-weight: 100 900;
 }
 
@@ -13,6 +13,10 @@
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  background-color: #000000d9;
 }
 
 // colors:
