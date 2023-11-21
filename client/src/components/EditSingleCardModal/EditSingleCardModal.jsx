@@ -137,6 +137,7 @@ const EditSingleCardModal = ({
       document.querySelector('.EditSingleCardModal').scrollTop
     );
     setScrollY(scrollValue);
+    toggleDeleteCardConfirmationModal();
   };
 
   return (
@@ -359,7 +360,6 @@ const EditSingleCardModal = ({
               className="escm-delete-button"
               onClick={() => {
                 handleScrollCalculation();
-                toggleDeleteCardConfirmationModal();
               }}
             >
               Delete card
