@@ -33,7 +33,7 @@ const Header = ({ color, background }) => {
       }
     >
       <div className="logo-wrapper">
-        <Logo color={color} />
+        <Logo color={color} height={'3.2rem'} />
       </div>
       <div className="hamburger-wrapper">
         <Hamburger

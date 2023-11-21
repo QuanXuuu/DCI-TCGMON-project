@@ -56,10 +56,10 @@ const LandingPage = () => {
 
   return (
     <div className="LandingPage">
-      <Logo color={'black'} padding={'1.6rem'} />
+      <Logo color={'black'} height={'4rem'} padding={'1.6rem'} />
       <div
         className="image-wrapper"
-        style={{ height: `calc(${height}px - 35.2rem)` }}
+        style={{ height: `calc(${height}px - 32.8rem)` }}
       >
         <img src={currentImage} alt="pokemon-cards" />
       </div>
