@@ -160,7 +160,7 @@ const CollectionDetailsPage = () => {
             (pokemonEntry) => userEntry.id === pokemonEntry.id
           );
 
-          if (priceData[0].tcgplayer.prices === undefined) {
+          if (priceData[0].tcgplayer.prices === undefined || priceData[0].tcgplayer.prices.market === undefined) {
             return (userEntry.marketPrice = 1);
           } else
             return (userEntry.marketPrice =
