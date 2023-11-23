@@ -18,8 +18,10 @@
 }
 
 .EditCollectionModalContent {
-  height: 100%;
-  padding: 3.2rem;
+  min-height: 100%;
+  padding: 3.2rem calc(3.2em + env(safe-area-inset-right))
+    calc(4.8em + env(safe-area-inset-bottom))
+    calc(3.2em + env(safe-area-inset-left));
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -106,7 +108,7 @@
   width: 100%;
   max-width: 40rem;
   height: 5.6rem;
-  margin: auto 0 1.6rem 0;
+  margin-top: auto;
   line-height: 5.6rem;
   border-radius: $button-border-radius;
   background-color: #e24a5d;

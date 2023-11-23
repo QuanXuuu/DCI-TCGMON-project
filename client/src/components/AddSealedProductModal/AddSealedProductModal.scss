@@ -22,7 +22,9 @@
     justify-content: center;
     align-items: center;
     min-height: 100%;
-    padding: 8rem 3.2rem 4.8rem 3.2rem;
+    padding: 8rem calc(3.2em + env(safe-area-inset-right))
+      calc(4.8em + env(safe-area-inset-bottom))
+      calc(3.2em + env(safe-area-inset-left));
     gap: 3.2rem;
 
     .title {
