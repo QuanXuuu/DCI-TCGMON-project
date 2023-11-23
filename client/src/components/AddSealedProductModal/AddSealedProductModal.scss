@@ -13,7 +13,7 @@
   .close-button-wrapper {
     position: absolute;
     top: 0.8rem;
-    right: 0.8rem;
+    right: calc(0.8em + env(safe-area-inset-right));
   }
 
   .content {
