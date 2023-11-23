@@ -26,6 +26,14 @@
     font-weight: 400;
     padding: 2.4rem calc(1.6em + env(safe-area-inset-right)) 0 0;
 
+    @media (max-height: 400px) {
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 4.8rem;
+      padding-right: 0;
+  }
+
     button {
       padding: 0.8rem;
       cursor: pointer;

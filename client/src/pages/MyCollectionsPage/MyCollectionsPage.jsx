@@ -30,6 +30,7 @@ const MyCollectionsPage = () => {
 
   const [isAddCollectionModalOpen, setIsAddCollectionModalOpen] =
     useState(false);
+    const [scrollY, setScrollY] = useState(0);
 
   const toggleAddCollectionModal = () => {
     setIsAddCollectionModalOpen(!isAddCollectionModalOpen);
@@ -112,8 +113,12 @@ const MyCollectionsPage = () => {
     };
   }, [isAddCollectionModalOpen]);
 
+
   return isLoading ? null : (
-    <div className="MyCollectionsPage">
+    <div
+      className="MyCollectionsPage"
+      style={
+        { overflowY: isAddCollectionModalOpen ? 'hidden' : 'scroll' }}>
       <Header />
       <div className="page-wrapper">
         <h1>My Collections</h1>

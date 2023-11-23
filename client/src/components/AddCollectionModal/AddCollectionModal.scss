@@ -18,9 +18,9 @@
 }
 
 .AddCollectionModalContent {
-  height: 100%;
+  min-height: 100%;
   padding: 3.2rem calc(3.2em + env(safe-area-inset-right))
-    calc(3.2em + env(safe-area-inset-bottom))
+    calc(4.8em + env(safe-area-inset-bottom))
     calc(3.2em + env(safe-area-inset-left));
   display: flex;
   flex-flow: column nowrap;
