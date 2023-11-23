@@ -5,7 +5,7 @@ import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
 import TriggerSuccessModalContext from '../../contexts/TriggerSuccessModal';
 import './DeleteConfirmationModal.scss';
 
-const DeleteConfirmationModal = ({ toggleDeleteConfirmationModal }) => {
+const DeleteConfirmationModal = ({ toggleDeleteConfirmationModal, scrollY }) => {
   const params = useParams();
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const DeleteConfirmationModal = ({ toggleDeleteConfirmationModal }) => {
   };
 
   return (
-    <div className="DeleteConfirmationModal">
+    <div className="DeleteConfirmationModal" style={{ top: `${scrollY}px` }}>
       <div className="confirmation-content">
         <p>Are you sure you want to delete {params.id}?</p>
         <button

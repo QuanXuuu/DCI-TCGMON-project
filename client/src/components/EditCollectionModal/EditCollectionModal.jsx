@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import UserDataContext from '../../contexts/UserDataContext';
 import SuccessModalTextContext from '../../contexts/SuccessModalTextContext';
@@ -24,6 +24,7 @@ const EditCollectionModal = ({
   );
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false);
+    const [scrollY, setScrollY] = useState(0);
 
   const toggleDeleteConfirmationModal = () => {
     setIsDeleteConfirmationModalOpen(!isDeleteConfirmationModalOpen);
@@ -69,8 +70,41 @@ const EditCollectionModal = ({
     toggleSuccessModal();
   };
 
+  const handleScrollCalculation = () => {
+
+    let userAgentString =  
+    navigator.userAgent; 
+
+    let chromeAgent =  
+      userAgentString.indexOf("Chrome") > -1
+    
+      let safariAgent =  
+      userAgentString.indexOf("Safari") > -1; 
+
+      if ((chromeAgent) && (safariAgent))  
+      safariAgent = false; 
+
+      if (safariAgent) {
+      toggleDeleteConfirmationModal();
+      }
+    
+      else {
+      const scrollValue = Math.round(
+        document.querySelector('.EditCollectionModal').scrollTop
+      );
+      setScrollY(scrollValue);
+      toggleDeleteConfirmationModal();
+      };
+  }
+
   return (
-    <div className="EditCollectionModal">
+    <div
+      className="EditCollectionModal"
+      style={
+        { overflowY: isEditCollectionModalOpen ? 'scroll' : 'hidden' } && {
+          overflowY: isDeleteConfirmationModalOpen ? 'hidden' : 'scroll',
+        }
+      }>
       <div className="close-button-wrapper">
         <CloseButton
           isEditCollectionModalOpen={isEditCollectionModalOpen}
@@ -118,7 +152,7 @@ const EditCollectionModal = ({
         <button
           className="delete-button"
           onClick={() => {
-            toggleDeleteConfirmationModal();
+            handleScrollCalculation();
           }}
         >
           Delete collection
@@ -127,6 +161,7 @@ const EditCollectionModal = ({
       {isDeleteConfirmationModalOpen ? (
         <DeleteConfirmationModal
           toggleDeleteConfirmationModal={toggleDeleteConfirmationModal}
+          scrollY={scrollY}
         />
       ) : (
         <></>
