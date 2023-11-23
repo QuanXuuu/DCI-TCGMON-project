@@ -107,11 +107,31 @@ const EditSealedProductModal = ({
   };
 
   const handleScrollCalculation = () => {
-    const scrollValue = Math.round(
-      document.querySelector('.EditSealedProductModal').scrollTop
-    );
-    setScrollY(scrollValue);
-  };
+
+    let userAgentString =  
+    navigator.userAgent; 
+
+    let chromeAgent =  
+      userAgentString.indexOf("Chrome") > -1
+    
+      let safariAgent =  
+      userAgentString.indexOf("Safari") > -1; 
+    
+      if ((chromeAgent) && (safariAgent))  
+      safariAgent = false; 
+
+    if (safariAgent) {
+      toggleDeleteProductConfirmationModal();
+    }
+    
+    else {
+      const scrollValue = Math.round(
+        document.querySelector('.EditSealedProductModal').scrollTop
+      );
+      setScrollY(scrollValue);
+      toggleDeleteProductConfirmationModal();
+    };
+    }
 
   return (
     <div
@@ -275,7 +295,6 @@ const EditSealedProductModal = ({
               className="espm-delete-button"
               onClick={() => {
                 handleScrollCalculation();
-                toggleDeleteProductConfirmationModal();
               }}
             >
               Delete product
