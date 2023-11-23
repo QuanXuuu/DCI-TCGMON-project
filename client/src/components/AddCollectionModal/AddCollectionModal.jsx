@@ -58,7 +58,10 @@ const AddCollectionModal = ({
   };
 
   return (
-    <div className="AddCollectionModal">
+    <div
+      className="AddCollectionModal"
+      style={
+        { overflowY: isAddCollectionModalOpen ? 'scroll' : 'hidden' }}>
       <div className="close-button-wrapper">
         <CloseButton
           isAddCollectionModalOpen={isAddCollectionModalOpen}
