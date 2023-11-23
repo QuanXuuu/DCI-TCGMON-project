@@ -7,7 +7,9 @@
   align-items: flex-start;
   gap: 1.6rem;
   width: 100%;
-  padding: 3.2rem 3.2rem;
+  padding: 3.2rem calc(3.2rem + env(safe-area-inset-right)) 3.2rem
+    calc(3.2rem + env(safe-area-inset-left));
+
   overflow-x: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
