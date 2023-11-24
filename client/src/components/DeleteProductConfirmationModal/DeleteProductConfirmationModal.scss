@@ -18,7 +18,9 @@
   align-items: center;
   gap: 2.4rem;
   height: 100%;
-  padding: 3.2rem;
+  padding: 3.2rem calc(3.2em + env(safe-area-inset-right))
+    calc(4.8em + env(safe-area-inset-bottom))
+    calc(3.2em + env(safe-area-inset-left));
 
   p {
     font-size: $font2;
@@ -47,6 +49,5 @@
     background-color: $transparent-white50;
     font-size: $font3;
     font-weight: 400;
-    margin-bottom: 1.6rem;
   }
 }

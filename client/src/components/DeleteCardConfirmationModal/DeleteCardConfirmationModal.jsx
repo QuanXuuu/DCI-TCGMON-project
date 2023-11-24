@@ -62,7 +62,7 @@ const DeleteCardConfirmationModal = ({
   };
 
   return (
-    <div className="DeleteCardConfirmationModal" style={{ top: scrollY }}>
+    <div className="DeleteCardConfirmationModal" style={{ top: `${scrollY}px` }}>
       <div className="dccm-confirmation-content">
         <p>Are you sure you want to delete {singleCardData.name}?</p>
         <button

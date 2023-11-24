@@ -13,7 +13,7 @@
   .close-button-wrapper {
     position: absolute;
     top: 0.8rem;
-    right: 0.8rem;
+    right: calc(0.8em + env(safe-area-inset-right));
   }
 
   .content {
@@ -22,7 +22,9 @@
     justify-content: center;
     align-items: center;
     min-height: 100%;
-    padding: 8rem 3.2rem 3.2rem 3.2rem;
+    padding: 8rem calc(3.2em + env(safe-area-inset-right))
+      calc(4.8em + env(safe-area-inset-bottom))
+      calc(3.2em + env(safe-area-inset-left));
     gap: 3.2rem;
 
     .title {
@@ -228,7 +230,6 @@
         width: 100%;
         max-width: 40rem;
         height: 5.6rem;
-        margin-bottom: 1.6rem;
         border-radius: $button-border-radius;
         background-color: #e24a5d;
         color: $secondary-text;

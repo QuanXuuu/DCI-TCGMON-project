@@ -62,7 +62,7 @@ const DeleteProductConfirmationModal = ({
   };
 
   return (
-    <div className="DeleteProductConfirmationModal" style={{ top: scrollY }}>
+    <div className="DeleteProductConfirmationModal" style={{ top: `${scrollY}px` }}>
       <div className="dpcm-confirmation-content">
         <p>Are you sure you want to delete {sealedProductData.name}?</p>
         <button

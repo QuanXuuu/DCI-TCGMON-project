@@ -133,11 +133,31 @@ const EditSingleCardModal = ({
   };
 
   const handleScrollCalculation = () => {
-    const scrollValue = Math.round(
-      document.querySelector('.EditSingleCardModal').scrollTop
-    );
-    setScrollY(scrollValue);
-  };
+
+    let userAgentString =  
+    navigator.userAgent; 
+
+    let chromeAgent =  
+      userAgentString.indexOf("Chrome") > -1
+    
+      let safariAgent =  
+      userAgentString.indexOf("Safari") > -1; 
+    
+      if ((chromeAgent) && (safariAgent))  
+      safariAgent = false; 
+
+    if (safariAgent) {
+      toggleDeleteCardConfirmationModal();
+    }
+    
+    else {
+      const scrollValue = Math.round(
+        document.querySelector('.EditSingleCardModal').scrollTop
+      );
+      setScrollY(scrollValue);
+      toggleDeleteCardConfirmationModal();
+    };
+    }
 
   return (
     <div
@@ -359,7 +379,6 @@ const EditSingleCardModal = ({
               className="escm-delete-button"
               onClick={() => {
                 handleScrollCalculation();
-                toggleDeleteCardConfirmationModal();
               }}
             >
               Delete card
