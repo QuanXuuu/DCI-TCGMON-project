@@ -66,21 +66,21 @@ const LoginPage = ({ isRegisterSuccess, setIsRegisterSuccess }) => {
       {isAllLoginFieldsFilled && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'Enter your email address and password'}
+          easmText={'Check your email address and/or password'}
         />
       )}
 
       {isInvalidEmail && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'Enter your email address and password'}
+          easmText={'Check your email address and/or password'}
         />
       )}
 
       {isWrongPassword && (
         <ErrorAndSuccessModal
           customClassName="rp-lp-error-style"
-          easmText={'Enter your email address and password'}
+          easmText={'Check your email address and/or password'}
         />
       )}
     </div>
