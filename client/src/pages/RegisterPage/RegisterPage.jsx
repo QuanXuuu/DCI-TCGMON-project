@@ -13,7 +13,7 @@ const RegisterPage = ({
   setIsNotSamePassword,
 }) => {
   const navigate = useNavigate();
-  const [setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isEmailInUse, setIsEmailInUse] = useState(false);
